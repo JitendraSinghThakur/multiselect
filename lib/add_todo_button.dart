@@ -20,7 +20,8 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
       if (datatoParent3.length > 0) {
         datatoParent3.forEach((element) {
           if (element.checked) {
-            textvalue += element.fname;
+            textvalue +=
+                " " + element.fname + " " + element.lname.toLowerCase();
           }
         });
       }
@@ -66,7 +67,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                         ),
                       ),
                       child: Text(
-                        "Salesman/ Customer Rep",
+                        "Customer Names",
                         style: TextStyle(letterSpacing: 0.5),
                       ),
                     ),
@@ -108,7 +109,7 @@ class _OpenBox extends StatefulWidget {
 class __OpenBoxState extends State<_OpenBox> {
   // String data = 'no';
   void bindData() {
-    print("bindData");
+    // print("bindData");
     datatoParent = widget.datatoParent2;
   }
 
