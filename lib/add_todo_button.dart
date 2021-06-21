@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multiselected/data.dart';
 import 'package:multiselected/listdart.dart';
-import 'package:multiselected/styles.dart';
 import 'hero_dialog_route.dart';
 
 class OpenCustomerDetails extends StatefulWidget {
@@ -28,7 +27,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
     });
   }
 
-  String textvalue = "None";
+  String textvalue = "0 seleceted";
 
   void initState() {
     datatoParent3 = mainDataList;
@@ -63,11 +62,12 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                       padding: EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
-                          top: BorderSide(width: 1.2),
-                        ),
+                            top: BorderSide(width: 1.2),
+                            left: BorderSide(width: 1.2),
+                            right: BorderSide(width: 1.2)),
                       ),
                       child: Text(
-                        "Customer Names",
+                        "Selected Values",
                         style: TextStyle(letterSpacing: 0.5),
                       ),
                     ),
@@ -76,8 +76,9 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                       padding: EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(
-                              width: 1.2, color: Colors.lightBlue.shade900),
+                          bottom: BorderSide(width: 1.2),
+                          left: BorderSide(width: 1.2),
+                          right: BorderSide(width: 1.2),
                         ),
                       ),
                       child: Text(textvalue),
@@ -139,7 +140,7 @@ class __OpenBoxState extends State<_OpenBox> {
         child: Hero(
           tag: _heroAddTodo,
           child: Material(
-            color: AppColors.accentColor,
+            color: Colors.white,
             elevation: 2,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),

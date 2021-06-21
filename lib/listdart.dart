@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multiselected/data.dart';
-import 'package:multiselected/styles.dart';
 
+// ignore: must_be_immutable
 class ListSearch extends StatefulWidget {
   ListSearch({Key? key, required this.datatoParent, this.callback})
       : super(key: key);
@@ -15,24 +15,27 @@ class ListSearchState extends State<ListSearch> {
   bool isChecked = false;
   int count = 0;
   void sortData() {
+    List<ManageName> tempDataToParent = widget.datatoParent;
     print("sortData");
-    int index = 1;
-    newDataList.forEach((element) {
-      element.checked = false;
-      if (widget.datatoParent.length > 0) {
-        var tempdata =
-            widget.datatoParent.where((e) => e.id == element.id).first;
-        if (element.id == tempdata.id) {
-          element.sort = 0;
-          print("element.id" + element.id.toString());
-          element.checked = tempdata.checked;
-          print("element.checked temdata" + tempdata.checked.toString());
-        } else {
-          element.sort = index++;
-        }
-      }
-    });
-    newDataList.sort((a, b) => a.sort.compareTo(b.sort));
+    if (tempDataToParent.length > 0) {
+      newDataList = tempDataToParent;
+    }
+    // int index = 1;
+    // newDataList.forEach((element) {
+    //   element.checked = false;
+    //   if (tempDataToParent.length > 0) {
+    //     var tempdata = tempDataToParent.where((e) => e.id == element.id).first;
+    //     if (element.id == tempdata.id) {
+    //       // element.sort = 0;
+    //       print("element.id" + element.id.toString());
+    //       element.checked = tempdata.checked;
+    //       print("element.checked temdata" + tempdata.checked.toString());
+    //     } else {
+    //       element.sort = index++;
+    //     }
+    //   }
+    // });
+    // newDataList.sort((a, b) => a.sort.compareTo(b.sort));
     count = 0;
     newDataList.forEach((element) {
       if (element.checked) count++;
@@ -40,7 +43,7 @@ class ListSearchState extends State<ListSearch> {
   }
 
   void listData(id, fname, lname, sort, checked, BuildContext context) {
-    print("checked" + checked.toString());
+    // print("checked" + checked.toString());
     newDataList.forEach((element) {
       if (element.id == id) {
         element.checked = checked;
@@ -52,6 +55,8 @@ class ListSearchState extends State<ListSearch> {
       if (element.checked) count++;
     });
     widget.datatoParent = newDataList;
+
+    _flag = count == newDataList.length;
   }
 
   TextEditingController _textController = TextEditingController();
@@ -83,11 +88,11 @@ class ListSearchState extends State<ListSearch> {
     if (states.any(interactiveStates.contains)) {
       return Colors.black;
     }
-    return Colors.white;
+    return Colors.blueAccent;
   }
 
   void selectAll() {
-    setState(() => _flag = !_flag);
+    // setState(() => _flag = !_flag);
     newDataList.forEach((element) {
       element.checked = _flag;
     });
@@ -121,11 +126,17 @@ class ListSearchState extends State<ListSearch> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.50,
                 ),
-                InkWell(
-                  onTap: () => {
-                    selectAll(),
+                Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateColor.resolveWith(getTextColor),
+                  value: _flag,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      _flag = !_flag;
+                    });
+
+                    selectAll();
                   },
-                  child: _flag ? Icon(Icons.ac_unit) : Icon(Icons.add),
                 ),
               ],
             ),
@@ -148,11 +159,10 @@ class ListSearchState extends State<ListSearch> {
             children: newDataList.map((data) {
               return ListTile(
                 leading: CircleAvatar(
-                  backgroundImage: AssetImage('img/images/jitendra.jpeg'),
-                ),
+                    backgroundImage: AssetImage('img/images/jitendra.jpeg')),
                 title: Text(data.fname + " " + data.lname),
                 trailing: Checkbox(
-                  checkColor: AppColors.accentColor,
+                  checkColor: Colors.white,
                   fillColor: MaterialStateColor.resolveWith(getTextColor),
                   value: data.checked,
                   onChanged: (bool? value) {
@@ -165,6 +175,10 @@ class ListSearchState extends State<ListSearch> {
                   },
                 ),
                 onTap: () {
+                  setState(() {
+                    data.checked = !data.checked;
+                  });
+
                   listData(data.id, data.fname, data.lname, data.sort,
                       data.checked, context);
                 },
@@ -176,10 +190,10 @@ class ListSearchState extends State<ListSearch> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              SizedBox(width: 40),
+              SizedBox(width: 55),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+                  backgroundColor: MaterialStateProperty.all(Colors.black38),
                   padding: MaterialStateProperty.all(EdgeInsets.all(2)),
                   textStyle: MaterialStateProperty.all(
                     TextStyle(fontSize: 15),
@@ -190,10 +204,11 @@ class ListSearchState extends State<ListSearch> {
                 },
                 child: Text("Cancel"),
               ),
-              SizedBox(width: 40),
+              SizedBox(width: 50),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+                  backgroundColor:
+                      MaterialStateProperty.all(Colors.lightBlueAccent),
                   padding: MaterialStateProperty.all(EdgeInsets.all(2)),
                   textStyle: MaterialStateProperty.all(
                     TextStyle(fontSize: 15),
