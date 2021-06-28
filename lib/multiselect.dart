@@ -11,10 +11,14 @@ class OpenCustomerDetails extends StatefulWidget {
 class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
   bool isChecked = false;
   int count = 0;
+  List<ManageName> newDataList2 = [];
+
+// Color chechIcons = const Color(0xFFFFFF);
+  Color chechIcons = const Color(0xF2347EBD);
+  Color textColor = const Color(0xF2101010);
+  Color CancelColor = const Color(0xF254627D);
 
   void listData(id, fname, lname, sort, checked, BuildContext context) {
-    // var mydata=
-    //  print("element.id" +data);
     newDataList.forEach((element) {
       if (element.id == id) {
         element.checked = checked;
@@ -41,16 +45,15 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
   TextEditingController _textController = TextEditingController();
 
   List<ManageName> newDataList = List.from(mainDataList);
-  List<ManageName> newDataList2 = List.from(mainDataList);
 
   onItemChanged(String value) {
-    setState(() {
-      newDataList = mainDataList
-          .where((managename) =>
-              managename.fname.toLowerCase().contains(value.toLowerCase()) ||
-              managename.lname.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
+    // setState(() {
+    return mainDataList
+        .where((managename) =>
+            managename.fname.toLowerCase().contains(value.toLowerCase()) ||
+            managename.lname.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    // });
   }
 
   doneAll() {
@@ -69,17 +72,19 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
   }
 
   call() {
-    print("kamlesh");
-    // newDataList2 = newDataList;
-    newDataList2 = List.from(newDataList);
-    setState(() {
-      newDataList = newDataList;
+    newDataList2 = [];
+    newDataList.forEach((element) {
+      newDataList2.add(new ManageName(element.id, element.fname, element.lname,
+          element.checked, element.sort, element.colorName));
     });
   }
 
   cancel() {
-    // newDataList = List.from(newDataList);
-    newDataList2 = newDataList;
+    newDataList = [];
+    newDataList2.forEach((element) {
+      newDataList.add(new ManageName(element.id, element.fname, element.lname,
+          element.checked, element.sort, element.colorName));
+    });
   }
 
   String textvalue = "0 selceted";
@@ -117,7 +122,10 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                     right: BorderSide(width: 1.2),
                   ),
                 ),
-                child: Text(textvalue),
+                child: Text(
+                  textvalue,
+                  style: TextStyle(color: textColor, fontSize: 15),
+                ),
               ),
             ],
           ),
@@ -159,38 +167,40 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                                         prefixIcon: Icon(
                                           Icons.search,
                                           size: 18,
+                                          color: Colors.grey,
                                         ),
                                       ),
-                                      onChanged: onItemChanged,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          newDataList = onItemChanged(value);
+                                        });
+                                      },
                                     ),
                                   ),
                                   Row(
                                     children: [
                                       Container(
                                         margin: new EdgeInsets.only(
-                                          left: 32,
+                                          left: 22,
                                         ),
                                         child: Text(
                                           count.toString(),
                                           style: TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.black),
+                                              fontSize: 17, color: Colors.grey),
                                         ),
                                       ),
                                       Container(
                                         child: Text(
                                           "/",
                                           style: TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.black),
+                                              fontSize: 17, color: Colors.grey),
                                         ),
                                       ),
                                       Container(
                                         child: Text(
                                           newDataList.length.toString(),
                                           style: TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.black),
+                                              fontSize: 17, color: Colors.grey),
                                         ),
                                       ),
                                       SizedBox(
@@ -208,18 +218,18 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                                             child: isChecked
                                                 ? Icon(
                                                     Icons.check_box,
-                                                    color: Colors.blue,
+                                                    color: chechIcons,
                                                   )
                                                 : count == 0
                                                     ? Icon(
                                                         Icons
                                                             .check_box_outline_blank_outlined,
-                                                        color: Colors.blue,
+                                                        color: chechIcons,
                                                       )
                                                     : Icon(
                                                         Icons
                                                             .indeterminate_check_box,
-                                                        color: Colors.blue,
+                                                        color: chechIcons,
                                                       ),
                                           ),
                                         ),
@@ -237,7 +247,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                                   itemCount: newDataList.length,
                                   itemBuilder: (context, index) {
                                     var data = newDataList[index];
-                                    var data2 = newDataList[index];
+                                    // var data2 = newDataList[index];
                                     return ListTile(
                                       leading: Container(
                                         width: 32.0,
@@ -273,11 +283,11 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                                         child: data.checked
                                             ? Icon(
                                                 Icons.check_box,
-                                                color: Colors.blue,
+                                                color: chechIcons,
                                               )
                                             : Icon(
                                                 Icons.check_box_outline_blank,
-                                                color: Colors.blue,
+                                                color: chechIcons,
                                               ),
                                       ),
                                       onTap: () {
@@ -312,7 +322,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                                           borderRadius: BorderRadius.all(
                                             Radius.circular(6),
                                           ),
-                                          color: Colors.grey,
+                                          color: CancelColor,
                                           border:
                                               Border.all(color: Colors.grey),
                                         ),
@@ -346,9 +356,8 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                                           borderRadius: BorderRadius.all(
                                             Radius.circular(6),
                                           ),
-                                          color: Colors.blue,
-                                          border:
-                                              Border.all(color: Colors.blue),
+                                          color: chechIcons,
+                                          border: Border.all(color: chechIcons),
                                         ),
                                         child: InkWell(
                                           onTap: () {
