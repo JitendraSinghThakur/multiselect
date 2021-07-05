@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class Showdialogue extends StatefulWidget {
   void Function(List<ManageName> selectedData, String action) callback;
-  List<ManageName> mainList;
-  List<ManageName> selected;
+  final List<ManageName> mainList;
+  final List<ManageName> selected;
   Showdialogue({
     Key? key,
     required this.mainList,
@@ -24,7 +24,7 @@ class _ShowdialogueState extends State<Showdialogue> {
 
   int count = 0;
   bool user1 = false;
-
+  bool user2 = false;
   Color chechIcons = const Color(0xF2347EBD);
 
   Color textColor = const Color(0xF2101010);
@@ -48,8 +48,11 @@ class _ShowdialogueState extends State<Showdialogue> {
     newDataList.forEach((element) {
       element.checked = isChecked;
     });
+    actualDataList.forEach((element) {
+      element.checked = isChecked;
+    });
     count = 0;
-    newDataList.forEach((element) {
+    actualDataList.forEach((element) {
       if (element.checked) count++;
     });
   }
@@ -58,12 +61,20 @@ class _ShowdialogueState extends State<Showdialogue> {
 
   void clearText() {
     _textController.clear();
+    var list = onItemChanged(_textController.value.toString(), newDataList);
+    setState(() {
+      newDataList = list;
+    });
+    user1 = false;
+    user2 = false;
   }
 
   List<ManageName> newDataList = [];
+  List<ManageName> actualDataList = [];
 
   onItemChanged(String value, List<ManageName> listSearch) {
     user1 = true;
+    user2 = value.trim().length > 0 ? true : false;
     return listSearch
         .where((managename) =>
             managename.name.toLowerCase().contains(value.toLowerCase()))
@@ -77,12 +88,12 @@ class _ShowdialogueState extends State<Showdialogue> {
     }
 
     List<ManageName> data =
-        newDataList.where((element) => element.checked).toList();
+        actualDataList.where((element) => element.checked).toList();
     widget.callback(data, action);
   }
 
   getSelectedCount() {
-    return newDataList.where((element) => element.checked).length;
+    return actualDataList.where((element) => element.checked).length;
   }
 
   selectedValue() {
@@ -99,21 +110,24 @@ class _ShowdialogueState extends State<Showdialogue> {
       }
       return -1;
     });
+    isChecked = widget.mainList.length == widget.selected.length;
+    count = widget.selected.length;
   }
 
-  // ignore: must_call_super
   void initState() {
+    super.initState();
     selectedValue();
   }
 
   @override
   Widget build(BuildContext context) {
     newDataList = widget.mainList;
+    actualDataList = widget.mainList;
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
           insetPadding: EdgeInsets.all(0),
-          backgroundColor: Colors.grey[100],
+          // backgroundColor: Colors.grey[100],
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
           content: Builder(
@@ -125,18 +139,20 @@ class _ShowdialogueState extends State<Showdialogue> {
                 height: height,
                 width: width - 80,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                      ),
                       child: Column(
                         children: [
                           Container(
                             child: TextField(
                               controller: _textController,
                               decoration: InputDecoration(
-                                  hintText: 'search user...',
+                                  hintText: 'Search User...',
+                                  hintStyle: TextStyle(
+                                      fontSize: 17.0,
+                                      color: Colors.grey,
+                                      letterSpacing: 1),
                                   border: InputBorder.none,
                                   prefixIcon: Icon(
                                     Icons.search,
@@ -172,7 +188,7 @@ class _ShowdialogueState extends State<Showdialogue> {
                                   padding: const EdgeInsets.only(left: 18.0),
                                   child: Container(
                                     child: Text(
-                                      '${getSelectedCount()}/${newDataList.length}',
+                                      '${getSelectedCount()}/${actualDataList.length}',
                                       style: TextStyle(
                                           fontSize: 17, color: Colors.grey),
                                     ),
@@ -180,34 +196,34 @@ class _ShowdialogueState extends State<Showdialogue> {
                                 ),
                               ),
                               Expanded(
-                                child: Container(
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        isChecked = !isChecked;
-                                      });
-                                      selectAll();
-                                    },
-                                    child: isChecked
-                                        ? Icon(
-                                            Icons.check_box,
-                                            color: chechIcons,
-                                          )
-                                        : count == 0
-                                            ? Icon(
-                                                Icons
-                                                    .check_box_outline_blank_outlined,
-                                                color: chechIcons,
-                                              )
-                                            : Icon(
-                                                Icons.indeterminate_check_box,
-                                                color: chechIcons,
-                                              ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 1,
+                                child: newDataList.length == 0 || user2
+                                    ? Container()
+                                    : Container(
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              isChecked = !isChecked;
+                                            });
+                                            selectAll();
+                                          },
+                                          child: isChecked
+                                              ? Icon(
+                                                  Icons.check_box,
+                                                  color: chechIcons,
+                                                )
+                                              : count == 0
+                                                  ? Icon(
+                                                      Icons
+                                                          .check_box_outline_blank_outlined,
+                                                      color: chechIcons,
+                                                    )
+                                                  : Icon(
+                                                      Icons
+                                                          .indeterminate_check_box,
+                                                      color: chechIcons,
+                                                    ),
+                                        ),
+                                      ),
                               ),
                             ],
                           ),
@@ -216,7 +232,18 @@ class _ShowdialogueState extends State<Showdialogue> {
                     ),
                     Expanded(
                       child: newDataList.length == 0
-                          ? Text("No Records Found")
+                          ? Container(
+                              child: Padding(
+                                padding: const EdgeInsets.all(18.0),
+                                child: Text(
+                                  "No records found",
+                                  style: TextStyle(
+                                      color: Colors.black38,
+                                      fontSize: 14,
+                                      letterSpacing: 1),
+                                ),
+                              ),
+                            )
                           : ListView.builder(
                               itemCount: newDataList.length,
                               itemBuilder: (context, index) {
@@ -225,7 +252,7 @@ class _ShowdialogueState extends State<Showdialogue> {
                                 return ListTile(
                                   dense: true,
                                   contentPadding:
-                                      EdgeInsets.only(left: 0.0, right: 18),
+                                      EdgeInsets.only(left: 0.0, right: 14),
                                   leading: Container(
                                     width: 32.0,
                                     height: 32.0,
@@ -241,7 +268,8 @@ class _ShowdialogueState extends State<Showdialogue> {
                                   ),
                                   title: Text(
                                     data.name,
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(
+                                        fontSize: 15.2, color: Colors.black),
                                   ),
                                   trailing: InkWell(
                                     onTap: () {
