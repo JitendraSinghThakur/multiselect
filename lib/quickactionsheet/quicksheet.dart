@@ -80,7 +80,7 @@ class _QuichActionSheetState extends State<QuichActionSheet> {
                               ),
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height - 85,
+                              height: MediaQuery.of(context).size.height - 200,
                               child: ListView.builder(
                                   itemCount: newDataList.length,
                                   itemBuilder: (context, index) {
@@ -92,7 +92,8 @@ class _QuichActionSheetState extends State<QuichActionSheet> {
                                         child: Text(
                                           data.actionName,
                                           style: TextStyle(
-                                              color: Colors.red, fontSize: 15),
+                                              color: Colors.black,
+                                              fontSize: 15),
                                         ),
                                       ),
                                       // minVerticalPadding: 0,

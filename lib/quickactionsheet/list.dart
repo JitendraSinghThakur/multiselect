@@ -14,7 +14,7 @@ List<QuichSheetData> mainDataList = [
   new QuichSheetData(
       2, "Edit Customer", Icon(Icons.edit, color: Colors.red, size: 15)),
   new QuichSheetData(
-      3, "View", Icon(Icons.view_agenda, color: Colors.red, size: 15)),
+      3, "View", Icon(Icons.remove_red_eye, color: Colors.red, size: 15)),
   new QuichSheetData(
       4, "Email", Icon(Icons.email, color: Colors.red, size: 15)),
   new QuichSheetData(
