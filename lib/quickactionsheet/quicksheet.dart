@@ -1,3 +1,5 @@
+import 'package:demoapp/multiselect/showdialogue.dart';
+import 'package:demoapp/multiselect/data.dart';
 import 'package:flutter/material.dart';
 
 import 'list.dart';
@@ -10,9 +12,26 @@ class QuichActionSheet extends StatefulWidget {
 }
 
 class _QuichActionSheetState extends State<QuichActionSheet> {
-  List<QuichSheetData> newDataList = List.from(mainDataList);
+  List<ManageName> selectedNames = [];
+  List<QuichSheetData> newDataList = List.from(quickActionList);
 
   Color cancelIcons = const Color(0xF2347EBD);
+
+  void callback(List<ManageName> selectedData, String action) {
+    if (action == "cancel") {
+      return;
+    }
+    selectedNames = selectedData;
+
+    // setState(() {
+    //   textvalue = " ";
+    //   if (selectedNames.length > 0) {
+    //     if (selectedNames.length > 0) {
+    //       textvalue += (selectedNames.map((e) => (e.name))).join(", ");
+    //     }
+    //   }
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +115,24 @@ class _QuichActionSheetState extends State<QuichActionSheet> {
                                               fontSize: 15),
                                         ),
                                       ),
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return MultiselectedModel(
+                                                  mainList: mainDataList,
+                                                  selected: selectedNames,
+                                                  callback: (List<ManageName>
+                                                          selectedData,
+                                                      String action) {
+                                                    callback(
+                                                        selectedData, action);
+                                                  },
+                                                  keyToDisplay: 'name',
+                                                  type: 'user',
+                                                  canShowProfilePic: true);
+                                            });
+                                      },
                                       // minVerticalPadding: 0,
                                     );
                                   }),

@@ -1,4 +1,5 @@
 import 'package:demoapp/quickactionsheet/quicksheet.dart';
+import 'package:demoapp/singleselect/singleselect.dart';
 import 'package:flutter/material.dart';
 import 'package:demoapp/multiselect/multiselect.dart';
 import 'package:demoapp/multiselect/styles.dart';
@@ -53,6 +54,10 @@ class _HomeState extends State<Home> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: OpenCustomerDetails(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: SingleUserSelect(),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 18.0),

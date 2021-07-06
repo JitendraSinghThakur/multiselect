@@ -1,34 +1,36 @@
 import 'package:demoapp/multiselect/data.dart';
-import 'package:demoapp/multiselect/showdialogue.dart';
+import 'package:demoapp/singleselect/singleUserDialouge.dart';
 import 'package:flutter/material.dart';
 
-class OpenCustomerDetails extends StatefulWidget {
-  const OpenCustomerDetails({Key? key}) : super(key: key);
+class SingleUserSelect extends StatefulWidget {
+  const SingleUserSelect({Key? key}) : super(key: key);
 
   @override
-  _OpenCustomerDetailsState createState() => _OpenCustomerDetailsState();
+  _SingleUserSelectState createState() => _SingleUserSelectState();
 }
 
-class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
-  List<ManageName> selectedNames = [];
+class _SingleUserSelectState extends State<SingleUserSelect> {
+  ManageName selectedNames =
+      new ManageName(1, "Ram Singh", false, 0, Colors.red);
 
-  void callback(List<ManageName> selectedData, String action) {
+  void callback(ManageName selectedData, String action) {
     if (action == "cancel") {
       return;
     }
     selectedNames = selectedData;
 
     setState(() {
-      textvalue = " ";
-      if (selectedNames.length > 0) {
-        if (selectedNames.length > 0) {
-          textvalue += (selectedNames.map((e) => (e.name))).join(", ");
-        }
-      }
+      // textvalue = " ";
+      textvalue = selectedNames.name;
+      // if (selectedNames.length > 0) {
+      //   if (selectedNames.length > 0) {
+      //     textvalue += (selectedNames.map((e) => (e.name))).join(", ");
+      //   }
+      // }
     });
   }
 
-  String textvalue = "0 Selected";
+  String textvalue = "Dropbox user";
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -47,7 +49,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                       right: BorderSide(width: 1.2)),
                 ),
                 child: Text(
-                  "Selected Values",
+                  "Single User",
                   style: TextStyle(letterSpacing: 0.5, color: Colors.black),
                 ),
               ),
@@ -76,10 +78,10 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return MultiselectedModel(
+              return SingleSelectedModel(
                   mainList: mainDataList,
                   selected: selectedNames,
-                  callback: (List<ManageName> selectedData, String action) {
+                  callback: (ManageName selectedData, String action) {
                     callback(selectedData, action);
                   },
                   keyToDisplay: 'name',

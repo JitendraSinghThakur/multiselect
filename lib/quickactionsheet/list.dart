@@ -8,7 +8,7 @@ class QuichSheetData {
   QuichSheetData(this.id, this.actionName, this.iconName);
 }
 
-List<QuichSheetData> mainDataList = [
+List<QuichSheetData> quickActionList = [
   new QuichSheetData(
       1, "Edit Job", Icon(Icons.edit, color: Colors.red, size: 15)),
   new QuichSheetData(

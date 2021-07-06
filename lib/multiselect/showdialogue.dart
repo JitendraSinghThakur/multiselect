@@ -1,11 +1,11 @@
 import 'package:demoapp/multiselect/data.dart';
 import 'package:flutter/material.dart';
 
-class Showdialogue extends StatefulWidget {
+class MultiselectedModel extends StatefulWidget {
   void Function(List<ManageName> selectedData, String action) callback;
   final List<ManageName> mainList;
   final List<ManageName> selected;
-  Showdialogue({
+  MultiselectedModel({
     Key? key,
     required this.mainList,
     required this.selected,
@@ -16,10 +16,10 @@ class Showdialogue extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ShowdialogueState createState() => _ShowdialogueState();
+  _MultiselectedModelState createState() => _MultiselectedModelState();
 }
 
-class _ShowdialogueState extends State<Showdialogue> {
+class _MultiselectedModelState extends State<MultiselectedModel> {
   bool isChecked = false;
 
   int count = 0;
@@ -252,7 +252,7 @@ class _ShowdialogueState extends State<Showdialogue> {
                                 return ListTile(
                                   dense: true,
                                   contentPadding:
-                                      EdgeInsets.only(left: 0.0, right: 14),
+                                      EdgeInsets.only(left: 0.0, right: 18),
                                   leading: Container(
                                     width: 32.0,
                                     height: 32.0,
