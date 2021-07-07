@@ -1,8 +1,8 @@
-import 'package:demoapp/multiselect/data.dart';
+import '../multiselect/data.dart';
 import 'package:flutter/material.dart';
 
 class SingleSelectedModel extends StatefulWidget {
-  void Function(ManageName selectedData, String action) callback;
+  final void Function(ManageName selectedData, String action) callback;
   final List<ManageName> mainList;
 
   final ManageName selected;
@@ -37,6 +37,7 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
       element.checked = false;
       if (element.id == data.id) {
         element.checked = true;
+        isChecked = true;
       }
     });
     ManageName newSelected =
@@ -105,15 +106,16 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
         return AlertDialog(
           backgroundColor: Color(0xffEEEEEE),
           insetPadding: EdgeInsets.all(0),
+          contentPadding: EdgeInsets.only(top: 10, left: 0, right: 0),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0))),
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           content: Builder(
             builder: (context) {
               var height = MediaQuery.of(context).size.height * 0.85;
-              var width = MediaQuery.of(context).size.width * .95;
+              var width = MediaQuery.of(context).size.width * 1;
               return Container(
                 height: height,
-                width: width - 80,
+                width: width - 45,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -121,13 +123,18 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                       child: Column(
                         children: [
                           Container(
+                            padding: EdgeInsets.only(
+                                top: 15, bottom: 10, left: 20, right: 20),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
                                   child: Text(
                                     "SELECT USER",
-                                    style: TextStyle(fontSize: 17),
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.5),
                                   ),
                                 ),
                                 Container(
@@ -186,24 +193,31 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                     Expanded(
                       child: newDataList.length == 0
                           ? Container(
+                              width: width,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(25.0),
+                                  topRight: Radius.circular(25.0),
+                                ),
+                              ),
                               child: Padding(
-                                padding: const EdgeInsets.all(18.0),
+                                padding: const EdgeInsets.only(top: 30.0),
                                 child: Text(
                                   "No records found",
                                   style: TextStyle(
-                                      color: Colors.black38,
+                                      color: Colors.black,
                                       fontSize: 14,
                                       letterSpacing: 1),
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             )
                           : Container(
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0),
-                                  topRight: Radius.circular(10.0),
-                                ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25)),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(18.0),
@@ -212,43 +226,47 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                     itemBuilder: (context, index) {
                                       var data = newDataList[index];
 
-                                      return ListTile(
-                                        selectedTileColor: Colors.red,
-                                        dense: true,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 0.0, right: 18),
-                                        leading: Container(
-                                          width: 32.0,
-                                          height: 32.0,
-                                          padding: EdgeInsets.all(2.0),
-                                          decoration: BoxDecoration(
-                                            color: data.colorName,
-                                            shape: BoxShape.circle,
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: ListTile(
+                                          selectedTileColor: Colors.red,
+                                          dense: true,
+                                          contentPadding: EdgeInsets.only(
+                                              left: 0.0, right: 18),
+                                          leading: Container(
+                                            width: 32.0,
+                                            height: 32.0,
+                                            padding: EdgeInsets.all(2.0),
+                                            decoration: BoxDecoration(
+                                              color: data.colorName,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: CircleAvatar(
+                                                radius: 14.0,
+                                                backgroundImage: AssetImage(
+                                                    'img/images/jitendra.jpeg')),
                                           ),
-                                          child: CircleAvatar(
-                                              radius: 14.0,
-                                              backgroundImage: AssetImage(
-                                                  'img/images/jitendra.jpeg')),
+                                          title: Text(
+                                            data.name,
+                                            style: TextStyle(
+                                                fontSize: 15.2,
+                                                color: Colors.black),
+                                          ),
+                                          trailing: data.checked
+                                              ? Icon(
+                                                  Icons.check,
+                                                  color: Colors.blue[400],
+                                                )
+                                              : null,
+                                          onTap: () {
+                                            setState(() {
+                                              data.checked = !data.checked;
+                                            });
+                                            listData(data, context);
+                                            Navigator.of(context).pop();
+                                          },
                                         ),
-                                        title: Text(
-                                          data.name,
-                                          style: TextStyle(
-                                              fontSize: 15.2,
-                                              color: Colors.black),
-                                        ),
-                                        trailing: data.checked
-                                            ? Icon(
-                                                Icons.check,
-                                                color: Colors.blue[400],
-                                              )
-                                            : null,
-                                        onTap: () {
-                                          setState(() {
-                                            data.checked = !data.checked;
-                                          });
-                                          listData(data, context);
-                                          Navigator.of(context).pop();
-                                        },
                                       );
                                     }),
                               ),

@@ -1,5 +1,5 @@
-import 'package:demoapp/multiselect/showdialogue.dart';
-import 'package:demoapp/multiselect/data.dart';
+import '../multiselect/showdialogue.dart';
+import '../multiselect/data.dart';
 import 'package:flutter/material.dart';
 
 import 'list.dart';

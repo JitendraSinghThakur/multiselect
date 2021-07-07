@@ -1,5 +1,5 @@
-import 'package:demoapp/multiselect/data.dart';
-import 'package:demoapp/singleselect/singleUserDialouge.dart';
+import '../multiselect/data.dart';
+import '../singleselect/singleUserDialouge.dart';
 import 'package:flutter/material.dart';
 
 class SingleUserSelect extends StatefulWidget {

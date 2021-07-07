@@ -1,8 +1,8 @@
-import 'package:demoapp/multiselect/data.dart';
+import '../multiselect/data.dart';
 import 'package:flutter/material.dart';
 
 class MultiselectedModel extends StatefulWidget {
-  void Function(List<ManageName> selectedData, String action) callback;
+  final void Function(List<ManageName> selectedData, String action) callback;
   final List<ManageName> mainList;
   final List<ManageName> selected;
   MultiselectedModel({
@@ -126,27 +126,32 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
-          backgroundColor: Color(0xffEEEEEE),
+          backgroundColor: Colors.transparent,
           insetPadding: EdgeInsets.all(0),
+          contentPadding:
+              EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0))),
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           content: Builder(
             builder: (context) {
-              var height = MediaQuery.of(context).size.height * 0.85;
+              var height = MediaQuery.of(context).size.height * 0.90;
               var width = MediaQuery.of(context).size.width * .95;
 
               return Container(
                 decoration: BoxDecoration(
-                  color: Color(0xffEEEEEE),
-                ),
+                    color: Color(0xffEEEEEE),
+                    borderRadius: BorderRadius.circular(15)),
+                padding: EdgeInsets.all(1),
                 height: height,
-                width: width - 80,
+                width: width - 40,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
+                      padding: EdgeInsets.only(top: 10),
                       decoration: BoxDecoration(
                         color: Color(0xffEEEEEE),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: Column(
                         children: [
@@ -186,18 +191,16 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                             ),
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Expanded(
-                                flex: 4,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 18.0),
-                                  child: Container(
-                                    child: Text(
-                                      '${getSelectedCount()}/${actualDataList.length}',
-                                      style: TextStyle(
-                                          fontSize: 17, color: Colors.grey),
-                                    ),
+                                flex: 2,
+                                child: Container(
+                                  padding: EdgeInsets.only(left: 25),
+                                  child: Text(
+                                    '${getSelectedCount()}/${actualDataList.length}',
+                                    style: TextStyle(
+                                        fontSize: 17, color: Colors.grey),
                                   ),
                                 ),
                               ),
@@ -205,6 +208,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 child: newDataList.length == 0 || user2
                                     ? Container()
                                     : Container(
+                                        // padding: EdgeInsets.only(left: 5),
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
@@ -255,24 +259,24 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 top: 12.0,
                               ),
                               child: Container(
+                                padding: EdgeInsets.only(top: 15),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
-                                    topRight: Radius.circular(10.0),
+                                    topLeft: Radius.circular(25.0),
+                                    topRight: Radius.circular(25.0),
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ListView.builder(
-                                      itemCount: newDataList.length,
-                                      itemBuilder: (context, index) {
-                                        var data = newDataList[index];
+                                child: ListView.builder(
+                                    itemCount: newDataList.length,
+                                    itemBuilder: (context, index) {
+                                      var data = newDataList[index];
 
-                                        return ListTile(
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20),
+                                        child: ListTile(
                                           dense: true,
-                                          contentPadding: EdgeInsets.only(
-                                              left: 0.0, right: 10),
                                           leading: Container(
                                             width: 32.0,
                                             height: 32.0,
@@ -318,81 +322,77 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                             });
                                             listData(data, context);
                                           },
-                                        );
-                                      }),
-                                ),
+                                        ),
+                                      );
+                                    }),
                               ),
                             ),
                     ),
                     Container(
                       decoration: BoxDecoration(
                         color: Color(0xffEEEEEE),
-                        // border: Border(
-                        //     top: BorderSide(color: Colors.grey, width: 5)),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Material(
-                        color: Color(0xffEEEEEE),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                  color: cancelColor,
-                                  border: Border.all(color: Colors.grey),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20, bottom: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(6),
                                 ),
-                                child: InkWell(
-                                  onTap: () {
-                                    submit("cancel");
-                                    Navigator.pop(context);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 6, bottom: 6, left: 25, right: 25),
-                                    child: Text(
-                                      "Cancel",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        letterSpacing: 1,
-                                      ),
+                                color: cancelColor,
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  submit("cancel");
+                                  Navigator.pop(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 6, bottom: 6, left: 25, right: 25),
+                                  child: Text(
+                                    "Cancel",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      letterSpacing: 1,
                                     ),
                                   ),
                                 ),
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                  color: chechIcons,
-                                  border: Border.all(color: chechIcons),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(6),
                                 ),
-                                child: InkWell(
-                                  onTap: () {
-                                    submit("done");
-                                    Navigator.pop(context);
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 6, bottom: 6, left: 35, right: 35),
-                                    child: Text(
-                                      "Done",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        letterSpacing: 1,
-                                      ),
+                                color: chechIcons,
+                                border: Border.all(color: chechIcons),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  submit("done");
+                                  Navigator.pop(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 6, bottom: 6, left: 35, right: 35),
+                                  child: Text(
+                                    "Done",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      letterSpacing: 1,
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
