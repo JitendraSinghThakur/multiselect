@@ -10,8 +10,7 @@ class SingleUserSelect extends StatefulWidget {
 }
 
 class _SingleUserSelectState extends State<SingleUserSelect> {
-  ManageName selectedNames =
-      new ManageName(1, "Ram Singh", false, 0, Colors.red);
+  ManageName selectedNames = new ManageName(-1, "", false, 0, Colors.red);
 
   void callback(ManageName selectedData, String action) {
     if (action == "cancel") {
@@ -20,13 +19,7 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
     selectedNames = selectedData;
 
     setState(() {
-      // textvalue = " ";
       textvalue = selectedNames.name;
-      // if (selectedNames.length > 0) {
-      //   if (selectedNames.length > 0) {
-      //     textvalue += (selectedNames.map((e) => (e.name))).join(", ");
-      //   }
-      // }
     });
   }
 

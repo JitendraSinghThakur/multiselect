@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class SingleSelectedModel extends StatefulWidget {
   void Function(ManageName selectedData, String action) callback;
   final List<ManageName> mainList;
+
   final ManageName selected;
   SingleSelectedModel({
     Key? key,
@@ -32,14 +33,6 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
   Color cancelColor = const Color(0xF254627D);
 
   void listData(data, BuildContext context) {
-    // widget.callback(fname);
-    // for (var i = 0; i < newDataList.length; i++) {
-    //   newDataList[i].checked = false;
-    //   if (newDataList[i].id == id) {
-    //     newDataList[i].checked = true;
-    //   }
-    // }
-
     newDataList.forEach((element) {
       element.checked = false;
       if (element.id == data.id) {
@@ -80,13 +73,28 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
 
   void submit(String action) {
     if (action == "cancel") {
-      // widget.callback(ManageName uns = null action);
       return;
     }
   }
 
+  selectedValue() {
+    widget.mainList.forEach((element2) {
+      element2.checked = false;
+      if (widget.selected.id == element2.id) {
+        element2.checked = true;
+      }
+    });
+    widget.mainList.sort((a, b) {
+      if (b.checked) {
+        return 1;
+      }
+      return -1;
+    });
+  }
+
   void initState() {
     super.initState();
+    selectedValue();
   }
 
   @override
@@ -95,6 +103,7 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
+          backgroundColor: Color(0xffEEEEEE),
           insetPadding: EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
@@ -188,45 +197,62 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                 ),
                               ),
                             )
-                          : ListView.builder(
-                              itemCount: newDataList.length,
-                              itemBuilder: (context, index) {
-                                var data = newDataList[index];
+                          : Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(18.0),
+                                child: ListView.builder(
+                                    itemCount: newDataList.length,
+                                    itemBuilder: (context, index) {
+                                      var data = newDataList[index];
 
-                                return ListTile(
-                                  dense: true,
-                                  contentPadding:
-                                      EdgeInsets.only(left: 0.0, right: 18),
-                                  leading: Container(
-                                    width: 32.0,
-                                    height: 32.0,
-                                    padding: EdgeInsets.all(2.0),
-                                    decoration: BoxDecoration(
-                                      color: data.colorName,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: CircleAvatar(
-                                        radius: 14.0,
-                                        backgroundImage: AssetImage(
-                                            'img/images/jitendra.jpeg')),
-                                  ),
-                                  title: Text(
-                                    data.name,
-                                    style: TextStyle(
-                                        fontSize: 15.2, color: Colors.black),
-                                  ),
-                                  trailing: data.checked
-                                      ? Icon(
-                                          Icons.check,
-                                          color: Colors.blue[400],
-                                        )
-                                      : null,
-                                  onTap: () {
-                                    listData(data, context);
-                                    Navigator.pop(context);
-                                  },
-                                );
-                              }),
+                                      return ListTile(
+                                        selectedTileColor: Colors.red,
+                                        dense: true,
+                                        contentPadding: EdgeInsets.only(
+                                            left: 0.0, right: 18),
+                                        leading: Container(
+                                          width: 32.0,
+                                          height: 32.0,
+                                          padding: EdgeInsets.all(2.0),
+                                          decoration: BoxDecoration(
+                                            color: data.colorName,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: CircleAvatar(
+                                              radius: 14.0,
+                                              backgroundImage: AssetImage(
+                                                  'img/images/jitendra.jpeg')),
+                                        ),
+                                        title: Text(
+                                          data.name,
+                                          style: TextStyle(
+                                              fontSize: 15.2,
+                                              color: Colors.black),
+                                        ),
+                                        trailing: data.checked
+                                            ? Icon(
+                                                Icons.check,
+                                                color: Colors.blue[400],
+                                              )
+                                            : null,
+                                        onTap: () {
+                                          setState(() {
+                                            data.checked = !data.checked;
+                                          });
+                                          listData(data, context);
+                                          Navigator.of(context).pop();
+                                        },
+                                      );
+                                    }),
+                              ),
+                            ),
                     ),
                   ],
                 ),

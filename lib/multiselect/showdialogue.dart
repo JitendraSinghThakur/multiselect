@@ -126,8 +126,8 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
+          backgroundColor: Color(0xffEEEEEE),
           insetPadding: EdgeInsets.all(0),
-          // backgroundColor: Colors.grey[100],
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(25.0))),
           content: Builder(
@@ -136,12 +136,18 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
               var width = MediaQuery.of(context).size.width * .95;
 
               return Container(
+                decoration: BoxDecoration(
+                  color: Color(0xffEEEEEE),
+                ),
                 height: height,
                 width: width - 80,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xffEEEEEE),
+                      ),
                       child: Column(
                         children: [
                           Container(
@@ -208,18 +214,21 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                           },
                                           child: isChecked
                                               ? Icon(
-                                                  Icons.check_box,
+                                                  Icons.check_box_rounded,
+                                                  size: 25,
                                                   color: chechIcons,
                                                 )
                                               : count == 0
                                                   ? Icon(
                                                       Icons
-                                                          .check_box_outline_blank_outlined,
+                                                          .check_box_outline_blank_rounded,
+                                                      size: 25,
                                                       color: chechIcons,
                                                     )
                                                   : Icon(
                                                       Icons
-                                                          .indeterminate_check_box,
+                                                          .indeterminate_check_box_rounded,
+                                                      size: 25,
                                                       color: chechIcons,
                                                     ),
                                         ),
@@ -233,76 +242,96 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                     Expanded(
                       child: newDataList.length == 0
                           ? Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: Text(
-                                  "No records found",
-                                  style: TextStyle(
-                                      color: Colors.black38,
-                                      fontSize: 14,
-                                      letterSpacing: 1),
-                                ),
+                              child: Text(
+                                "No records found",
+                                style: TextStyle(
+                                    color: Colors.black38,
+                                    fontSize: 14,
+                                    letterSpacing: 1),
                               ),
                             )
-                          : ListView.builder(
-                              itemCount: newDataList.length,
-                              itemBuilder: (context, index) {
-                                var data = newDataList[index];
+                          : Padding(
+                              padding: const EdgeInsets.only(
+                                top: 12.0,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ListView.builder(
+                                      itemCount: newDataList.length,
+                                      itemBuilder: (context, index) {
+                                        var data = newDataList[index];
 
-                                return ListTile(
-                                  dense: true,
-                                  contentPadding:
-                                      EdgeInsets.only(left: 0.0, right: 18),
-                                  leading: Container(
-                                    width: 32.0,
-                                    height: 32.0,
-                                    padding: EdgeInsets.all(2.0),
-                                    decoration: BoxDecoration(
-                                      color: data.colorName,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: CircleAvatar(
-                                        radius: 14.0,
-                                        backgroundImage: AssetImage(
-                                            'img/images/jitendra.jpeg')),
-                                  ),
-                                  title: Text(
-                                    data.name,
-                                    style: TextStyle(
-                                        fontSize: 15.2, color: Colors.black),
-                                  ),
-                                  trailing: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        data.checked = !data.checked;
-                                      });
-                                      listData(data, context);
-                                    },
-                                    child: data.checked
-                                        ? Icon(
-                                            Icons.check_box,
-                                            color: chechIcons,
-                                          )
-                                        : Icon(
-                                            Icons.check_box_outline_blank,
-                                            color: chechIcons,
+                                        return ListTile(
+                                          dense: true,
+                                          contentPadding: EdgeInsets.only(
+                                              left: 0.0, right: 10),
+                                          leading: Container(
+                                            width: 32.0,
+                                            height: 32.0,
+                                            padding: EdgeInsets.all(2.0),
+                                            decoration: BoxDecoration(
+                                              color: data.colorName,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: CircleAvatar(
+                                                radius: 14.0,
+                                                backgroundImage: AssetImage(
+                                                    'img/images/jitendra.jpeg')),
                                           ),
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      data.checked = !data.checked;
-                                    });
-                                    listData(data, context);
-                                  },
-                                );
-                              }),
+                                          title: Text(
+                                            data.name,
+                                            style: TextStyle(
+                                                fontSize: 15.2,
+                                                color: Colors.black),
+                                          ),
+                                          trailing: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                data.checked = !data.checked;
+                                              });
+                                              listData(data, context);
+                                            },
+                                            child: data.checked
+                                                ? Icon(
+                                                    Icons.check_box_rounded,
+                                                    size: 25,
+                                                    color: chechIcons,
+                                                  )
+                                                : Icon(
+                                                    Icons
+                                                        .check_box_outline_blank_rounded,
+                                                    size: 25,
+                                                    color: chechIcons,
+                                                  ),
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              data.checked = !data.checked;
+                                            });
+                                            listData(data, context);
+                                          },
+                                        );
+                                      }),
+                                ),
+                              ),
+                            ),
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.grey, width: 0.4)),
+                        color: Color(0xffEEEEEE),
+                        // border: Border(
+                        //     top: BorderSide(color: Colors.grey, width: 5)),
                       ),
                       child: Material(
+                        color: Color(0xffEEEEEE),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Row(
