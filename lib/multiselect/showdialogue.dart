@@ -208,7 +208,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 child: newDataList.length == 0 || user2
                                     ? Container()
                                     : Container(
-                                        // padding: EdgeInsets.only(left: 5),
+                                        padding: EdgeInsets.only(left: 15),
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
@@ -288,7 +288,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                             child: CircleAvatar(
                                                 radius: 14.0,
                                                 backgroundImage: AssetImage(
-                                                    'img/images/jitendra.jpeg')),
+                                                    'c')),
                                           ),
                                           title: Text(
                                             data.name,
