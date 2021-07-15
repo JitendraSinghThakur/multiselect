@@ -97,20 +97,95 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                 ],
               ),
             ),
+
+            // Container(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            //       Container(
+            //           child: Center(
+            //         child: Expanded(
+            //           child: ListView(
+            //             padding: EdgeInsets.zero,
+            //             shrinkWrap: true,
+            //             scrollDirection: Axis.vertical,
+            //             children: drawerDataList.map((data) {
+            //               return ListTile(
+            //                 visualDensity:
+            //                     VisualDensity(horizontal: 0, vertical: -4),
+            //                 dense: true,
+            //                 leading: Icon(
+            //                   data.iconName,
+            //                   size: 16,
+            //                 ),
+            //                 title: Transform.translate(
+            //                   offset: Offset(-22, 0),
+            //                   child: Text(
+            //                     data.name,
+            //                     style: TextStyle(fontSize: 12),
+            //                   ),
+            //                 ),
+            //               );
+            //             }).toList(),
+            //           ),
+            //         ),
+            //       )),
+            //       Container(
+            //           color: Colors.white,
+            //           child: Center(
+            //             child: Expanded(
+            //               child: ListView(
+            //                 padding: EdgeInsets.zero,
+            //                 shrinkWrap: true,
+            //                 scrollDirection: Axis.vertical,
+            //                 children: drawerDataList.map((data) {
+            //                   return ListTile(
+            //                     visualDensity:
+            //                         VisualDensity(horizontal: 0, vertical: -4),
+            //                     dense: true,
+            //                     leading: Icon(
+            //                       data.iconName,
+            //                       size: 16,
+            //                     ),
+            //                     title: Transform.translate(
+            //                       offset: Offset(-22, 0),
+            //                       child: Text(
+            //                         data.name,
+            //                         style: TextStyle(fontSize: 12),
+            //                       ),
+            //                     ),
+            //                   );
+            //                 }).toList(),
+            //               ),
+            //             ),
+            //           )),
+            //       Container(
+            //           color: Colors.green,
+            //           child: Center(
+            //             child: Text("Widget3"),
+            //           ))
+            //     ],
+            //   ),
+            // ),
+
             Expanded(
               child: ListView(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
-                children: mainDataList.map((data) {
+                children: drawerDataList.map((data) {
                   return data.name == "Divider"
                       ? Divider(
                           height: 10,
                           thickness: 2,
                         )
                       : ListTile(
-                          contentPadding: EdgeInsets.only(
-                              top: 0, bottom: 0, left: 12, right: 0),
+                          // contentPadding: EdgeInsets.only(
+                          //     top: 0, bottom: 0, left: 12, right: 0),
+                          // contentPadding: EdgeInsets.symmetric(
+                          //     vertical: -100.0, horizontal: 10.0),
+                          visualDensity:
+                              VisualDensity(horizontal: 0, vertical: -4),
                           dense: true,
                           leading: Icon(
                             data.iconName,

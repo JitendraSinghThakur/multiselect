@@ -1,5 +1,4 @@
-import 'package:demoapp/customeDrawer/customedrawer.dart';
-
+import '../customeDrawer/customedrawer.dart';
 import '../quickactionsheet/quicksheet.dart';
 import '../singleselect/singleselect.dart';
 import 'package:flutter/material.dart';

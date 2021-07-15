@@ -9,7 +9,7 @@ class DrawerList {
   DrawerList(this.id, this.name, this.iconName, this.colorName);
 }
 
-List<DrawerList> drawerDataList = [
+List<DrawerList> drawerDataListColors = [
   new DrawerList(1, "Home", Icons.home, Colors.red),
   new DrawerList(2, "My Daily Plan", Icons.summarize, Colors.yellow),
   new DrawerList(3, "Clock In", Icons.watch_later_outlined, Colors.purple),
