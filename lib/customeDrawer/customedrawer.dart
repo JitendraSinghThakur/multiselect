@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'drawerlist.dart';
+import 'drawerlistColors.dart';
+import 'drawerstatic.dart';
 
 class CustomeDrawer extends StatefulWidget {
   @override
@@ -98,110 +100,155 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
               ),
             ),
 
-            // Container(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: <Widget>[
-            //       Container(
-            //           child: Center(
-            //         child: Expanded(
-            //           child: ListView(
-            //             padding: EdgeInsets.zero,
-            //             shrinkWrap: true,
-            //             scrollDirection: Axis.vertical,
-            //             children: drawerDataList.map((data) {
-            //               return ListTile(
-            //                 visualDensity:
-            //                     VisualDensity(horizontal: 0, vertical: -4),
-            //                 dense: true,
-            //                 leading: Icon(
-            //                   data.iconName,
-            //                   size: 16,
-            //                 ),
-            //                 title: Transform.translate(
-            //                   offset: Offset(-22, 0),
-            //                   child: Text(
-            //                     data.name,
-            //                     style: TextStyle(fontSize: 12),
-            //                   ),
-            //                 ),
-            //               );
-            //             }).toList(),
-            //           ),
-            //         ),
-            //       )),
-            //       Container(
-            //           color: Colors.white,
-            //           child: Center(
-            //             child: Expanded(
-            //               child: ListView(
-            //                 padding: EdgeInsets.zero,
-            //                 shrinkWrap: true,
-            //                 scrollDirection: Axis.vertical,
-            //                 children: drawerDataList.map((data) {
-            //                   return ListTile(
-            //                     visualDensity:
-            //                         VisualDensity(horizontal: 0, vertical: -4),
-            //                     dense: true,
-            //                     leading: Icon(
-            //                       data.iconName,
-            //                       size: 16,
-            //                     ),
-            //                     title: Transform.translate(
-            //                       offset: Offset(-22, 0),
-            //                       child: Text(
-            //                         data.name,
-            //                         style: TextStyle(fontSize: 12),
-            //                       ),
-            //                     ),
-            //                   );
-            //                 }).toList(),
-            //               ),
-            //             ),
-            //           )),
-            //       Container(
-            //           color: Colors.green,
-            //           child: Center(
-            //             child: Text("Widget3"),
-            //           ))
-            //     ],
-            //   ),
-            // ),
-
             Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                children: drawerDataList.map((data) {
-                  return data.name == "Divider"
-                      ? Divider(
-                          height: 10,
-                          thickness: 2,
-                        )
-                      : ListTile(
-                          // contentPadding: EdgeInsets.only(
-                          //     top: 0, bottom: 0, left: 12, right: 0),
-                          // contentPadding: EdgeInsets.symmetric(
-                          //     vertical: -100.0, horizontal: 10.0),
-                          visualDensity:
-                              VisualDensity(horizontal: 0, vertical: -4),
-                          dense: true,
-                          leading: Icon(
-                            data.iconName,
-                            size: 16,
-                          ),
-                          title: Transform.translate(
-                            offset: Offset(-22, 0),
-                            child: Text(
-                              data.name,
-                              style: TextStyle(fontSize: 12),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: drawerDataList.map((data) {
+                        return Container(
+                          padding: EdgeInsets.only(top: 10, left: 15),
+                          child: Row(children: [
+                            Icon(
+                              data.iconName,
+                              size: 16,
+                              color: Colors.black45,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 13.0),
+                              child: Text(
+                                data.name,
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ]),
+                        );
+                      }).toList(),
+                    ),
+                    Divider(
+                      height: 10,
+                      thickness: 2,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 18.0, top: 10, bottom: 10),
+                        child: Text(
+                          "WorkFlow",
+                          style: TextStyle(fontSize: 18, letterSpacing: 0),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: drawerDataListColors.map((data) {
+                        return Container(
+                          height: 30,
+                          margin: EdgeInsets.only(bottom: 3),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              left: BorderSide(color: data.colorName, width: 2),
                             ),
                           ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 18.0, right: 15),
+                                child: Text(data.name,
+                                    style: TextStyle(fontSize: 13)),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    color: data.colorName,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50))),
+                                child: Text(
+                                  "10",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
+                                ),
+                              ),
+                            ],
+                          ),
                         );
-                }).toList(),
+                      }).toList(),
+                    ),
+                    Divider(
+                      height: 10,
+                      thickness: 2,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: drawerDataListStatic.map((data) {
+                        return Container(
+                          padding: EdgeInsets.only(top: 10, left: 15),
+                          child: Row(children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  data.iconName,
+                                  size: 16,
+                                  color: Colors.black45,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 13.0),
+                                  child: Text(
+                                    data.name,
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ]),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
               ),
             ),
+
+            // Expanded(
+            //   child: ListView(
+            //     padding: EdgeInsets.zero,
+            //     shrinkWrap: true,
+            //     scrollDirection: Axis.vertical,
+            //     children: drawerDataList.map((data) {
+            //       return data.name == "Divider"
+            //           ? Divider(
+            //               height: 10,
+            //               thickness: 2,
+            //             )
+            //           : ListTile(
+            //               // contentPadding: EdgeInsets.only(
+            //               //     top: 0, bottom: 0, left: 12, right: 0),
+            //               // contentPadding: EdgeInsets.symmetric(
+            //               //     vertical: -100.0, horizontal: 10.0),
+            //               visualDensity:
+            //                   VisualDensity(horizontal: 0, vertical: -4),
+            //               dense: true,
+            //               leading: Icon(
+            //                 data.iconName,
+            //                 size: 16,
+            //               ),
+            //               title: Transform.translate(
+            //                 offset: Offset(-22, 0),
+            //                 child: Text(
+            //                   data.name,
+            //                   style: TextStyle(fontSize: 12),
+            //                 ),
+            //               ),
+            //             );
+            //     }).toList(),
+            //   ),
+            // ),
           ],
         ),
       ),

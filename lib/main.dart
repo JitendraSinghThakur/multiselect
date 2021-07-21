@@ -1,3 +1,6 @@
+import 'package:demoapp/workflow/tringle.dart';
+
+import '../workflow/workflowpage.dart';
 import '../customeDrawer/customedrawer.dart';
 import '../quickactionsheet/quicksheet.dart';
 import '../singleselect/singleselect.dart';
@@ -18,9 +21,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-      home: const Home(
-        title: "PopOver",
-      ),
+      // home: const Home(
+      //   title: "PopOver",
+      // ),
+      routes: {
+        "/": (context) => Home(title: "Popover"),
+        "/workflowpage": (context) => WorkFlowPage(),
+        "/tringlepage": (context) => StackAndPositionedDemo(),
+      },
     );
   }
 }
@@ -76,6 +84,22 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.only(top: 18.0),
                     child: QuichActionSheet(),
                   ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/workflowpage');
+                      },
+                      child: Text("Open WorkFlow"),
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/tringlepage');
+                      },
+                      child: Text("Open trinagle"),
+                    ),
+                  )
                 ],
               ),
             ),
