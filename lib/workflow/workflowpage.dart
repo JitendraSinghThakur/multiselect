@@ -1,4 +1,6 @@
 // import '../customeDrawer/customedrawer.dart';
+
+import '../customeDrawer/drawerlistColors.dart';
 import 'package:flutter/material.dart';
 
 class WorkFlowPage extends StatefulWidget {
@@ -9,6 +11,7 @@ class WorkFlowPage extends StatefulWidget {
 }
 
 class _WorkFlowPageState extends State<WorkFlowPage> {
+  var colorName = "selected";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,397 +25,213 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: [
-            Container(
-              width: 200,
-              height: 200,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    margin: EdgeInsets.only(top: 20),
-                    width: 155,
-                    height: 55,
-                    child: Center(
-                        child: Text(
-                      "Stage 1",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0,
-                          fontSize: 20),
-                    )),
-                  ),
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: drawerDataListColors.map((data) {
+            return data.selectedBox == colorName
+                ? Container(
+                    margin: EdgeInsets.zero,
+                    width: 200,
+                    height: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.zero,
+                          child: ClipPath(
+                            clipper: ClipperStack(),
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: data.colorName,
+                                  border: Border.all(color: data.colorName)
+                                  // borderRadius: BorderRadius.all(
+                                  //   Radius.circular(5),
+                                  // )
+                                  ),
+                              // width: 200,
+                              height: 65,
+                              // color: data.colorName,
+                              child: Text(
+                                data.name,
+                                // maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Container(
-                        width: 20,
-                        height: 20,
-                        decoration: new BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        )),
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
+                        Row(children: [
+                          Expanded(
+                            child: Container(
+                              child: Divider(
+                                color: data.colorName,
+                                height: 50,
+                                thickness: 3,
+                              ),
+                            ),
+                          ),
+                          Container(
+                              width: 20,
+                              height: 20,
+                              decoration: new BoxDecoration(
+                                border: Border.all(color: data.colorName),
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              )),
+                          Expanded(
+                            child: Container(
+                              child: Divider(
+                                color: data.colorName,
+                                height: 50,
+                                thickness: 3,
+                              ),
+                            ),
+                          ),
+                        ]),
+                        Center(child: Text("Move")),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              size: 16,
+                            ),
+                            Text("03/15/2021")
+                          ],
                         ),
-                      ),
+                      ],
                     ),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text("Completed"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        size: 16,
-                      ),
-                      Text("03/15/2021")
-                    ],
                   )
-                ],
-              ),
-            ),
-            Container(
-              width: 200,
-              height: 200,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.amberAccent,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    margin: EdgeInsets.only(top: 20),
-                    width: 155,
-                    height: 55,
-                    child: Center(
-                        child: Text(
-                      "Stage 2",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0,
-                          fontSize: 20),
-                    )),
-                  ),
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
+                : Container(
+                    margin: EdgeInsets.zero,
+                    width: 200,
+                    height: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.zero,
+                          child: ClipPath(
+                            clipper: ClipperStack(),
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: data.colorName,
+                                // borderRadius: BorderRadius.all(
+                                //   Radius.circular(5),
+                                // )
+                              ),
+                              // width: 200,
+                              height: 65,
+                              // color: data.colorName,
+                              child: Text(
+                                data.name,
+                                // maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 1),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Container(
-                        width: 20,
-                        height: 20,
-                        decoration: new BoxDecoration(
-                          color: Colors.amberAccent,
-                          shape: BoxShape.circle,
-                        )),
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
+                        Row(children: [
+                          Expanded(
+                            child: Container(
+                              child: Divider(
+                                color: Colors.grey,
+                                height: 50,
+                                thickness: 3,
+                              ),
+                            ),
+                          ),
+                          Container(
+                              width: 20,
+                              height: 20,
+                              decoration: new BoxDecoration(
+                                color: data.colorName,
+                                shape: BoxShape.circle,
+                              )),
+                          Expanded(
+                            child: Container(
+                              child: Divider(
+                                color: Colors.grey,
+                                height: 50,
+                                thickness: 3,
+                              ),
+                            ),
+                          ),
+                        ]),
+                        Center(child: Text("Completed")),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              size: 16,
+                            ),
+                            Text("03/15/2021")
+                          ],
                         ),
-                      ),
+                      ],
                     ),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text("Completed"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        size: 16,
-                      ),
-                      Text("03/15/2021")
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: 200,
-              height: 200,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.greenAccent,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    margin: EdgeInsets.only(top: 20),
-                    width: 155,
-                    height: 55,
-                    child: Center(
-                        child: Text(
-                      "Stage 3",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0,
-                          fontSize: 20),
-                    )),
-                  ),
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
-                        ),
-                      ),
-                    ),
-                    Container(
-                        width: 20,
-                        height: 20,
-                        decoration: new BoxDecoration(
-                          color: Colors.greenAccent,
-                          shape: BoxShape.circle,
-                        )),
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
-                        ),
-                      ),
-                    ),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text("Completed"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        size: 16,
-                      ),
-                      Text("03/15/2021")
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: 200,
-              height: 200,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    margin: EdgeInsets.only(top: 20),
-                    width: 155,
-                    height: 55,
-                    child: Center(
-                        child: Text(
-                      "Stage 4",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0,
-                          fontSize: 20),
-                    )),
-                  ),
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
-                        ),
-                      ),
-                    ),
-                    Container(
-                        width: 20,
-                        height: 20,
-                        decoration: new BoxDecoration(
-                          color: Colors.blueAccent,
-                          shape: BoxShape.circle,
-                        )),
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
-                        ),
-                      ),
-                    ),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text("Completed"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        size: 16,
-                      ),
-                      Text("03/15/2021")
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: 200,
-              height: 200,
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.brown,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    margin: EdgeInsets.only(top: 20),
-                    width: 155,
-                    height: 55,
-                    child: Center(
-                        child: Text(
-                      "Stage 5",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0,
-                          fontSize: 20),
-                    )),
-                  ),
-                  Row(children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
-                        ),
-                      ),
-                    ),
-                    Container(
-                        width: 20,
-                        height: 20,
-                        decoration: new BoxDecoration(
-                          color: Colors.brown,
-                          shape: BoxShape.circle,
-                        )),
-                    Expanded(
-                      child: Container(
-                        child: Divider(
-                          color: Colors.grey,
-                          height: 50,
-                          thickness: 3,
-                        ),
-                      ),
-                    ),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text("Completed"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        size: 16,
-                      ),
-                      Text("03/15/2021")
-                    ],
-                  )
-                ],
-              ),
-            ),
-            // Container(
-            //   width: 200,
-            //   height: 200,
-            //   child: Stack(
-            //     children: <Widget>[
-            //       Positioned(
-            //         child: Container(
-            //           decoration: BoxDecoration(
-            //               color: Colors.green,
-            //               borderRadius: BorderRadius.all(Radius.circular(5))),
-            //           height: 55,
-            //           width: 155,
-            //           margin: EdgeInsets.only(top: 20),
-            //           child: Center(
-            //             child: Text(
-            //               'Green',
-            //               style: TextStyle(color: Colors.white, fontSize: 20),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //       Positioned(
-            //         top: 60,
-            //         left: 60,
-            //         width: 40,
-            //         height: 40,
-            //         child: Transform.rotate(
-            //           angle: 1,
-            //           child: CustomPaint(
-            //             painter: TrianglePainter(),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-          ],
+                  );
+          }).toList(),
         ),
       ),
     );
   }
 }
 
-class TrianglePainter extends CustomPainter {
+class ClipperStack extends CustomClipper<Path> {
   @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.green
-      ..strokeWidth = 2
-      ..style = PaintingStyle.fill;
+  Path getClip(Size size) {
+    Path path = Path();
 
-    final path = Path();
-    path.moveTo(size.width * 1 / 2, size.height * 1 / 4);
-    path.lineTo(size.width * 1.1 / 6, size.height * 3 / 4);
-    path.lineTo(size.width * 5 / 6, size.height * 3 / 4);
-    path.close();
+    path.moveTo(5, 0.0);
+    // path.lineTo(0.0, 5);
+    path.arcToPoint(Offset(0, 5), radius: Radius.circular(5), clockwise: false);
+    path.lineTo(0.0, size.height - 25);
+    path.arcToPoint(Offset(5, size.height - 20),
+        radius: Radius.circular(5), clockwise: false);
 
-    canvas.drawPath(path, paint);
+    path.lineTo((size.width / 2) - 10, size.height - 20);
+    path.lineTo(size.width / 2, size.height);
+
+    path.lineTo(
+      (size.width / 2) + 10,
+      size.height - 20,
+    );
+
+    // path.lineTo(size.width, size.height - 20);
+    // path.arcToPoint(Offset(0, 5), radius: Radius.circular(5), clockwise: false);
+
+    // path.moveTo(radius, 0.0);
+    // path.arcToPoint(Offset(0.0, radius),
+    //     clockwise: false, radius: Radius.circular(radius));
+    // path.lineTo(0.0, size.height - radius);
+    // path.arcToPoint(Offset(radius, size.height),
+    //     clockwise: false, radius: Radius.circular(radius));
+
+    path.lineTo(size.width - 20, size.height - 20);
+    path.arcToPoint(Offset(size.width, 10),
+        clockwise: false, radius: Radius.circular(5));
+
+    path.lineTo(size.width, 5);
+    path.arcToPoint(Offset(size.width - 5, 0.0),
+        clockwise: false, radius: Radius.circular(5));
+
+    return path;
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

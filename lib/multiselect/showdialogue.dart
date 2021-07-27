@@ -288,7 +288,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                             child: CircleAvatar(
                                                 radius: 14.0,
                                                 backgroundImage: AssetImage(
-                                                    'c')),
+                                                    'img/images/jitendra.jpeg')),
                                           ),
                                           title: Text(
                                             data.name,
