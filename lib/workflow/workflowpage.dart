@@ -11,7 +11,7 @@ class WorkFlowPage extends StatefulWidget {
 }
 
 class _WorkFlowPageState extends State<WorkFlowPage> {
-  var colorName = "selected";
+  var colorName = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

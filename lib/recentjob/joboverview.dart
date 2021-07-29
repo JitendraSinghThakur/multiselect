@@ -15,31 +15,26 @@ class _JobOverviewState extends State<JobOverview> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 10),
-          padding: EdgeInsets.all(6),
-          color: Color(0xffCCCCCC),
+          padding: EdgeInsets.all(4),
+          color: Color.fromARGB(255, 238, 238, 238),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "JOB OVERVIEW",
                 style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: .5),
+                    color: Color.fromARGB(255, 196, 28, 26), letterSpacing: .5),
               ),
               Container(
                 padding:
                     EdgeInsets.only(top: 3, bottom: 3, left: 10, right: 10),
                 decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Color.fromARGB(255, 196, 28, 26),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Text(
                   "VIEW MORE",
                   style: TextStyle(
-                      color: Colors.white,
-                      letterSpacing: .5,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 12),
+                      color: Colors.white, letterSpacing: .5, fontSize: 12),
                 ),
               ),
             ],
@@ -75,8 +70,10 @@ class _JobOverviewState extends State<JobOverview> {
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             border: Border(
-              top: BorderSide(color: Color(0xffCCCCCC), width: 2),
-              bottom: BorderSide(color: Color(0xffCCCCCC), width: 2),
+              top: BorderSide(
+                  color: Color.fromARGB(206, 206, 206, 255), width: 2),
+              bottom: BorderSide(
+                  color: Color.fromARGB(206, 206, 206, 255), width: 2),
             ),
           ),
           child: Row(
@@ -86,7 +83,7 @@ class _JobOverviewState extends State<JobOverview> {
                 padding: EdgeInsets.all(3),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 60, 135, 171),
                 ),
                 child: Row(
                   children: [

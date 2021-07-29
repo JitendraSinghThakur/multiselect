@@ -1,6 +1,4 @@
 import 'package:demoapp/recentjob/recentmain.dart';
-
-import '../workflow/regtanglebuble.dart';
 import '../workflow/workflowpage.dart';
 import '../customeDrawer/customedrawer.dart';
 import '../quickactionsheet/quicksheet.dart';
@@ -28,7 +26,6 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => Home(title: "Popover"),
         "/workflowpage": (context) => WorkFlowPage(),
-        "/rectangle": (context) => LinePaintPage(),
         "/recentjob": (context) => RecentMain(),
       },
     );
@@ -92,14 +89,6 @@ class _HomeState extends State<Home> {
                         Navigator.pushNamed(context, '/workflowpage');
                       },
                       child: Text("Open WorkFlow"),
-                    ),
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/rectangle');
-                      },
-                      child: Text("Open Bubble"),
                     ),
                   ),
                   Center(

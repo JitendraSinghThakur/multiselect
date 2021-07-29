@@ -10,21 +10,19 @@ class BoxContainer extends StatefulWidget {
 class _BoxContainerState extends State<BoxContainer> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 80,
+            padding: EdgeInsets.all(4),
             color: Color(0xffE5E4E2),
             child: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(
-                    Icons.chat,
-                    size: 20,
-                  ),
+                  Icon(Icons.chat,
+                      size: 20, color: Color(0xFF0E3311).withOpacity(0.5)),
                   SizedBox(
                     width: 20,
                   ),
@@ -40,7 +38,10 @@ class _BoxContainerState extends State<BoxContainer> {
               )
             ]),
           ),
-          Container(
+        ),
+        Expanded(
+          child: Container(
+            height: 80,
             padding: EdgeInsets.all(10),
             color: Color(0xffE3F8FB),
             child: Column(children: [
@@ -48,8 +49,9 @@ class _BoxContainerState extends State<BoxContainer> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(
-                    Icons.chat,
+                    Icons.app_blocking_outlined,
                     size: 20,
+                    color: Color(0xFF0E3311).withOpacity(0.5),
                   ),
                   SizedBox(
                     width: 20,
@@ -66,17 +68,19 @@ class _BoxContainerState extends State<BoxContainer> {
               )
             ]),
           ),
-          Container(
+        ),
+        Expanded(
+          flex: 2,
+          child: Container(
+            height: 80,
             padding: EdgeInsets.all(10),
             color: Color(0xffFFF5F4),
             child: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.chat,
-                    size: 20,
-                  ),
+                  Icon(Icons.calendar_today,
+                      size: 20, color: Color(0xFF0E3311).withOpacity(0.5)),
                   SizedBox(
                     width: 20,
                   ),
@@ -92,17 +96,18 @@ class _BoxContainerState extends State<BoxContainer> {
               )
             ]),
           ),
-          Container(
+        ),
+        Expanded(
+          child: Container(
+            height: 80,
             padding: EdgeInsets.all(10),
             color: Color(0xffF5F5DB),
             child: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.chat,
-                    size: 20,
-                  ),
+                  Icon(Icons.note_add_outlined,
+                      size: 20, color: Color(0xFF0E3311).withOpacity(0.5)),
                   SizedBox(
                     width: 20,
                   ),
@@ -118,17 +123,18 @@ class _BoxContainerState extends State<BoxContainer> {
               )
             ]),
           ),
-          Container(
+        ),
+        Expanded(
+          child: Container(
+            height: 80,
             padding: EdgeInsets.all(10),
             color: Color(0xffECDDE2),
             child: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.chat,
-                    size: 20,
-                  ),
+                  Icon(Icons.check_box_outlined,
+                      size: 20, color: Color(0xFF0E3311).withOpacity(0.5)),
                   SizedBox(
                     width: 20,
                   ),
@@ -144,8 +150,8 @@ class _BoxContainerState extends State<BoxContainer> {
               )
             ]),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
