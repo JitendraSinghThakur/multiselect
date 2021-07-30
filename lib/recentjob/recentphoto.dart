@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class RecentPhotoFile extends StatefulWidget {
@@ -22,7 +24,9 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
               Text(
                 "RECENT PHOTOS & DOCUMENTS",
                 style: TextStyle(
-                    color: Color.fromARGB(255, 196, 28, 26), letterSpacing: .5),
+                    color: Color.fromARGB(255, 196, 28, 26),
+                    letterSpacing: .5,
+                    fontSize: 16),
               ),
               Container(
                 padding:
@@ -33,47 +37,74 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
                 child: Text(
                   "VIEW ALL",
                   style: TextStyle(
-                      color: Colors.white, letterSpacing: .5, fontSize: 12),
+                      color: Colors.white,
+                      letterSpacing: 0,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             ],
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.zero,
-                  padding: EdgeInsets.zero,
-                  child: Image.asset(
-                    'img/images/sss.png',
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  Card(
+                    child: Container(
+                      width: 200,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset('img/images/sss.png')),
+                    ),
                   ),
-                ),
-                Positioned(top: 160, left: 90, child: Text("file 1"))
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.zero,
-                  padding: EdgeInsets.zero,
-                  child: Image.asset(
-                    'img/images/sss.png',
-                    width: 200,
-                    height: 200,
-                    fit: BoxFit.cover,
+                  // Container(
+                  //     margin: EdgeInsets.zero,
+                  //     color: Colors.grey,
+                  //     width: 200,
+                  //     height: 25,
+                  //     child: Center(child: Text('File 1'))),
+                ],
+              ),
+              Column(
+                children: [
+                  Card(
+                    child: Container(
+                      width: 200,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset('img/images/sss.png')),
+                    ),
                   ),
-                ),
-                Positioned(top: 160, left: 90, child: Text("file 2"))
-              ],
-            ),
-          ],
-        ),
+                  // Container(
+                  //     margin: EdgeInsets.zero,
+                  //     color: Colors.red,
+                  //     width: 200,
+                  //     child: Center(child: Text('File 2'))),
+                ],
+              ),
+              Column(
+                children: [
+                  Card(
+                    child: Container(
+                      width: 200,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset('img/images/sss.png')),
+                    ),
+                  ),
+                  // Container(
+                  //     margin: EdgeInsets.zero,
+                  //     color: Colors.red,
+                  //     width: 200,
+                  //     child: Center(child: Text('File3'))),
+                ],
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

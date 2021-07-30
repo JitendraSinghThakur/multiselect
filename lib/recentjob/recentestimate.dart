@@ -22,7 +22,9 @@ class _RecentEstimateState extends State<RecentEstimate> {
               Text(
                 "RECENT ESTIMATES",
                 style: TextStyle(
-                    color: Color.fromARGB(255, 196, 28, 26), letterSpacing: .5),
+                    color: Color.fromARGB(255, 196, 28, 26),
+                    letterSpacing: .5,
+                    fontSize: 16),
               ),
               Row(children: [
                 Container(
@@ -47,7 +49,10 @@ class _RecentEstimateState extends State<RecentEstimate> {
                   child: Text(
                     "VIEW ALL",
                     style: TextStyle(
-                        color: Colors.white, letterSpacing: .5, fontSize: 12),
+                         color: Colors.white,
+                      letterSpacing: 0,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700),
                   ),
                 ),
               ]),
@@ -57,7 +62,13 @@ class _RecentEstimateState extends State<RecentEstimate> {
         Container(
           height: 200,
           child: Align(
-            child: Text("NO estimate found"),
+            child: Text(
+              "NO estimate found",
+              style: TextStyle(
+                color: Color(0xff666666),
+                fontSize: 18,
+              ),
+            ),
           ),
         ),
       ],

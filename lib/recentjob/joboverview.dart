@@ -23,7 +23,9 @@ class _JobOverviewState extends State<JobOverview> {
               Text(
                 "JOB OVERVIEW",
                 style: TextStyle(
-                    color: Color.fromARGB(255, 196, 28, 26), letterSpacing: .5),
+                    color: Color.fromARGB(255, 196, 28, 26),
+                    letterSpacing: .5,
+                    fontSize: 16),
               ),
               Container(
                 padding:
@@ -34,14 +36,17 @@ class _JobOverviewState extends State<JobOverview> {
                 child: Text(
                   "VIEW MORE",
                   style: TextStyle(
-                      color: Colors.white, letterSpacing: .5, fontSize: 12),
+                      color: Colors.white,
+                      letterSpacing: 0,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             ],
           ),
         ),
         Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(15),
           child: Column(
             children: [
               Align(
@@ -51,7 +56,8 @@ class _JobOverviewState extends State<JobOverview> {
                     child: Text(
                       "Description",
                       style: TextStyle(
-                          fontSize: 16,
+                          color: Color(0xff444444),
+                          fontSize: 18,
                           fontWeight: FontWeight.w400,
                           letterSpacing: 1),
                     ),
@@ -60,7 +66,8 @@ class _JobOverviewState extends State<JobOverview> {
                   alignment: Alignment.topLeft,
                   child: Text("XZSx",
                       style: TextStyle(
-                          fontSize: 16,
+                          color: Color(0xff444444),
+                          fontSize: 18,
                           fontWeight: FontWeight.w300,
                           letterSpacing: 1)))
             ],

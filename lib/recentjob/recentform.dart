@@ -22,7 +22,9 @@ class _RecentFormsState extends State<RecentForms> {
               Text(
                 "RECENT PHOTOS & DOCUMENTS",
                 style: TextStyle(
-                    color: Color.fromARGB(255, 196, 28, 26), letterSpacing: .5),
+                    color: Color.fromARGB(255, 196, 28, 26),
+                    letterSpacing: .5,
+                    fontSize: 16),
               ),
               Container(
                 padding:
@@ -33,7 +35,10 @@ class _RecentFormsState extends State<RecentForms> {
                 child: Text(
                   "VIEW ALL",
                   style: TextStyle(
-                      color: Colors.white, letterSpacing: .5, fontSize: 12),
+                       color: Colors.white,
+                      letterSpacing: 0,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700),
                 ),
               ),
             ],
@@ -42,7 +47,13 @@ class _RecentFormsState extends State<RecentForms> {
         Container(
           height: 200,
           child: Align(
-            child: Text("NO form/proposal found"),
+            child: Text(
+              "NO form/proposal found",
+              style: TextStyle(
+                color: Color(0xff666666),
+                fontSize: 18,
+              ),
+            ),
           ),
         ),
       ],
