@@ -12,6 +12,7 @@ class _BoxContainerState extends State<BoxContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 20),
       child: Row(
         children: [
           Expanded(
@@ -27,9 +28,6 @@ class _BoxContainerState extends State<BoxContainer> {
                       children: [
                         Icon(CupertinoIcons.chat_bubble,
                             size: 24, color: Color(0xff888888)),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .001,
-                        ),
                         Text(
                           "1",
                           style:
@@ -42,7 +40,7 @@ class _BoxContainerState extends State<BoxContainer> {
                     margin: EdgeInsets.only(top: 25, bottom: 10),
                     child: Center(
                       child: Text(
-                        "Message1",
+                        "Message",
                         style:
                             TextStyle(fontSize: 15, color: Color(0xff888888)),
                       ),
@@ -63,11 +61,8 @@ class _BoxContainerState extends State<BoxContainer> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(CupertinoIcons.chat_bubble,
+                        Icon(Icons.mobile_screen_share,
                             size: 24, color: Color(0xff888888)),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .001,
-                        ),
                         Text(
                           "1",
                           style:
@@ -80,7 +75,7 @@ class _BoxContainerState extends State<BoxContainer> {
                     margin: EdgeInsets.only(top: 25, bottom: 10),
                     child: Center(
                       child: Text(
-                        "Message2",
+                        "Texts",
                         style:
                             TextStyle(fontSize: 15, color: Color(0xff888888)),
                       ),
@@ -101,11 +96,8 @@ class _BoxContainerState extends State<BoxContainer> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(CupertinoIcons.chat_bubble,
+                        Icon(CupertinoIcons.calendar,
                             size: 24, color: Color(0xff888888)),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .001,
-                        ),
                         Text(
                           "1",
                           style:
@@ -114,13 +106,15 @@ class _BoxContainerState extends State<BoxContainer> {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 25, bottom: 10),
-                    child: Center(
-                      child: Text(
-                        "Message3",
-                        style:
-                            TextStyle(fontSize: 15, color: Color(0xff888888)),
+                  Flexible(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 25, bottom: 10),
+                      child: Center(
+                        child: Text(
+                          "Appointments",
+                          style:
+                              TextStyle(fontSize: 15, color: Color(0xff888888)),
+                        ),
                       ),
                     ),
                   ),
@@ -139,11 +133,8 @@ class _BoxContainerState extends State<BoxContainer> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(CupertinoIcons.chat_bubble,
+                        Icon(Icons.assessment_sharp,
                             size: 24, color: Color(0xff888888)),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .001,
-                        ),
                         Text(
                           "1",
                           style:
@@ -156,7 +147,7 @@ class _BoxContainerState extends State<BoxContainer> {
                     margin: EdgeInsets.only(top: 25, bottom: 10),
                     child: Center(
                       child: Text(
-                        "Message4",
+                        "Notes",
                         style:
                             TextStyle(fontSize: 15, color: Color(0xff888888)),
                       ),
@@ -177,11 +168,7 @@ class _BoxContainerState extends State<BoxContainer> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(CupertinoIcons.chat_bubble,
-                            size: 24, color: Color(0xff888888)),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .001,
-                        ),
+                        Icon(Icons.task, size: 24, color: Color(0xff888888)),
                         Text(
                           "1",
                           style:
@@ -194,7 +181,7 @@ class _BoxContainerState extends State<BoxContainer> {
                     margin: EdgeInsets.only(top: 25, bottom: 10),
                     child: Center(
                       child: Text(
-                        "Message5",
+                        "Tasks",
                         style:
                             TextStyle(fontSize: 15, color: Color(0xff888888)),
                       ),

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'boxcontainer.dart';
 import 'customer.dart';
 import 'joboverview.dart';
-import 'recentestimate.dart';
-import 'recentform.dart';
 import 'recentphoto.dart';
+import 'recentpicturelist.dart';
 import 'workflowpage.dart';
 
 class RecentMain extends StatefulWidget {
@@ -38,9 +37,24 @@ class _RecentMainState extends State<RecentMain> {
             WorkFlowPage(),
             BoxContainer(),
             Customer(),
-            RecentPhotoFile(),
-            RecentEstimate(),
-            RecentForms()
+            RecentPhotoFile(
+              keyToDisplay: 'RECENT PHOTO & DOCUMNETS',
+              type: 'PHOTO',
+              defaultMessage: 'No images/doc found',
+              imageData: imageDataList,
+            ),
+            RecentPhotoFile(
+              keyToDisplay: 'RECENT ESTIMATES',
+              type: 'ESTIMATE',
+              defaultMessage: 'No estimate found',
+              imageData: [],
+            ),
+            RecentPhotoFile(
+              keyToDisplay: 'RECENT FORM & PROPOSAL',
+              type: 'FORM',
+              defaultMessage: 'No form proposal found',
+              imageData: [],
+            ),
           ],
         ),
       ),

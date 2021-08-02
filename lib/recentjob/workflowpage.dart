@@ -32,7 +32,8 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                         child: CustomPaint(
                       painter: BorderPainter(selectedColor: data),
                       child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.only(
+                            top: 12, bottom: 12, left: 25, right: 25),
                         height: 65,
                         child: Text(
                           data.name,
@@ -43,9 +44,10 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                               color:
                                   data.selectedBox == 1 || data.selectedBox == 2
                                       ? Colors.white
-                                      : Colors.black,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1),
+                                      : Color(0xff666666),
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 1,
+                              fontSize: 18),
                         ),
                       ),
                     )),
@@ -91,62 +93,83 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                         ),
                       ),
                     ]),
-                    Center(
-                        child: data.selectedBox == 1
-                            ? Text(
-                                "Completed",
-                                style: TextStyle(
-                                    color: Color(0xff6a6666),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16),
-                              )
-                            : data.selectedBox == 2
-                                ? InkWell(
-                                    splashColor: Colors.blue,
-                                    child: Container(
-                                      padding: EdgeInsets.only(
-                                          top: 1, bottom: 1, left: 5, right: 5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        color: Color(0xff357ebd),
+                    data.selectedBox == 1
+                        ? Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  "Completed",
+                                  style: TextStyle(
+                                      color: Color(0xff6a6666),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ),
+                              Container(
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.edit,
+                                        size: 16,
+                                        color: Color(0xff6a6666),
                                       ),
+                                      Text(
+                                        "03/03/2021",
+                                        style: TextStyle(
+                                            color: Color(0xff6a6666),
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16),
+                                      ),
+                                    ]),
+                              ),
+                            ],
+                          )
+                        : data.selectedBox == 2
+                            ? Column(
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      "03/10/2021",
+                                      style: TextStyle(
+                                          color: Color(0xff6a6666),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10,
+                                        right: 10,
+                                        bottom: 1.5,
+                                        top: 1.5),
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                      color: Color(0xff357ebd),
+                                    ),
+                                    child: InkWell(
                                       child: Text(
                                         "Move",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.w700),
                                       ),
                                     ),
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(3),
+                                    child: Text(""),
+                                  ),
+                                  Container(
+                                    child: Text(""),
                                   )
-                                : Text("")
-                        // child: Text(data.selectedBox == 1
-                        //     ? "Completed"
-                        //     : data.selectedBox == 2
-                        //         ? "Move"
-                        //         : "")
-                        ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        data.selectedBox == 1
-                            ? Icon(
-                                Icons.edit,
-                                size: 16,
-                                color: Color(0xff6a6666),
+                                ],
                               )
-                            : Text(""),
-                        data.selectedBox == 1
-                            ? Text(
-                                "03/15/2021",
-                                style: TextStyle(
-                                    color: Color(0xff6a6666),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16),
-                              )
-                            : Text("")
-                      ],
-                    ),
                   ],
                 ),
               );
