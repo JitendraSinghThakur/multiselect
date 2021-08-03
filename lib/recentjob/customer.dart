@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class Customer extends StatefulWidget {
   const Customer({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _CustomerState extends State<Customer> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 15),
+          margin: EdgeInsets.only(top: 10),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Padding(
             padding: const EdgeInsets.all(6.0),
@@ -55,7 +56,7 @@ class _CustomerState extends State<Customer> {
                   children: [
                     Icon(
                       Icons.person,
-                      size: 24,
+                      size: 22,
                       color: Color(0xff666666),
                     ),
                     SizedBox(
@@ -65,7 +66,7 @@ class _CustomerState extends State<Customer> {
                       "Test Customer",
                       style: TextStyle(
                         color: Color(0xff666666),
-                        fontSize: 18,
+                        fontSize: 16,
                       ),
                     )
                   ],
@@ -85,7 +86,7 @@ class _CustomerState extends State<Customer> {
                         children: [
                           Icon(
                             Icons.call,
-                            size: 22,
+                            size: 20,
                             color: Color(0xff666666),
                           ),
                           SizedBox(
@@ -95,7 +96,7 @@ class _CustomerState extends State<Customer> {
                             "Home:(410) 000-000",
                             style: TextStyle(
                               color: Color(0xff666666),
-                              fontSize: 18,
+                              fontSize: 16,
                             ),
                           )
                         ],
@@ -106,7 +107,7 @@ class _CustomerState extends State<Customer> {
                         children: [
                           Container(
                             margin: EdgeInsets.only(right: 10),
-                            padding: EdgeInsets.all(3),
+                            padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               border: Border.all(
                                 width: 2,
@@ -115,13 +116,13 @@ class _CustomerState extends State<Customer> {
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: Icon(
-                              Icons.call,
-                              size: 15,
+                              CupertinoIcons.chat_bubble_fill,
+                              size: 20,
                               color: Colors.blue,
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(3),
+                            padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               border: Border.all(
                                 width: 2,
@@ -131,19 +132,93 @@ class _CustomerState extends State<Customer> {
                             ),
                             child: Icon(
                               Icons.call,
-                              size: 15,
+                              size: 20,
                               color: Color(0xff428ACA),
                             ),
                           )
                         ],
                       ),
-                    )
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                height: 0,
+                thickness: 2,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.arrowshape_turn_up_right_fill,
+                            size: 20,
+                            color: Color(0xff666666),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "Share Customer Web Page",
+                            style: TextStyle(
+                              color: Color(0xff666666),
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: Row(
+                        children: [
+                          // Container(
+                          //   margin: EdgeInsets.only(right: 10),
+                          //   padding: EdgeInsets.all(3),
+                          //   decoration: BoxDecoration(
+                          //     border: Border.all(
+                          //       width: 2,
+                          //       color: Colors.blue,
+                          //     ),
+                          //     borderRadius: BorderRadius.circular(50),
+                          //   ),
+                          //   child: Icon(
+                          //     Icons.call,
+                          //     size: 15,
+                          //     color: Colors.blue,
+                          //   ),
+                          // ),
+                          Container(
+                            padding: EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 2,
+                                color: Color(0xff428ACA),
+                              ),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Icon(
+                                CupertinoIcons.arrowshape_turn_up_right_fill,
+                                size: 16,
+                                color: Color(0xff428ACA)),
+                            // Icon(
+                            //   Icons.call,
+                            //   size: 15,
+                            //   color: Color(0xff428ACA),
+                            // ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
