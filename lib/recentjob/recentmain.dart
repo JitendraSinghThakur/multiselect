@@ -1,12 +1,12 @@
-import 'package:demoapp/recentjob/secondaryDrawer.dart';
+import '../recentjob/secondaryDrawer.dart';
 import 'package:flutter/material.dart';
 import 'boxcontainer.dart';
 import 'customer.dart';
+import 'fablist.dart';
 import 'joboverview.dart';
 import 'recentphoto.dart';
 import 'recentpicturelist.dart';
 import 'workflowpage.dart';
-import '../quickactionsheet/list.dart';
 
 class RecentMain extends StatefulWidget {
   const RecentMain({Key? key}) : super(key: key);
@@ -20,73 +20,77 @@ class _RecentMainState extends State<RecentMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 200, 27, 27),
         title: Text("Recent Job"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0)),
-              ),
-              isScrollControlled: true,
-              enableDrag: true,
               context: context,
-              backgroundColor: Colors.white,
-              builder: (context) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 20.0, bottom: 2, left: 24, right: 24),
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Text(
-                                "QUICK ACTIONS",
-                                style: TextStyle(fontSize: 17),
-                              ),
+              isScrollControlled: true,
+              builder: (builder) {
+                return Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(3))),
+                  height: 500,
+
+                  child: GridView.extent(
+                    maxCrossAxisExtent: 130,
+                    // crossAxisCount: 3,
+                    // // padding: EdgeInsets.all(5),
+                    // crossAxisSpacing: 90,
+                    // // mainAxisSpacing: 100,
+                    children: fabActionList.map((data) {
+                      return Column(
+                        children: [
+                          Container(
+                            child: data.iconName,
+                          ),
+                          Container(
+                            child: Text(
+                              data.actionName,
+                              maxLines: 1,
+                              softWrap: false,
+                              overflow: TextOverflow.visible,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromARGB(205, 102, 102, 102)),
                             ),
-                            Container(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(
-                                  Icons.clear,
-                                  size: 25,
-                                  // color: cancelIcons,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height - 200,
-                      child: ListView.builder(
-                          itemCount: quickActionList.length,
-                          itemBuilder: (context, index) {
-                            var data = quickActionList[index];
-                            return ListTile(
-                              leading: data.iconName,
-                              title: Transform.translate(
-                                offset: Offset(-28, -7),
-                                child: Text(
-                                  data.actionName,
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 15),
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ],
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+
+                  //  GridView.count(
+                  //   crossAxisCount: 3,
+                  //   // padding: EdgeInsets.all(5),
+                  //   crossAxisSpacing: 90,
+                  //   // mainAxisSpacing: 100,
+                  //   children: fabActionList.map((data) {
+                  //     return Column(
+                  //       children: [
+                  //         Container(
+                  //           child: data.iconName,
+                  //         ),
+                  //         Container(
+                  //           child: Text(
+                  //             data.actionName,
+                  //             maxLines: 1,
+                  //             softWrap: false,
+                  //             overflow: TextOverflow.visible,
+                  //             textAlign: TextAlign.center,
+                  //             style: TextStyle(
+                  //                 fontSize: 14,
+                  //                 color: Color.fromARGB(205, 102, 102, 102)),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     );
+                  //   }).toList(),
+                  // ),
                 );
               });
         },

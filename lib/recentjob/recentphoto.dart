@@ -26,7 +26,7 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 10),
-          padding: EdgeInsets.all(6),
+          padding: EdgeInsets.all(4),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,9 +34,7 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
               Text(
                 widget.keyToDisplay,
                 style: TextStyle(
-                    color: Color.fromARGB(255, 196, 28, 26),
-                    letterSpacing: .5,
-                    fontSize: 16),
+                    color: Color.fromARGB(255, 196, 28, 26), fontSize: 13),
               ),
               Row(children: [
                 Visibility(
@@ -49,8 +47,7 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Text(
                       "1,500.00",
-                      style: TextStyle(
-                          color: Colors.white, letterSpacing: .5, fontSize: 12),
+                      style: TextStyle(color: Colors.white, fontSize: 11),
                     ),
                   ),
                 ),
@@ -66,8 +63,8 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
                     style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 0,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700),
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ]),
@@ -76,13 +73,13 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
         ),
         widget.imageData.length == 0
             ? Container(
-                height: 200,
+                height: 155,
                 child: Align(
                   child: Text(
                     widget.defaultMessage,
                     style: TextStyle(
                       color: Color(0xff666666),
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -94,8 +91,7 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
                   return Column(
                     children: [
                       Container(
-                        width: 200,
-                        height: 200,
+                        height: 155,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15.0),
                             child: Image.asset(data.url)),

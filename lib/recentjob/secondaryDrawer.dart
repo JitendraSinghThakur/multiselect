@@ -9,7 +9,7 @@ class SecondaryDrawer extends StatelessWidget {
       margin: EdgeInsets.only(top: 10),
       child: Row(
         children: [
-          Icon(Icons.menu),
+          InkWell(onTap: () {}, child: Icon(Icons.menu)),
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 0),
             child: Text(

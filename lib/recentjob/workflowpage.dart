@@ -10,8 +10,17 @@ class WorkFlowPage extends StatefulWidget {
 
 class _WorkFlowPageState extends State<WorkFlowPage> {
   int colorName = 1;
+  int maxLetterLenth = 0;
+  double maxWidth = 200;
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i < drawerDataListColors.length; i++) {
+      if (drawerDataListColors[i].name.length > maxLetterLenth) {
+        maxLetterLenth = drawerDataListColors[i].name.length;
+      }
+    }
+    if (maxLetterLenth > 20) maxWidth = maxLetterLenth * 10;
+
     return Container(
       child: Scrollbar(
         hoverThickness: 5,
@@ -21,36 +30,35 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: drawerDataListColors.map((data) {
               return Container(
-                margin: EdgeInsets.only(top: 20),
-                width: 200,
-                height: 200,
+                margin: EdgeInsets.only(top: 15, bottom: 24),
+                width: maxWidth,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
+                        width: maxWidth - 10,
                         child: CustomPaint(
-                      painter: BorderPainter(selectedColor: data),
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: 12, bottom: 12, left: 25, right: 25),
-                        height: 65,
-                        child: Text(
-                          data.name,
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                              color:
-                                  data.selectedBox == 1 || data.selectedBox == 2
+                          painter: BorderPainter(selectedColor: data),
+                          child: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            height: 65,
+                            child: Text(
+                              data.name,
+                              maxLines: 1,
+                              softWrap: false,
+                              overflow: TextOverflow.visible,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: data.selectedBox == 1 ||
+                                          data.selectedBox == 2
                                       ? Colors.white
                                       : Color(0xff666666),
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 1,
-                              fontSize: 18),
-                        ),
-                      ),
-                    )),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        )),
                     Row(children: [
                       Expanded(
                         child: Container(
@@ -58,7 +66,7 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                             color: data.selectedBox != 2
                                 ? Color.fromARGB(255, 219, 219, 219)
                                 : data.colorName,
-                            height: 50,
+                            height: 30,
                             thickness: 4,
                           ),
                         ),
@@ -87,7 +95,7 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                             color: data.selectedBox != 2
                                 ? Color.fromARGB(255, 219, 219, 219)
                                 : data.colorName,
-                            height: 50,
+                            height: 30,
                             thickness: 4,
                           ),
                         ),
@@ -102,7 +110,7 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                                   style: TextStyle(
                                       color: Color(0xff6a6666),
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 16),
+                                      fontSize: 14),
                                 ),
                               ),
                               Container(
@@ -111,7 +119,7 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                                     children: [
                                       Icon(
                                         Icons.edit,
-                                        size: 16,
+                                        size: 14,
                                         color: Color(0xff6a6666),
                                       ),
                                       Text(
@@ -119,7 +127,7 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                                         style: TextStyle(
                                             color: Color(0xff6a6666),
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 16),
+                                            fontSize: 14),
                                       ),
                                     ]),
                               ),
@@ -134,28 +142,38 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                                       style: TextStyle(
                                           color: Color(0xff6a6666),
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 16),
+                                          fontSize: 13),
                                     ),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        left: 10,
-                                        right: 10,
-                                        bottom: 1.5,
-                                        top: 1.5),
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5)),
-                                      color: Color(0xff357ebd),
-                                    ),
-                                    child: InkWell(
-                                      child: Text(
-                                        "Move",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 2,
+                                        height: 2,
                                       ),
-                                    ),
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            left: 10,
+                                            right: 10,
+                                            bottom: 1.5,
+                                            top: 0),
+                                        margin: EdgeInsets.only(top: 2),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5)),
+                                          color: Color(0xff357ebd),
+                                        ),
+                                        child: InkWell(
+                                          child: Text(
+                                            "Move",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               )

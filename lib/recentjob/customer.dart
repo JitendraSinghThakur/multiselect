@@ -14,10 +14,10 @@ class _CustomerState extends State<Customer> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: 10, bottom: 15),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.all(4.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -26,7 +26,7 @@ class _CustomerState extends State<Customer> {
                   style: TextStyle(
                       color: Color.fromARGB(255, 196, 28, 26),
                       letterSpacing: .5,
-                      fontSize: 16),
+                      fontSize: 13),
                 ),
                 Container(
                   padding:
@@ -38,9 +38,9 @@ class _CustomerState extends State<Customer> {
                     "EMAIL HISTORY",
                     style: TextStyle(
                         color: Colors.white,
-                        letterSpacing: 0,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700),
+                        letterSpacing: .5,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ],
@@ -51,12 +51,12 @@ class _CustomerState extends State<Customer> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Row(
                   children: [
                     Icon(
                       Icons.person,
-                      size: 22,
+                      size: 14,
                       color: Color(0xff666666),
                     ),
                     SizedBox(
@@ -66,16 +66,16 @@ class _CustomerState extends State<Customer> {
                       "Test Customer",
                       style: TextStyle(
                         color: Color(0xff666666),
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     )
                   ],
                 ),
               ),
-              Divider(
-                height: 0,
-                thickness: 2,
-              ),
+              // Divider(
+              //   height: 0,
+              //   thickness: 2,
+              // ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -86,7 +86,7 @@ class _CustomerState extends State<Customer> {
                         children: [
                           Icon(
                             Icons.call,
-                            size: 20,
+                            size: 14,
                             color: Color(0xff666666),
                           ),
                           SizedBox(
@@ -96,7 +96,7 @@ class _CustomerState extends State<Customer> {
                             "Home:(410) 000-000",
                             style: TextStyle(
                               color: Color(0xff666666),
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           )
                         ],
@@ -117,7 +117,7 @@ class _CustomerState extends State<Customer> {
                             ),
                             child: Icon(
                               CupertinoIcons.chat_bubble_fill,
-                              size: 20,
+                              size: 14,
                               color: Colors.blue,
                             ),
                           ),
@@ -132,7 +132,7 @@ class _CustomerState extends State<Customer> {
                             ),
                             child: Icon(
                               Icons.call,
-                              size: 20,
+                              size: 14,
                               color: Color(0xff428ACA),
                             ),
                           )
@@ -142,12 +142,12 @@ class _CustomerState extends State<Customer> {
                   ],
                 ),
               ),
-              Divider(
-                height: 0,
-                thickness: 2,
-              ),
+              // Divider(
+              //   height: 0,
+              //   thickness: 2,
+              // ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -156,7 +156,7 @@ class _CustomerState extends State<Customer> {
                         children: [
                           Icon(
                             CupertinoIcons.arrowshape_turn_up_right_fill,
-                            size: 20,
+                            size: 14,
                             color: Color(0xff666666),
                           ),
                           SizedBox(
@@ -166,7 +166,7 @@ class _CustomerState extends State<Customer> {
                             "Share Customer Web Page",
                             style: TextStyle(
                               color: Color(0xff666666),
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           )
                         ],
@@ -175,24 +175,8 @@ class _CustomerState extends State<Customer> {
                     Container(
                       child: Row(
                         children: [
-                          // Container(
-                          //   margin: EdgeInsets.only(right: 10),
-                          //   padding: EdgeInsets.all(3),
-                          //   decoration: BoxDecoration(
-                          //     border: Border.all(
-                          //       width: 2,
-                          //       color: Colors.blue,
-                          //     ),
-                          //     borderRadius: BorderRadius.circular(50),
-                          //   ),
-                          //   child: Icon(
-                          //     Icons.call,
-                          //     size: 15,
-                          //     color: Colors.blue,
-                          //   ),
-                          // ),
                           Container(
-                            padding: EdgeInsets.all(6),
+                            padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               border: Border.all(
                                 width: 2,
@@ -202,13 +186,8 @@ class _CustomerState extends State<Customer> {
                             ),
                             child: Icon(
                                 CupertinoIcons.arrowshape_turn_up_right_fill,
-                                size: 16,
+                                size: 14,
                                 color: Color(0xff428ACA)),
-                            // Icon(
-                            //   Icons.call,
-                            //   size: 15,
-                            //   color: Color(0xff428ACA),
-                            // ),
                           )
                         ],
                       ),

@@ -10,7 +10,7 @@ class DrawerListColors {
 }
 
 List<DrawerListColors> drawerDataListColors = [
-  new DrawerListColors(1, "Stage 1", Colors.red, 1),
+  new DrawerListColors(1, "Stage 1 Stage 1 Stage 1 Stage 1", Colors.red, 1),
   new DrawerListColors(2, "Stage 2", Colors.yellow, 1),
   new DrawerListColors(3, "Staged 3", Colors.purple, 1),
   new DrawerListColors(4, "Stage 4", Colors.blue, 1),
