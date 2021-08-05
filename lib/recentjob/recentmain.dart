@@ -1,3 +1,5 @@
+import 'package:demoapp/customeDrawer/customedrawer.dart';
+
 import '../recentjob/secondaryDrawer.dart';
 import 'package:flutter/material.dart';
 import 'boxcontainer.dart';
@@ -6,6 +8,7 @@ import 'fablist.dart';
 import 'joboverview.dart';
 import 'recentphoto.dart';
 import 'recentpicturelist.dart';
+import 'secondaryDrawerview.dart';
 import 'workflowpage.dart';
 
 class RecentMain extends StatefulWidget {
@@ -16,13 +19,31 @@ class RecentMain extends StatefulWidget {
 }
 
 class _RecentMainState extends State<RecentMain> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.keyboard_arrow_left,
+          ),
+        ),
         backgroundColor: Color.fromARGB(255, 200, 27, 27),
         title: Text("Recent Job"),
       ),
+      drawer: Container(
+        margin: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height -
+              (MediaQuery.of(context).size.height - 80),
+        ),
+        child: SecondDrawerView(),
+      ),
+      endDrawer: CustomeDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -34,13 +55,8 @@ class _RecentMainState extends State<RecentMain> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(3))),
                   height: 500,
-
                   child: GridView.extent(
                     maxCrossAxisExtent: 130,
-                    // crossAxisCount: 3,
-                    // // padding: EdgeInsets.all(5),
-                    // crossAxisSpacing: 90,
-                    // // mainAxisSpacing: 100,
                     children: fabActionList.map((data) {
                       return Column(
                         children: [
@@ -63,34 +79,6 @@ class _RecentMainState extends State<RecentMain> {
                       );
                     }).toList(),
                   ),
-
-                  //  GridView.count(
-                  //   crossAxisCount: 3,
-                  //   // padding: EdgeInsets.all(5),
-                  //   crossAxisSpacing: 90,
-                  //   // mainAxisSpacing: 100,
-                  //   children: fabActionList.map((data) {
-                  //     return Column(
-                  //       children: [
-                  //         Container(
-                  //           child: data.iconName,
-                  //         ),
-                  //         Container(
-                  //           child: Text(
-                  //             data.actionName,
-                  //             maxLines: 1,
-                  //             softWrap: false,
-                  //             overflow: TextOverflow.visible,
-                  //             textAlign: TextAlign.center,
-                  //             style: TextStyle(
-                  //                 fontSize: 14,
-                  //                 color: Color.fromARGB(205, 102, 102, 102)),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     );
-                  //   }).toList(),
-                  // ),
                 );
               });
         },
@@ -103,7 +91,13 @@ class _RecentMainState extends State<RecentMain> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SecondaryDrawer(),
+            SecondaryDrawer(
+              callback: (String action) {
+                // Scaffold.of(context).openDrawer();
+                scaffoldKey.currentState!.openDrawer();
+                // callback(action);
+              },
+            ),
             JobOverview(),
             WorkFlowPage(),
             BoxContainer(),
