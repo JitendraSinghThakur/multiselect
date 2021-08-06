@@ -11,10 +11,13 @@ class CustomeDrawer extends StatefulWidget {
 class _CustomeDrawerState extends State<CustomeDrawer> {
   TextEditingController _textController = TextEditingController();
 
+  int colorchange = 0;
+  int groupSelected = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * .7,
+      width: MediaQuery.of(context).size.width - 100,
       child: Drawer(
         child: Column(
           children: [
@@ -29,7 +32,6 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
               child: Column(
                 children: [
                   Container(
-                    // width: W,
                     padding: EdgeInsets.all(10),
                     height: 80,
                     child: Row(
@@ -50,7 +52,7 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                                 "Jitendra Singh",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 18,
+                                  fontSize: 17,
                                   letterSpacing: 1,
                                 ),
                               ),
@@ -99,7 +101,6 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                 ],
               ),
             ),
-
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
@@ -107,22 +108,54 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: drawerDataList.map((data) {
-                        return Container(
-                          padding: EdgeInsets.only(top: 10, left: 15),
-                          child: Row(children: [
-                            Icon(
-                              data.iconName,
-                              size: 16,
-                              color: Colors.black45,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 13.0),
-                              child: Text(
-                                data.name,
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ),
-                          ]),
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              colorchange = data.id;
+                              groupSelected = 1;
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Container(
+                            child: Row(children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width - 100,
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 15, bottom: 10),
+                                margin: EdgeInsets.only(bottom: 2),
+                                color:
+                                    groupSelected == 1 && colorchange == data.id
+                                        ? Colors.blue
+                                        : Colors.white,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      data.iconName,
+                                      size: 15,
+                                      color: groupSelected == 1 &&
+                                              colorchange == data.id
+                                          ? Colors.white
+                                          : Colors.black45,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 15.0),
+                                      child: Text(
+                                        data.name,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: groupSelected == 1 &&
+                                                  colorchange == data.id
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ]),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -134,48 +167,67 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                       alignment: Alignment.centerLeft,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 18.0, top: 10, bottom: 10),
+                            left: 15.0, top: 7, bottom: 7),
                         child: Text(
                           "WorkFlow",
-                          style: TextStyle(fontSize: 18, letterSpacing: 0),
+                          style: TextStyle(fontSize: 17),
                         ),
                       ),
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: drawerDataListColors.map((data) {
-                        return Container(
-                          height: 30,
-                          margin: EdgeInsets.only(bottom: 3),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              left: BorderSide(color: data.colorName, width: 2),
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              colorchange = data.id;
+                              groupSelected = 2;
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Container(
+                            height: 37,
+                            margin: EdgeInsets.only(bottom: 3),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                left:
+                                    BorderSide(color: data.colorName, width: 2),
+                              ),
+                              color:
+                                  groupSelected == 2 && colorchange == data.id
+                                      ? Colors.blue
+                                      : Colors.white,
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 18.0, right: 15),
-                                child: Text(data.name,
-                                    style: TextStyle(fontSize: 13)),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(right: 10),
-                                padding: EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                    color: data.colorName,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(50))),
-                                child: Text(
-                                  "10",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15.0, right: 15),
+                                  child: Text(data.name,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: groupSelected == 2 &&
+                                                  colorchange == data.id
+                                              ? Colors.white
+                                              : Colors.black)),
                                 ),
-                              ),
-                            ],
+                                Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  padding: EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                      color: data.colorName,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(50))),
+                                  child: Text(
+                                    "10",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }).toList(),
@@ -187,26 +239,53 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: drawerDataListStatic.map((data) {
-                        return Container(
-                          padding: EdgeInsets.only(top: 10, left: 15),
-                          child: Row(children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  data.iconName,
-                                  size: 16,
-                                  color: Colors.black45,
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              colorchange = data.id;
+                              groupSelected = 3;
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Container(
+                            child: Row(children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width - 100,
+                                padding: EdgeInsets.only(
+                                    top: 10, left: 15, bottom: 10),
+                                color:
+                                    groupSelected == 3 && colorchange == data.id
+                                        ? Colors.blue
+                                        : Colors.white,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      data.iconName,
+                                      size: 15,
+                                      color: groupSelected == 3 &&
+                                              colorchange == data.id
+                                          ? Colors.white
+                                          : Colors.black45,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 13.0),
+                                      child: Text(
+                                        data.name,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: groupSelected == 3 &&
+                                                  colorchange == data.id
+                                              ? Colors.white
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 13.0),
-                                  child: Text(
-                                    data.name,
-                                    style: TextStyle(fontSize: 13),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ]),
+                              ),
+                            ]),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -214,41 +293,6 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                 ),
               ),
             ),
-
-            // Expanded(
-            //   child: ListView(
-            //     padding: EdgeInsets.zero,
-            //     shrinkWrap: true,
-            //     scrollDirection: Axis.vertical,
-            //     children: drawerDataList.map((data) {
-            //       return data.name == "Divider"
-            //           ? Divider(
-            //               height: 10,
-            //               thickness: 2,
-            //             )
-            //           : ListTile(
-            //               // contentPadding: EdgeInsets.only(
-            //               //     top: 0, bottom: 0, left: 12, right: 0),
-            //               // contentPadding: EdgeInsets.symmetric(
-            //               //     vertical: -100.0, horizontal: 10.0),
-            //               visualDensity:
-            //                   VisualDensity(horizontal: 0, vertical: -4),
-            //               dense: true,
-            //               leading: Icon(
-            //                 data.iconName,
-            //                 size: 16,
-            //               ),
-            //               title: Transform.translate(
-            //                 offset: Offset(-22, 0),
-            //                 child: Text(
-            //                   data.name,
-            //                   style: TextStyle(fontSize: 12),
-            //                 ),
-            //               ),
-            //             );
-            //     }).toList(),
-            //   ),
-            // ),
           ],
         ),
       ),

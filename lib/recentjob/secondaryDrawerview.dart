@@ -12,16 +12,16 @@ class SecondDrawerView extends StatefulWidget {
 class _SecondDrawerViewState extends State<SecondDrawerView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Drawer(
-        child: Column(children: [
+    return Drawer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
           Container(
             padding: EdgeInsets.only(top: 20, bottom: 10, left: 15, right: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  // padding: EdgeInsets.all(20),
                   child: Text(
                     "JOB MENU",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
@@ -41,58 +41,52 @@ class _SecondDrawerViewState extends State<SecondDrawerView> {
               ],
             ),
           ),
-          Container(
-            height: 450,
-            padding: EdgeInsets.only(left: 10),
-            child: Scrollbar(
-              thickness: 5,
-              isAlwaysShown: true,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: secondaryDataList.map((data) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(top: 20, left: 15),
-                          child: Row(children: [
-                            Icon(
-                              data.iconName,
-                              size: 16,
-                              color: Colors.black45,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 13.0),
-                              child: Text(
-                                data.name,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ]),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 20, right: 10),
-                          child: Text(
-                            "0",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 53, 132, 202),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: secondaryDataList.map((data) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(top: 25, left: 25),
+                        child: Row(children: [
+                          Icon(
+                            data.iconName,
+                            size: 16,
+                            color: Colors.black45,
                           ),
-                        )
-                      ],
-                    );
-                  }).toList(),
-                ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              data.name,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ]),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top: 20, right: 10),
+                        child: Text(
+                          "0",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 53, 132, 202),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      )
+                    ],
+                  );
+                }).toList(),
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 35),
+            margin: EdgeInsets.only(top: 35, bottom: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -172,7 +166,7 @@ class _SecondDrawerViewState extends State<SecondDrawerView> {
               ],
             ),
           )
-        ]),
+        ],
       ),
     );
   }

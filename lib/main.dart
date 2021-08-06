@@ -44,67 +44,69 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text("Task"),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Center(
+            child: Text("Task"),
+          ),
         ),
-      ),
-      endDrawer: CustomeDrawer(),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.whiteColor,
-                  AppColors.whiteColor,
-                ],
-                stops: [0.0, 1],
+        endDrawer: CustomeDrawer(),
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    AppColors.whiteColor,
+                    AppColors.whiteColor,
+                  ],
+                  stops: [0.0, 1],
+                ),
               ),
             ),
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  PopOverpage(),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: OpenCustomerDetails(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    child: SingleUserSelect(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    child: QuichActionSheet(),
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/workflowpage');
-                      },
-                      child: Text("Open WorkFlow"),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PopOverpage(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: OpenCustomerDetails(),
                     ),
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/recentjob');
-                      },
-                      child: Text("Recent Job"),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 18.0),
+                      child: SingleUserSelect(),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 18.0),
+                      child: QuichActionSheet(),
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/workflowpage');
+                        },
+                        child: Text("Open WorkFlow"),
+                      ),
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/recentjob');
+                        },
+                        child: Text("Recent Job"),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -16,8 +16,8 @@ class _BoxContainerState extends State<BoxContainer> {
       child: Row(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width / 5,
-            height: 90,
+            width: MediaQuery.of(context).size.width / 5 - 1,
+            height: 97,
             color: Color(0xffe5e4e2),
             child: Column(
               children: [
@@ -50,8 +50,8 @@ class _BoxContainerState extends State<BoxContainer> {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width / 5,
-            height: 90,
+            width: MediaQuery.of(context).size.width / 5 - 1,
+            height: 97,
             color: Color(0xffe3f8fa),
             child: Column(
               children: [
@@ -83,8 +83,8 @@ class _BoxContainerState extends State<BoxContainer> {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width / 5,
-            height: 90,
+            width: MediaQuery.of(context).size.width / 5 + 5,
+            height: 97,
             color: Color(0xfffff5f4),
             child: Column(
               children: [
@@ -116,8 +116,8 @@ class _BoxContainerState extends State<BoxContainer> {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width / 5,
-            height: 90,
+            width: MediaQuery.of(context).size.width / 5 - 1,
+            height: 97,
             color: Color(0xffF5F5DC),
             child: Column(
               children: [
@@ -149,8 +149,8 @@ class _BoxContainerState extends State<BoxContainer> {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width / 5,
-            height: 90,
+            width: MediaQuery.of(context).size.width / 5 - 2,
+            height: 97,
             color: Color(0xffebdde2),
             child: Column(
               children: [
