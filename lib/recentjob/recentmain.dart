@@ -23,6 +23,7 @@ class _RecentMainState extends State<RecentMain> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Scaffold(
         key: scaffoldKey,
         appBar: PreferredSize(
@@ -64,6 +65,7 @@ class _RecentMainState extends State<RecentMain> {
           ),
         ),
         drawer: Container(
+          width: 273,
           margin: EdgeInsets.only(
             top: 44,
           ),

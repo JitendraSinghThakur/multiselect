@@ -14,7 +14,7 @@ class _JobOverviewState extends State<JobOverview> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
           padding: EdgeInsets.all(4),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Row(
@@ -64,7 +64,7 @@ class _JobOverviewState extends State<JobOverview> {
                   )),
               Align(
                   alignment: Alignment.topLeft,
-                  child: Text("XZSx",
+                  child: Text("xyhx",
                       style: TextStyle(
                           color: Color(0xff444444),
                           fontSize: 14,
@@ -79,14 +79,15 @@ class _JobOverviewState extends State<JobOverview> {
             border: Border(
               top: BorderSide(
                   color: Color.fromARGB(206, 206, 206, 255), width: 2),
-              bottom: BorderSide(
-                  color: Color.fromARGB(206, 206, 206, 255), width: 2),
+              // bottom: BorderSide(
+              //     color: Color.fromARGB(206, 206, 206, 255), width: 2),
             ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
+                margin: EdgeInsets.only(left: 10),
                 padding: EdgeInsets.all(3),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),

@@ -41,7 +41,7 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                         child: CustomPaint(
                           painter: BorderPainter(selectedColor: data),
                           child: Container(
-                            padding: EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.only(top: 12),
                             height: 65,
                             child: Text(
                               data.name,

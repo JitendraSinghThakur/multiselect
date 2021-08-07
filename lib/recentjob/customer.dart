@@ -14,7 +14,7 @@ class _CustomerState extends State<Customer> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10, bottom: 15),
+          margin: EdgeInsets.only(top: 10, bottom: 15, left: 10, right: 10),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Padding(
             padding: const EdgeInsets.all(4.0),
@@ -110,7 +110,7 @@ class _CustomerState extends State<Customer> {
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                width: 2,
+                                width: 1,
                                 color: Colors.blue,
                               ),
                               borderRadius: BorderRadius.circular(50),
@@ -118,14 +118,14 @@ class _CustomerState extends State<Customer> {
                             child: Icon(
                               CupertinoIcons.chat_bubble_fill,
                               size: 14,
-                              color: Colors.blue,
+                              color: Color(0xff428ACA),
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                width: 2,
+                                width: 1,
                                 color: Color(0xff428ACA),
                               ),
                               borderRadius: BorderRadius.circular(50),
@@ -179,7 +179,7 @@ class _CustomerState extends State<Customer> {
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                width: 2,
+                                width: 1,
                                 color: Color(0xff428ACA),
                               ),
                               borderRadius: BorderRadius.circular(50),

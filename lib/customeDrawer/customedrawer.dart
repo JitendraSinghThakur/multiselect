@@ -11,9 +11,6 @@ class CustomeDrawer extends StatefulWidget {
 class _CustomeDrawerState extends State<CustomeDrawer> {
   TextEditingController _textController = TextEditingController();
 
-  int colorchange = 0;
-  int groupSelected = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -109,11 +106,15 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: drawerDataList.map((data) {
                         return InkWell(
+                          highlightColor: Color(0xff357ebd),
+                          onHighlightChanged: (isActivated) {
+                            setState(() {
+                              data.isActivated = isActivated;
+                            });
+                          },
                           onTap: () {
                             setState(() {
-                              colorchange = data.id;
-                              groupSelected = 1;
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
                             });
                           },
                           child: Container(
@@ -123,17 +124,12 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                                 padding: EdgeInsets.only(
                                     top: 10, left: 15, bottom: 10),
                                 margin: EdgeInsets.only(bottom: 2),
-                                color:
-                                    groupSelected == 1 && colorchange == data.id
-                                        ? Colors.blue
-                                        : Colors.white,
                                 child: Row(
                                   children: [
                                     Icon(
                                       data.iconName,
-                                      size: 15,
-                                      color: groupSelected == 1 &&
-                                              colorchange == data.id
+                                      size: 19,
+                                      color: data.isActivated
                                           ? Colors.white
                                           : Colors.black45,
                                     ),
@@ -144,8 +140,7 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                                         data.name,
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: groupSelected == 1 &&
-                                                  colorchange == data.id
+                                          color: data.isActivated
                                               ? Colors.white
                                               : Colors.black,
                                         ),
@@ -178,11 +173,15 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: drawerDataListColors.map((data) {
                         return InkWell(
+                          highlightColor: Color(0xff357ebd),
+                          onHighlightChanged: (isActivated) {
+                            setState(() {
+                              data.isActivated = isActivated;
+                            });
+                          },
                           onTap: () {
                             setState(() {
-                              colorchange = data.id;
-                              groupSelected = 2;
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
                             });
                           },
                           child: Container(
@@ -195,9 +194,7 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                                     BorderSide(color: data.colorName, width: 2),
                               ),
                               color:
-                                  groupSelected == 2 && colorchange == data.id
-                                      ? Colors.blue
-                                      : Colors.white,
+                                  data.isActivated ? Colors.blue : Colors.white,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,8 +205,7 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                                   child: Text(data.name,
                                       style: TextStyle(
                                           fontSize: 14,
-                                          color: groupSelected == 2 &&
-                                                  colorchange == data.id
+                                          color: data.isActivated
                                               ? Colors.white
                                               : Colors.black)),
                                 ),
@@ -240,11 +236,15 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: drawerDataListStatic.map((data) {
                         return InkWell(
+                          highlightColor: Color(0xff357ebd),
+                          onHighlightChanged: (isActivated) {
+                            setState(() {
+                              data.isActivated = isActivated;
+                            });
+                          },
                           onTap: () {
                             setState(() {
-                              colorchange = data.id;
-                              groupSelected = 3;
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
                             });
                           },
                           child: Container(
@@ -253,17 +253,15 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                                 width: MediaQuery.of(context).size.width - 100,
                                 padding: EdgeInsets.only(
                                     top: 10, left: 15, bottom: 10),
-                                color:
-                                    groupSelected == 3 && colorchange == data.id
-                                        ? Colors.blue
-                                        : Colors.white,
+                                color: data.isActivated
+                                    ? Colors.blue
+                                    : Colors.white,
                                 child: Row(
                                   children: [
                                     Icon(
                                       data.iconName,
-                                      size: 15,
-                                      color: groupSelected == 3 &&
-                                              colorchange == data.id
+                                      size: 19,
+                                      color: data.isActivated
                                           ? Colors.white
                                           : Colors.black45,
                                     ),
@@ -274,8 +272,7 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                                         data.name,
                                         style: TextStyle(
                                           fontSize: 14,
-                                          color: groupSelected == 3 &&
-                                                  colorchange == data.id
+                                          color: data.isActivated
                                               ? Colors.white
                                               : Colors.black,
                                         ),
@@ -293,9 +290,85 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                 ),
               ),
             ),
+            Container(
+              padding: EdgeInsets.all(8),
+              // decoration: BoxDecoration(
+              //   border: Border(
+              //     top: BorderSide(
+              //       color: Color.fromARGB(255, 128, 128, 128),
+              //       width: 0.7,
+              //     ),
+              //     bottom: BorderSide(
+              //       color: Color.fromARGB(255, 128, 128, 128),
+              //       width: 0.7,
+              //     ),
+              //   ),
+              // ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 10, left: 15),
+                          child: CustomPaint(
+                            painter: OpenPainter(),
+                          ),
+                        ),
+                        Text(
+                          "Privacy Policy",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 0),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 10, left: 15),
+                          child: CustomPaint(
+                            painter: OpenPainter(),
+                          ),
+                        ),
+                        Text(
+                          "Service Agreement",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 0),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
     );
   }
+}
+
+class OpenPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = Color.fromARGB(255, 128, 128, 128)
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(Offset(0, 0), 3, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }

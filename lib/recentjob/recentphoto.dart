@@ -25,7 +25,7 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
           padding: EdgeInsets.all(4),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Row(

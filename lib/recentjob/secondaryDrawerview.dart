@@ -10,6 +10,7 @@ class SecondDrawerView extends StatefulWidget {
 }
 
 class _SecondDrawerViewState extends State<SecondDrawerView> {
+  String selectedItem = '1';
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -46,40 +47,55 @@ class _SecondDrawerViewState extends State<SecondDrawerView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: secondaryDataList.map((data) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(top: 25, left: 25),
-                        child: Row(children: [
-                          Icon(
-                            data.iconName,
-                            size: 16,
-                            color: Colors.black45,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15.0),
-                            child: Text(
-                              data.name,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 0, 0, 0),
-                                  fontWeight: FontWeight.w400),
+                  return InkWell(
+                    highlightColor: Color(0xffdfeff5),
+                    onHighlightChanged: (isActivated) {
+                      setState(() {
+                        data.isActivated = isActivated;
+                      });
+                    },
+                    // onTap: () {
+                    //   setState(() {
+                    //     data.name = selectedItem ? Text("data") : Text("data2");
+                    //   });
+                    // },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding:
+                              EdgeInsets.only(top: 10, left: 25, bottom: 10),
+                          child: Row(children: [
+                            Icon(
+                              data.iconName,
+                              size: 16,
+                              color: Colors.black45,
                             ),
-                          ),
-                        ]),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 20, right: 10),
-                        child: Text(
-                          "0",
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 53, 132, 202),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Text(
+                                data.name,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ]),
                         ),
-                      )
-                    ],
+                        Container(
+                          padding:
+                              EdgeInsets.only(top: 10, right: 10, bottom: 10),
+                          child: Text(
+                            "0",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 53, 132, 202),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        )
+                      ],
+                    ),
                   );
                 }).toList(),
               ),

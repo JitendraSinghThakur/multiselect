@@ -12,7 +12,7 @@ class _SecondaryDrawerState extends State<SecondaryDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: 10, left: 10),
       child: Row(
         children: [
           InkWell(
@@ -21,11 +21,10 @@ class _SecondaryDrawerState extends State<SecondaryDrawer> {
               },
               child: Icon(Icons.menu)),
           Padding(
-            padding: const EdgeInsets.only(left: 5, right: 0),
+            padding: const EdgeInsets.only(left: 10, right: 0),
             child: Text(
               "JOB: 2009-3840-01",
-              style: TextStyle(
-                  fontSize: 13, letterSpacing: 0, color: Color(0xff000000)),
+              style: TextStyle(fontSize: 13, color: Color(0xff000000)),
             ),
           ),
           Icon(

@@ -61,7 +61,7 @@ List<QuichSheetData> fabActionList = [
   ),
   new QuichSheetData(
     11,
-    "Form/ Proposal",
+    "Form",
     Icons.work,
   ),
   new QuichSheetData(
@@ -71,7 +71,7 @@ List<QuichSheetData> fabActionList = [
   ),
   new QuichSheetData(
     13,
-    "Form/ Proposal",
+    "Proposal",
     Icons.work_off,
   ),
   new QuichSheetData(
