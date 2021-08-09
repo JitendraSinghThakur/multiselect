@@ -133,61 +133,49 @@ class _WorkFlowPageState extends State<WorkFlowPage> {
                               ),
                             ],
                           )
-                        : data.selectedBox == 2
-                            ? Column(
-                                children: [
-                                  Container(
-                                    child: Text(
-                                      "03/10/2021",
-                                      style: TextStyle(
-                                          color: Color(0xff6a6666),
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 13),
-                                    ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(
-                                        width: 2,
-                                        height: 2,
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(
+                        : Column(
+                            children: [
+                              Container(
+                                child: Text(
+                                  data.selectedBox == 2 ? "03/10/2021" : "",
+                                  style: TextStyle(
+                                      color: Color(0xff6a6666),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 13),
+                                ),
+                              ),
+                              data.selectedBox == 2
+                                  ? Column(
+                                      children: [
+                                        SizedBox(
+                                          width: 2,
+                                          height: 2,
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(
                                             left: 10,
                                             right: 10,
-                                            bottom: 1.5,
-                                            top: 0),
-                                        margin: EdgeInsets.only(top: 2),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5)),
-                                          color: Color(0xff357ebd),
-                                        ),
-                                        child: InkWell(
-                                          child: Text(
-                                            "Move",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w700),
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                            color: Color(0xff357ebd),
+                                          ),
+                                          child: InkWell(
+                                            child: Text(
+                                              "Move",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(3),
-                                    child: Text(""),
-                                  ),
-                                  Container(
-                                    child: Text(""),
-                                  )
-                                ],
-                              )
+                                      ],
+                                    )
+                                  : Text("")
+                            ],
+                          )
                   ],
                 ),
               );

@@ -132,6 +132,7 @@ class _PopOverpageState extends State<PopOverpage> {
                                           String action) {
                                         callback(selectedData, action);
                                       },
+                                      unassignedValue: unassignedData,
                                       keyToDisplay: 'name',
                                       type: 'user',
                                       canShowProfilePic: true);

@@ -1,11 +1,13 @@
+import 'dart:ui';
+
 import '../multiselect/data.dart';
 import 'package:flutter/material.dart';
 
 class SingleSelectedModel extends StatefulWidget {
   final void Function(ManageName selectedData, String action) callback;
   final List<ManageName> mainList;
-
   final ManageName selected;
+  final ManageName unassignedValueSingle;
   SingleSelectedModel({
     Key? key,
     required this.mainList,
@@ -14,6 +16,7 @@ class SingleSelectedModel extends StatefulWidget {
     required String keyToDisplay,
     required String type,
     required bool canShowProfilePic,
+    required this.unassignedValueSingle,
   }) : super(key: key);
 
   @override
@@ -79,6 +82,9 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
   }
 
   selectedValue() {
+    if (widget.mainList.where((element) => element.id == -1).length == 0) {
+      widget.mainList.insert(0, unassignedData);
+    }
     widget.mainList.forEach((element2) {
       element2.checked = false;
       if (widget.selected.id == element2.id) {
@@ -104,7 +110,7 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
-          backgroundColor: Color(0xffEEEEEE),
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
           insetPadding: EdgeInsets.all(0),
           contentPadding: EdgeInsets.only(top: 10, left: 0, right: 0),
           shape: RoundedRectangleBorder(
@@ -130,24 +136,23 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                               children: [
                                 Container(
                                   child: Text(
-                                    "SELECT USER",
+                                    "SALESMAN/CUSTOMER",
                                     style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 1.5),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 2),
                                   ),
                                 ),
                                 Container(
                                   child: InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Icon(
-                                      Icons.clear,
-                                      size: 25,
-                                      color: Colors.blue[400],
-                                    ),
-                                  ),
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        size: 25,
+                                        color: Colors.blue[700],
+                                      )),
                                 )
                               ],
                             ),
@@ -156,16 +161,19 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                             child: TextField(
                               controller: _textController,
                               decoration: InputDecoration(
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 13),
                                   hintText: 'Search User...',
                                   hintStyle: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Colors.grey,
-                                      letterSpacing: 1),
+                                      fontSize: 16.0,
+                                      color: Color.fromARGB(255, 102, 102, 102),
+                                      fontWeight: FontWeight.w400),
                                   border: InputBorder.none,
                                   prefixIcon: Icon(
                                     Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
+                                    size: 16,
+                                    color: Color.fromARGB(255, 102, 102, 102),
                                   ),
                                   suffixIcon: user1
                                       ? InkWell(
@@ -250,8 +258,9 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                           title: Text(
                                             data.name,
                                             style: TextStyle(
-                                                fontSize: 15.2,
-                                                color: Colors.black),
+                                                fontSize: 16,
+                                                color: Color.fromARGB(
+                                                    255, 68, 68, 68)),
                                           ),
                                           trailing: data.checked
                                               ? Icon(

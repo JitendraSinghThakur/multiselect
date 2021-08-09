@@ -14,8 +14,8 @@ class _JobOverviewState extends State<JobOverview> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-          padding: EdgeInsets.all(4),
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

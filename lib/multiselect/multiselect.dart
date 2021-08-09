@@ -82,6 +82,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
                   callback: (List<ManageName> selectedData, String action) {
                     callback(selectedData, action);
                   },
+                  unassignedValue: unassignedData,
                   keyToDisplay: 'name',
                   type: 'user',
                   canShowProfilePic: true);

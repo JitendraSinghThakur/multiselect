@@ -25,8 +25,8 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-          padding: EdgeInsets.all(4),
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +88,7 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                     children: widget.imageData.map((data) {
-                  return Column(
+                  return Stack(
                     children: [
                       Container(
                         height: 155,
@@ -96,7 +96,16 @@ class _RecentPhotoFileState extends State<RecentPhotoFile> {
                             borderRadius: BorderRadius.circular(15.0),
                             child: Image.asset(data.url)),
                       ),
-                      // Text(data.name)
+                      Positioned(
+                        left: 55,
+                        top: 125,
+                        child: Text(
+                          data.name,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color.fromARGB(255, 102, 102, 102)),
+                        ),
+                      )
                     ],
                   );
                 }).toList()))

@@ -59,9 +59,10 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
                 child: textvalue == " "
                     ? Text(
                         "0 Selected",
-                        style: TextStyle(color: Colors.black, fontSize: 15),
+                        style: TextStyle(color: Colors.black, fontSize: 16),
                       )
-                    : Text(textvalue),
+                    : Text(textvalue,
+                        style: TextStyle(color: Colors.black, fontSize: 16)),
               ),
             ],
           ),
@@ -77,6 +78,7 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
                   callback: (ManageName selectedData, String action) {
                     callback(selectedData, action);
                   },
+                  unassignedValueSingle: unassignedData,
                   keyToDisplay: 'name',
                   type: 'user',
                   canShowProfilePic: true);

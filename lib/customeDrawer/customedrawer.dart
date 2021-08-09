@@ -14,7 +14,7 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - 100,
+      // width: MediaQuery.of(context).size.width - 60,
       child: Drawer(
         child: Column(
           children: [
@@ -114,13 +114,12 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                           },
                           onTap: () {
                             setState(() {
-                              // Navigator.pop(context);
+                              Navigator.pop(context);
                             });
                           },
                           child: Container(
                             child: Row(children: [
                               Container(
-                                width: MediaQuery.of(context).size.width - 100,
                                 padding: EdgeInsets.only(
                                     top: 10, left: 15, bottom: 10),
                                 margin: EdgeInsets.only(bottom: 2),
@@ -155,17 +154,21 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                       }).toList(),
                     ),
                     Divider(
-                      height: 10,
+                      height: 1,
                       thickness: 2,
+                      color: Color.fromRGBO(102, 102, 102, 0.1),
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15.0, top: 7, bottom: 7),
-                        child: Text(
-                          "WorkFlow",
-                          style: TextStyle(fontSize: 17),
+                    Container(
+                      color: Colors.white,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, top: 7, bottom: 7),
+                          child: Text(
+                            "WorkFlow",
+                            style: TextStyle(fontSize: 17),
+                          ),
                         ),
                       ),
                     ),
@@ -186,12 +189,13 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                           },
                           child: Container(
                             height: 37,
-                            margin: EdgeInsets.only(bottom: 3),
-                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.only(bottom: 3),
                             decoration: BoxDecoration(
                               border: Border(
-                                left:
-                                    BorderSide(color: data.colorName, width: 2),
+                                top: BorderSide.none,
+                                bottom: BorderSide.none,
+                                left: BorderSide(
+                                    color: data.colorName, width: 2.5),
                               ),
                               color:
                                   data.isActivated ? Colors.blue : Colors.white,
@@ -229,81 +233,72 @@ class _CustomeDrawerState extends State<CustomeDrawer> {
                       }).toList(),
                     ),
                     Divider(
-                      height: 10,
-                      thickness: 2,
+                      height: 1,
+                      thickness: 1,
+                      color: Color.fromRGBO(102, 102, 102, 0.1),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: drawerDataListStatic.map((data) {
-                        return InkWell(
-                          highlightColor: Color(0xff357ebd),
-                          onHighlightChanged: (isActivated) {
-                            setState(() {
-                              data.isActivated = isActivated;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              // Navigator.pop(context);
-                            });
-                          },
-                          child: Container(
-                            child: Row(children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width - 100,
-                                padding: EdgeInsets.only(
-                                    top: 10, left: 15, bottom: 10),
-                                color: data.isActivated
-                                    ? Colors.blue
-                                    : Colors.white,
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      data.iconName,
-                                      size: 19,
-                                      color: data.isActivated
-                                          ? Colors.white
-                                          : Colors.black45,
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 13.0),
-                                      child: Text(
-                                        data.name,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: data.isActivated
-                                              ? Colors.white
-                                              : Colors.black,
+                    Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: drawerDataListStatic.map((data) {
+                          return InkWell(
+                            highlightColor: Color(0xff357ebd),
+                            onHighlightChanged: (isActivated) {
+                              setState(() {
+                                data.isActivated = isActivated;
+                              });
+                            },
+                            onTap: () {
+                              setState(() {
+                                // Navigator.pop(context);
+                              });
+                            },
+                            child: Container(
+                              child: Row(children: [
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      top: 10, left: 15, bottom: 10),
+                                  color: data.isActivated
+                                      ? Colors.blue
+                                      : Colors.white,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        data.iconName,
+                                        size: 19,
+                                        color: data.isActivated
+                                            ? Colors.white
+                                            : Colors.black45,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 13.0),
+                                        child: Text(
+                                          data.name,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: data.isActivated
+                                                ? Colors.white
+                                                : Colors.black,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ]),
-                          ),
-                        );
-                      }).toList(),
+                              ]),
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(8),
-              // decoration: BoxDecoration(
-              //   border: Border(
-              //     top: BorderSide(
-              //       color: Color.fromARGB(255, 128, 128, 128),
-              //       width: 0.7,
-              //     ),
-              //     bottom: BorderSide(
-              //       color: Color.fromARGB(255, 128, 128, 128),
-              //       width: 0.7,
-              //     ),
-              //   ),
-              // ),
+              padding: EdgeInsets.only(top: 10, bottom: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

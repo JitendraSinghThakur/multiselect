@@ -128,6 +128,8 @@ class _QuichActionSheetState extends State<QuichActionSheet> {
                                                     callback(
                                                         selectedData, action);
                                                   },
+                                                  unassignedValue:
+                                                      unassignedData,
                                                   keyToDisplay: 'name',
                                                   type: 'user',
                                                   canShowProfilePic: true);

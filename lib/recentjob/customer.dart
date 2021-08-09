@@ -14,7 +14,8 @@ class _CustomerState extends State<Customer> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10, bottom: 15, left: 10, right: 10),
+          margin: EdgeInsets.only(top: 10, bottom: 10),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 2, bottom: 2),
           color: Color.fromARGB(255, 238, 238, 238),
           child: Padding(
             padding: const EdgeInsets.all(4.0),

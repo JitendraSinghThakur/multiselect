@@ -1,4 +1,4 @@
-import 'package:demoapp/customeDrawer/customedrawer.dart';
+import '../customeDrawer/customedrawer.dart';
 
 import '../recentjob/secondaryDrawer.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,7 @@ import 'fablist.dart';
 import 'joboverview.dart';
 import 'recentphoto.dart';
 import 'recentpicturelist.dart';
+import 'secondaryData.dart';
 import 'secondaryDrawerview.dart';
 import 'workflowpage.dart';
 
@@ -19,6 +20,14 @@ class RecentMain extends StatefulWidget {
 }
 
 class _RecentMainState extends State<RecentMain> {
+  SecondaryDrawerData selectedMenuValue = new SecondaryDrawerData(
+      -1, "", Icons.access_alarm_rounded, Colors.yellow[800], false);
+  void callback(SecondaryDrawerData selectedMenuValue1, String action) {
+    setState(() {
+      selectedMenuValue = selectedMenuValue1;
+    });
+  }
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -69,7 +78,12 @@ class _RecentMainState extends State<RecentMain> {
           margin: EdgeInsets.only(
             top: 44,
           ),
-          child: SecondDrawerView(),
+          child: SecondDrawerView(
+            selectedMenu: selectedMenuValue,
+            callback: (SecondaryDrawerData selectedMenuData, String action) {
+              callback(selectedMenuData, action);
+            },
+          ),
         ),
         endDrawer: CustomeDrawer(),
         floatingActionButton: FloatingActionButton(

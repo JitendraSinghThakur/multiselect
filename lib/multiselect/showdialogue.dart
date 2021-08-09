@@ -5,15 +5,17 @@ class MultiselectedModel extends StatefulWidget {
   final void Function(List<ManageName> selectedData, String action) callback;
   final List<ManageName> mainList;
   final List<ManageName> selected;
-  MultiselectedModel({
-    Key? key,
-    required this.mainList,
-    required this.selected,
-    required this.callback,
-    required String keyToDisplay,
-    required String type,
-    required bool canShowProfilePic,
-  }) : super(key: key);
+  final ManageName unassignedValue;
+  MultiselectedModel(
+      {Key? key,
+      required this.mainList,
+      required this.selected,
+      required this.callback,
+      required String keyToDisplay,
+      required String type,
+      required bool canShowProfilePic,
+      required this.unassignedValue})
+      : super(key: key);
 
   @override
   _MultiselectedModelState createState() => _MultiselectedModelState();
@@ -29,7 +31,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
 
   Color textColor = const Color(0xF2101010);
 
-  Color cancelColor = const Color(0xF254627D);
+  Color cancelColor = const Color.fromARGB(255, 84, 98, 125);
 
   void listData(data, BuildContext context) {
     newDataList.forEach((element) {
@@ -97,6 +99,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   }
 
   selectedValue() {
+    if (widget.mainList.where((element) => element.id == -1).length == 0) {
+      widget.mainList.insert(0, unassignedData);
+    }
+
     widget.mainList.forEach((element2) {
       element2.checked = false;
       if (widget.selected.where((element) => element.id == element2.id).length >
@@ -104,12 +110,12 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
         element2.checked = true;
       }
     });
-    widget.mainList.sort((a, b) {
-      if (b.checked) {
-        return 1;
-      }
-      return -1;
-    });
+    // widget.mainList.sort((a, b) {
+    //   if (b.checked) {
+    //     return 1;
+    //   }
+    //   return -1;
+    // });
     isChecked = widget.mainList.length == widget.selected.length;
     count = widget.selected.length;
   }
@@ -138,69 +144,101 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
               var width = MediaQuery.of(context).size.width * .95;
 
               return Container(
+                margin:
+                    EdgeInsets.only(bottom: height - (height - 50), top: 60),
                 decoration: BoxDecoration(
-                    color: Color(0xffEEEEEE),
+                    // color: Color(0xffEEEEEE),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15)),
                 padding: EdgeInsets.all(1),
-                height: height,
-                width: width - 40,
+                // height: height,
+                width: width - 25,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 10),
+                      // decoration: BoxDecoration(
+                      //   color: Colors.white,
+                      //   borderRadius: BorderRadius.circular(15),
+                      // ),
                       decoration: BoxDecoration(
-                        color: Color(0xffEEEEEE),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(15.0),
+                            bottom: Radius.circular(15.0)),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 247, 247, 247),
+                            offset: Offset(0.0, 1.0), //(x,y)
+                          ),
+                        ],
                       ),
                       child: Column(
                         children: [
-                          Container(
-                            child: TextField(
-                              controller: _textController,
-                              decoration: InputDecoration(
-                                  hintText: 'Search User...',
-                                  hintStyle: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Colors.grey,
-                                      letterSpacing: 1),
-                                  border: InputBorder.none,
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  suffixIcon: user1
-                                      ? InkWell(
-                                          onTap: () {
-                                            clearText();
-                                          },
-                                          child: Icon(
-                                            Icons.clear,
-                                            color: Colors.black,
-                                            size: 18,
-                                          ),
-                                        )
-                                      : null),
-                              onChanged: (value) {
-                                setState(() {
-                                  newDataList =
-                                      onItemChanged(value, widget.mainList);
-                                });
-                              },
-                            ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 300,
+                                child: TextField(
+                                  controller: _textController,
+                                  decoration: InputDecoration(
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 14),
+                                      hintText: 'Search User...',
+                                      hintStyle: TextStyle(
+                                        fontSize: 16.0,
+                                        color:
+                                            Color.fromARGB(255, 102, 102, 102),
+                                      ),
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.search,
+                                        size: 16,
+                                        color:
+                                            Color.fromARGB(255, 102, 102, 102),
+                                      ),
+                                      suffixIcon: user1
+                                          ? InkWell(
+                                              onTap: () {
+                                                clearText();
+                                              },
+                                              child: Icon(
+                                                Icons.clear,
+                                                color: Colors.black,
+                                                size: 18,
+                                              ),
+                                            )
+                                          : null),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      newDataList =
+                                          onItemChanged(value, widget.mainList);
+                                    });
+                                  },
+                                ),
+                              ),
+                              // Container(
+                              //   child: Text("data"),
+                              // )
+                            ],
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Expanded(
                                 flex: 2,
                                 child: Container(
-                                  padding: EdgeInsets.only(left: 25),
+                                  padding: EdgeInsets.only(
+                                      left: 30, top: 0, bottom: 0),
                                   child: Text(
                                     '${getSelectedCount()}/${actualDataList.length}',
                                     style: TextStyle(
-                                        fontSize: 17, color: Colors.grey),
+                                        fontSize: 15,
+                                        color:
+                                            Color.fromARGB(255, 136, 136, 136),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ),
                               ),
@@ -208,7 +246,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 child: newDataList.length == 0 || user2
                                     ? Container()
                                     : Container(
-                                        padding: EdgeInsets.only(left: 15),
+                                        padding: EdgeInsets.only(left: 21),
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
@@ -249,7 +287,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                               child: Text(
                                 "No records found",
                                 style: TextStyle(
-                                    color: Colors.black38,
+                                    color: Color.fromARGB(255, 102, 102, 102),
                                     fontSize: 14,
                                     letterSpacing: 1),
                               ),
@@ -278,23 +316,28 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                         child: ListTile(
                                           dense: true,
                                           leading: Container(
-                                            width: 32.0,
-                                            height: 32.0,
+                                            width: 37.0,
+                                            height: 37.0,
                                             padding: EdgeInsets.all(2.0),
                                             decoration: BoxDecoration(
                                               color: data.colorName,
                                               shape: BoxShape.circle,
                                             ),
                                             child: CircleAvatar(
-                                                radius: 14.0,
-                                                backgroundImage: AssetImage(
-                                                    'img/images/jitendra.jpeg')),
+                                                radius: 20.0,
+                                                backgroundImage: data.id != -1
+                                                    ? AssetImage(
+                                                        'img/images/jitendra.jpeg')
+                                                    : AssetImage(
+                                                        'img/images/user.jpg')),
                                           ),
                                           title: Text(
                                             data.name,
                                             style: TextStyle(
-                                                fontSize: 15.2,
-                                                color: Colors.black),
+                                                fontSize: 17,
+                                                color: Color.fromRGBO(
+                                                    0, 0, 0, 0.8),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                           trailing: InkWell(
                                             onTap: () {
@@ -330,18 +373,32 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xffEEEEEE),
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(15.0),
+                            bottom: Radius.circular(15.0)),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 247, 247, 247),
+                            offset: Offset(0.0, 1.0), //(x,y)
+                          ),
+                        ],
                       ),
+                      // decoration: BoxDecoration(
+                      //   borderRadius: BorderRadius.circular(15),
+                      //   color: Colors.white,
+                      // ),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 15),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
+                              padding: EdgeInsets.all(5),
+                              width: 140,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(6),
+                                  Radius.circular(10),
                                 ),
                                 color: cancelColor,
                                 border: Border.all(color: Colors.grey),
@@ -352,10 +409,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                   Navigator.pop(context);
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 6, bottom: 6, left: 25, right: 25),
+                                  padding: EdgeInsets.all(5),
                                   child: Text(
-                                    "Cancel",
+                                    "CANCEL",
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -365,10 +422,15 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Container(
+                              padding: EdgeInsets.all(5),
+                              width: 140,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(6),
+                                  Radius.circular(10),
                                 ),
                                 color: chechIcons,
                                 border: Border.all(color: chechIcons),
@@ -379,10 +441,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                   Navigator.pop(context);
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 6, bottom: 6, left: 35, right: 35),
+                                  padding: EdgeInsets.all(5),
                                   child: Text(
-                                    "Done",
+                                    "DONE",
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,

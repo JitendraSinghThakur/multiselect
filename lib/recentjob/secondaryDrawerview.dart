@@ -3,14 +3,34 @@ import 'package:flutter/cupertino.dart';
 import 'secondaryData.dart';
 
 class SecondDrawerView extends StatefulWidget {
-  const SecondDrawerView({Key? key}) : super(key: key);
-
+  final void Function(SecondaryDrawerData selectedMenu, String action) callback;
+  final SecondaryDrawerData selectedMenu;
+  SecondDrawerView(
+      {Key? key, required this.callback, required this.selectedMenu})
+      : super(key: key);
   @override
   _SecondDrawerViewState createState() => _SecondDrawerViewState();
 }
 
 class _SecondDrawerViewState extends State<SecondDrawerView> {
-  String selectedItem = '1';
+  // List<SecondaryDrawerData> newMenuDataList = secondaryDataList;
+  List<SecondaryDrawerData> newMenuDataList = [];
+  void updateDrawerData() {
+    newMenuDataList = secondaryDataList;
+    newMenuDataList.forEach((element) {
+      if (element.id == widget.selectedMenu.id) {
+        element.isActivated = true;
+      } else {
+        element.isActivated = false;
+      }
+    });
+  }
+
+  void initState() {
+    super.initState();
+    updateDrawerData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -46,55 +66,63 @@ class _SecondDrawerViewState extends State<SecondDrawerView> {
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: secondaryDataList.map((data) {
+                children: newMenuDataList.map((data) {
                   return InkWell(
-                    highlightColor: Color(0xffdfeff5),
+                    highlightColor: Color(0xfff2f7fc),
                     onHighlightChanged: (isActivated) {
                       setState(() {
                         data.isActivated = isActivated;
                       });
                     },
-                    // onTap: () {
-                    //   setState(() {
-                    //     data.name = selectedItem ? Text("data") : Text("data2");
-                    //   });
-                    // },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding:
-                              EdgeInsets.only(top: 10, left: 25, bottom: 10),
-                          child: Row(children: [
-                            Icon(
-                              data.iconName,
-                              size: 16,
-                              color: Colors.black45,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Text(
-                                data.name,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.w400),
+                    onTap: () {
+                      setState(() {
+                        // selectedItem = data.id;
+                        widget.callback(data, "done");
+
+                        Navigator.pop(context);
+                      });
+                    },
+                    child: Container(
+                      color: data.isActivated
+                          ? Color(0xfff2f7fc)
+                          : Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding:
+                                EdgeInsets.only(top: 10, left: 25, bottom: 10),
+                            child: Row(children: [
+                              Icon(
+                                data.iconName,
+                                size: 18,
+                                color: Colors.black45,
                               ),
-                            ),
-                          ]),
-                        ),
-                        Container(
-                          padding:
-                              EdgeInsets.only(top: 10, right: 10, bottom: 10),
-                          child: Text(
-                            "0",
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 53, 132, 202),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Text(
+                                  data.name,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ]),
                           ),
-                        )
-                      ],
+                          Container(
+                            padding:
+                                EdgeInsets.only(top: 10, right: 10, bottom: 10),
+                            child: Text(
+                              "0",
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 53, 132, 202),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 }).toList(),
