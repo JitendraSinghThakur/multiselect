@@ -27,6 +27,12 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   int count = 0;
   bool user1 = false;
   bool user2 = false;
+
+  bool groupIconchange = false;
+  bool groupCheckedbox = false;
+  bool groupCheckedbox1 = false;
+  bool groupCheckedbox2 = false;
+  bool groupCheckedbox3 = false;
   Color chechIcons = const Color(0xF2347EBD);
 
   Color textColor = const Color(0xF2101010);
@@ -133,24 +139,22 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
       builder: (context, setState) {
         return AlertDialog(
           backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.all(0),
+          insetPadding: EdgeInsets.only(bottom: 45, top: 60),
           contentPadding:
               EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              borderRadius: BorderRadius.all(Radius.circular(50.0))),
           content: Builder(
             builder: (context) {
-              var height = MediaQuery.of(context).size.height * 0.90;
+              // var height = MediaQuery.of(context).size.height * 0.90;
               var width = MediaQuery.of(context).size.width * .95;
 
               return Container(
-                margin:
-                    EdgeInsets.only(bottom: height - (height - 50), top: 60),
                 decoration: BoxDecoration(
-                    // color: Color(0xffEEEEEE),
+                    // color: Colors.yellow,
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)),
-                padding: EdgeInsets.all(1),
+                    borderRadius: BorderRadius.circular(50)),
+                // padding: EdgeInsets.all(0),
                 // height: height,
                 width: width - 25,
                 child: Column(
@@ -164,7 +168,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                       // ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(15.0),
+                            top: Radius.circular(25.0),
                             bottom: Radius.circular(15.0)),
                         color: Colors.white,
                         boxShadow: [
@@ -177,9 +181,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                       child: Column(
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Container(
-                                width: 300,
+                                width: 200,
                                 child: TextField(
                                   controller: _textController,
                                   decoration: InputDecoration(
@@ -219,9 +224,43 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                   },
                                 ),
                               ),
-                              // Container(
-                              //   child: Text("data"),
-                              // )
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    groupIconchange = !groupIconchange;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      left: 18, right: 10, top: 9, bottom: 9),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 238, 238, 238),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Groups",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Color.fromRGBO(0, 0, 0, 1)),
+                                      ),
+                                      groupIconchange
+                                          ? Icon(
+                                              Icons.keyboard_arrow_up,
+                                              size: 16,
+                                              color: Colors.black,
+                                            )
+                                          : Icon(
+                                              Icons.keyboard_arrow_down,
+                                              size: 16,
+                                              color: Colors.black,
+                                            )
+                                    ],
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                           Row(
@@ -257,20 +296,20 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                           child: isChecked
                                               ? Icon(
                                                   Icons.check_box_rounded,
-                                                  size: 25,
+                                                  size: 27,
                                                   color: chechIcons,
                                                 )
                                               : count == 0
                                                   ? Icon(
                                                       Icons
                                                           .check_box_outline_blank_rounded,
-                                                      size: 25,
+                                                      size: 27,
                                                       color: chechIcons,
                                                     )
                                                   : Icon(
                                                       Icons
                                                           .indeterminate_check_box_rounded,
-                                                      size: 25,
+                                                      size: 27,
                                                       color: chechIcons,
                                                     ),
                                         ),
@@ -281,6 +320,117 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                         ],
                       ),
                     ),
+                    groupIconchange
+                        ? Container(
+                            width: 250,
+                            padding: EdgeInsets.only(top: 30),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "User Groups (3)",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Groups 1 (3)",
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            groupCheckedbox = !groupCheckedbox;
+                                          });
+                                        },
+                                        child: Icon(
+                                          groupCheckedbox
+                                              ? Icons.check_box_rounded
+                                              : Icons
+                                                  .check_box_outline_blank_rounded,
+                                          size: 27,
+                                          color: chechIcons,
+                                        ),
+                                      ),
+                                    ]),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Groups 2 (3)",
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            groupCheckedbox1 =
+                                                !groupCheckedbox1;
+                                          });
+                                        },
+                                        child: Icon(
+                                          groupCheckedbox1
+                                              ? Icons.check_box_rounded
+                                              : Icons
+                                                  .check_box_outline_blank_rounded,
+                                          size: 27,
+                                          color: chechIcons,
+                                        ),
+                                      ),
+                                    ]),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Groups 3 (3)",
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            groupCheckedbox2 =
+                                                !groupCheckedbox2;
+                                          });
+                                        },
+                                        child: Icon(
+                                          groupCheckedbox2
+                                              ? Icons.check_box_rounded
+                                              : Icons
+                                                  .check_box_outline_blank_rounded,
+                                          size: 27,
+                                          color: chechIcons,
+                                        ),
+                                      ),
+                                    ]),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
                     Expanded(
                       child: newDataList.length == 0
                           ? Container(
@@ -312,7 +462,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
 
                                       return Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 20, right: 20),
+                                            left: 20, right: 20, bottom: 13),
                                         child: ListTile(
                                           dense: true,
                                           leading: Container(
@@ -349,13 +499,13 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                             child: data.checked
                                                 ? Icon(
                                                     Icons.check_box_rounded,
-                                                    size: 25,
+                                                    size: 27,
                                                     color: chechIcons,
                                                   )
                                                 : Icon(
                                                     Icons
                                                         .check_box_outline_blank_rounded,
-                                                    size: 25,
+                                                    size: 27,
                                                     color: chechIcons,
                                                   ),
                                           ),
@@ -374,8 +524,8 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(15.0),
-                            bottom: Radius.circular(15.0)),
+                            top: Radius.circular(25.0),
+                            bottom: Radius.circular(25.0)),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(

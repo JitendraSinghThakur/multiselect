@@ -10,8 +10,8 @@ class SingleUserSelect extends StatefulWidget {
 }
 
 class _SingleUserSelectState extends State<SingleUserSelect> {
-  ManageName selectedNames = new ManageName(-1, "", false, 0, Colors.red);
-
+  ManageName selectedNames =
+      ManageName(-1, "Unassigned", false, 0, Colors.blue, "");
   void callback(ManageName selectedData, String action) {
     if (action == "cancel") {
       return;

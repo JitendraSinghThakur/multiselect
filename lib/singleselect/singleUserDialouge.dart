@@ -48,7 +48,7 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
 
     widget.callback(
         new ManageName(newSelected.id, newSelected.name, newSelected.checked,
-            newSelected.sort, newSelected.colorName),
+            newSelected.sort, newSelected.colorName, newSelected.groupName),
         "done");
   }
 
@@ -91,12 +91,12 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
         element2.checked = true;
       }
     });
-    widget.mainList.sort((a, b) {
-      if (b.checked) {
-        return 1;
-      }
-      return -1;
-    });
+    // widget.mainList.sort((a, b) {
+    //   if (b.checked) {
+    //     return 1;
+    //   }
+    //   return -1;
+    // });
   }
 
   void initState() {
@@ -252,8 +252,11 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                             ),
                                             child: CircleAvatar(
                                                 radius: 14.0,
-                                                backgroundImage: AssetImage(
-                                                    'img/images/jitendra.jpeg')),
+                                                backgroundImage: data.id != -1
+                                                    ? AssetImage(
+                                                        'img/images/jitendra.jpeg')
+                                                    : AssetImage(
+                                                        'img/images/user.jpg')),
                                           ),
                                           title: Text(
                                             data.name,
@@ -265,7 +268,9 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                           trailing: data.checked
                                               ? Icon(
                                                   Icons.check,
-                                                  color: Colors.blue[400],
+                                                  color: data.id != -1
+                                                      ? Colors.blue[400]
+                                                      : Colors.white,
                                                 )
                                               : null,
                                           onTap: () {
