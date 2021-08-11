@@ -22,6 +22,7 @@ class MultiselectedModel extends StatefulWidget {
 }
 
 class _MultiselectedModelState extends State<MultiselectedModel> {
+  double _animatedHeight = 100.0;
   bool isChecked = false;
 
   int count = 0;
@@ -181,9 +182,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                       child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
+                                margin: EdgeInsets.only(left: 5),
                                 width: 200,
                                 child: TextField(
                                   controller: _textController,
@@ -191,7 +193,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                       isDense: true,
                                       contentPadding: EdgeInsets.symmetric(
                                           horizontal: 0, vertical: 14),
-                                      hintText: 'Search User...',
+                                      hintText: 'Search User',
                                       hintStyle: TextStyle(
                                         fontSize: 16.0,
                                         color:
@@ -224,13 +226,18 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                   },
                                 ),
                               ),
-                              InkWell(
+                              GestureDetector(
                                 onTap: () {
                                   setState(() {
+                                    _animatedHeight != 0.0
+                                        ? _animatedHeight = 0.0
+                                        : _animatedHeight = 172;
+
                                     groupIconchange = !groupIconchange;
                                   });
                                 },
                                 child: Container(
+                                  margin: EdgeInsets.only(right: 20),
                                   padding: EdgeInsets.only(
                                       left: 18, right: 10, top: 9, bottom: 9),
                                   decoration: BoxDecoration(
@@ -267,10 +274,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: Container(
                                   padding: EdgeInsets.only(
-                                      left: 30, top: 0, bottom: 0),
+                                      left: 22, top: 0, bottom: 0),
                                   child: Text(
                                     '${getSelectedCount()}/${actualDataList.length}',
                                     style: TextStyle(
@@ -285,7 +292,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 child: newDataList.length == 0 || user2
                                     ? Container()
                                     : Container(
-                                        padding: EdgeInsets.only(left: 21),
+                                        // padding: EdgeInsets.only(),
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
@@ -320,117 +327,68 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                         ],
                       ),
                     ),
-                    groupIconchange
-                        ? Container(
-                            width: 250,
-                            padding: EdgeInsets.only(top: 30),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 120),
+                      child: _animatedHeight != 0
+                          ? SingleChildScrollView(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: Color.fromRGBO(247, 247, 247, 1)),
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                padding: EdgeInsets.only(
+                                    top: 40, left: 25, right: 25, bottom: 5),
+                                child: Column(
                                   children: [
-                                    Text(
-                                      "User Groups (3)",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "User Groups (3)",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
                                     ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Groups 1 (3)",
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                groupCheckedbox =
+                                                    !groupCheckedbox;
+                                              });
+                                            },
+                                            child: Icon(
+                                              groupCheckedbox
+                                                  ? Icons.check_box_rounded
+                                                  : Icons
+                                                      .check_box_outline_blank_rounded,
+                                              size: 27,
+                                              color: chechIcons,
+                                            ),
+                                          ),
+                                        ]),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Groups 1 (3)",
-                                        style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            groupCheckedbox = !groupCheckedbox;
-                                          });
-                                        },
-                                        child: Icon(
-                                          groupCheckedbox
-                                              ? Icons.check_box_rounded
-                                              : Icons
-                                                  .check_box_outline_blank_rounded,
-                                          size: 27,
-                                          color: chechIcons,
-                                        ),
-                                      ),
-                                    ]),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Groups 2 (3)",
-                                        style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            groupCheckedbox1 =
-                                                !groupCheckedbox1;
-                                          });
-                                        },
-                                        child: Icon(
-                                          groupCheckedbox1
-                                              ? Icons.check_box_rounded
-                                              : Icons
-                                                  .check_box_outline_blank_rounded,
-                                          size: 27,
-                                          color: chechIcons,
-                                        ),
-                                      ),
-                                    ]),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Groups 3 (3)",
-                                        style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            groupCheckedbox2 =
-                                                !groupCheckedbox2;
-                                          });
-                                        },
-                                        child: Icon(
-                                          groupCheckedbox2
-                                              ? Icons.check_box_rounded
-                                              : Icons
-                                                  .check_box_outline_blank_rounded,
-                                          size: 27,
-                                          color: chechIcons,
-                                        ),
-                                      ),
-                                    ]),
-                              ],
-                            ),
-                          )
-                        : SizedBox(),
+                              ),
+                            )
+                          : null,
+                      height: _animatedHeight,
+                    ),
                     Expanded(
                       child: newDataList.length == 0
                           ? Container(
@@ -462,7 +420,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
 
                                       return Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 20, right: 20, bottom: 13),
+                                            left: 10, right: 16, bottom: 9),
                                         child: ListTile(
                                           dense: true,
                                           leading: Container(
@@ -544,7 +502,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: EdgeInsets.all(4),
                               width: 140,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
@@ -573,10 +531,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                               ),
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 22,
                             ),
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: EdgeInsets.all(4),
                               width: 140,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(

@@ -6,6 +6,7 @@ import '../singleselect/singleselect.dart';
 import 'package:flutter/material.dart';
 import '../multiselect/multiselect.dart';
 import '../multiselect/styles.dart';
+import 'demo.dart';
 import 'popover/popOver.dart';
 
 void main() => runApp(
@@ -103,6 +104,7 @@ class _HomeState extends State<Home> {
                         child: Text("Recent Job"),
                       ),
                     ),
+                    JSONFILESDATA()
                   ],
                 ),
               ),
