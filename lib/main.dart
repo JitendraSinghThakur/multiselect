@@ -1,13 +1,13 @@
 import '../recentjob/recentmain.dart';
 import '../workflow/workflowpage.dart';
 import '../customeDrawer/customedrawer.dart';
-import '../quickactionsheet/quicksheet.dart';
+// import '../quickactionsheet/quicksheet.dart';
 import '../singleselect/singleselect.dart';
 import 'package:flutter/material.dart';
 import '../multiselect/multiselect.dart';
 import '../multiselect/styles.dart';
 import 'demo.dart';
-import 'popover/popOver.dart';
+// import 'popover/popOver.dart';
 
 void main() => runApp(
       const MyApp(),
@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PopOverpage(),
+                    // PopOverpage(),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: OpenCustomerDetails(),
@@ -84,10 +84,10 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.only(top: 18.0),
                       child: SingleUserSelect(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: QuichActionSheet(),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 18.0),
+                    //   child: QuichActionSheet(),
+                    // ),
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
@@ -104,7 +104,8 @@ class _HomeState extends State<Home> {
                         child: Text("Recent Job"),
                       ),
                     ),
-                    JSONFILESDATA()
+                    SingleChildScrollView(
+                        child: Container(height: 500, child: DemoHomeJson()))
                   ],
                 ),
               ),

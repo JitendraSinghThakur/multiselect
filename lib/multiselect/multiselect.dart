@@ -1,6 +1,10 @@
 import '../multiselect/data.dart';
 import '../multiselect/showdialogue.dart';
 import 'package:flutter/material.dart';
+import 'groupDatalist.dart';
+import 'userDatalist.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' as rootBundle;
 
 class OpenCustomerDetails extends StatefulWidget {
   const OpenCustomerDetails({Key? key}) : super(key: key);
@@ -77,7 +81,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
             context: context,
             builder: (BuildContext context) {
               return MultiselectedModel(
-                  mainList: mainDataList,
+                  mainList: ReadJsonDataList(),
                   selected: selectedNames,
                   callback: (List<ManageName> selectedData, String action) {
                     callback(selectedData, action);
@@ -89,5 +93,23 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
             });
       },
     );
+  }
+
+  Future<List<GroupList>> ReadJsonData() async {
+    final jsondata =
+        await rootBundle.rootBundle.loadString('jsonfiles/grouplist.json');
+    final list = json.decode(jsondata) as List<dynamic>;
+    final list2 = list.map((e) => GroupList.fromJson(e)).toList();
+    return list2;
+  }
+
+  // ignore: non_constant_identifier_names
+  Future<List<Userlist>> ReadJsonDataList() async {
+    final jsondata =
+        await rootBundle.rootBundle.loadString('jsonfiles/userlist.json');
+    final listmultiselected = json.decode(jsondata) as List<dynamic>;
+    final listmultiselected2 =
+        listmultiselected.map((e) => Userlist.fromJson(e)).toList();
+    return listmultiselected2;
   }
 }

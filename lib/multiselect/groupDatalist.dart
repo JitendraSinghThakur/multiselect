@@ -1,109 +1,62 @@
-import 'dart:convert';
+class GroupList {
+  int? id;
+  String? name;
+  String? type;
+  String? updatedAt;
+  List<Users>? users;
 
-ManageName manageNameFromJson(String str) =>
-    ManageName.fromJson(json.decode(str));
+  GroupList({this.id, this.name, this.type, this.updatedAt, this.users});
 
-String manageNameToJson(ManageName data) => json.encode(data.toJson());
+  GroupList.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    type = json['type'];
+    updatedAt = json['updated_at'];
+    if (json['users'] != null) {
+      users = <Users>[];
+      json['users'].forEach((v) {
+        users!.add(new Users.fromJson(v));
+      });
+    }
+  }
 
-class ManageName {
-  ManageName({
-    required this.data,
-    required this.status,
-  });
-
-  List<ManageNameDatum> data;
-  int status;
-
-  factory ManageName.fromJson(Map<String, dynamic> json) => ManageName(
-        data: List<ManageNameDatum>.from(
-            json["data"].map((x) => ManageNameDatum.fromJson(x))),
-        status: json["status"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-        "status": status,
-      };
-}
-
-class ManageNameDatum {
-  ManageNameDatum({
-    required this.id,
-    required this.name,
-    required this.type,
-    required this.updatedAt,
-    required this.users,
-  });
-
-  int id;
-  String name;
-  String type;
-  DateTime updatedAt;
-  Users users;
-
-  factory ManageNameDatum.fromJson(Map<String, dynamic> json) =>
-      ManageNameDatum(
-        id: json["id"],
-        name: json["name"],
-        type: json["type"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        users: Users.fromJson(json["users"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "type": type,
-        "updated_at": updatedAt.toIso8601String(),
-        "users": users.toJson(),
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['type'] = this.type;
+    data['updated_at'] = this.updatedAt;
+    if (this.users != null) {
+      data['users'] = this.users!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Users {
-  Users({
-    required this.data,
-  });
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? fullName;
+  int? groupId;
 
-  List<UsersDatum> data;
+  Users({this.id, this.firstName, this.lastName, this.fullName, this.groupId});
 
-  factory Users.fromJson(Map<String, dynamic> json) => Users(
-        data: List<UsersDatum>.from(
-            json["data"].map((x) => UsersDatum.fromJson(x))),
-      );
+  Users.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    fullName = json['full_name'];
+    groupId = json['group_id'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
-      };
-}
-
-class UsersDatum {
-  UsersDatum({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.fullName,
-    required this.groupId,
-  });
-
-  int id;
-  String firstName;
-  String lastName;
-  String fullName;
-  int groupId;
-
-  factory UsersDatum.fromJson(Map<String, dynamic> json) => UsersDatum(
-        id: json["id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        fullName: json["full_name"],
-        groupId: json["group_id"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "full_name": fullName,
-        "group_id": groupId,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['first_name'] = this.firstName;
+    data['last_name'] = this.lastName;
+    data['full_name'] = this.fullName;
+    data['group_id'] = this.groupId;
+    return data;
+  }
 }

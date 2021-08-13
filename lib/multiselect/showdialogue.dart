@@ -1,9 +1,12 @@
+import 'package:demoapp/multiselect/userDatalist.dart';
+
 import '../multiselect/data.dart';
 import 'package:flutter/material.dart';
+import 'groupDatalist.dart';
 
 class MultiselectedModel extends StatefulWidget {
   final void Function(List<ManageName> selectedData, String action) callback;
-  final List<ManageName> mainList;
+  final Future<List<Userlist>> mainList;
   final List<ManageName> selected;
   final ManageName unassignedValue;
   MultiselectedModel(
@@ -22,7 +25,7 @@ class MultiselectedModel extends StatefulWidget {
 }
 
 class _MultiselectedModelState extends State<MultiselectedModel> {
-  double _animatedHeight = 100.0;
+  double _animatedHeight = 0.0;
   bool isChecked = false;
 
   int count = 0;
@@ -41,29 +44,29 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   Color cancelColor = const Color.fromARGB(255, 84, 98, 125);
 
   void listData(data, BuildContext context) {
-    newDataList.forEach((element) {
-      if (element.id == data.id) {
-        element.checked = data.checked;
-      }
-    });
-    count = 0;
-    newDataList.forEach((element) {
-      if (element.checked) count++;
-    });
-    isChecked = count == newDataList.length;
+    // newDataList.forEach((element) {
+    //   if (element.id == data.id) {
+    //     element.checked = data.checked;
+    //   }
+    // });
+    // count = 0;
+    // newDataList.forEach((element) {
+    //   if (element.checked as bool) count++;
+    // });
+    // isChecked = count == newDataList.length;
   }
 
   void selectAll() {
-    newDataList.forEach((element) {
-      element.checked = isChecked;
-    });
-    actualDataList.forEach((element) {
-      element.checked = isChecked;
-    });
-    count = 0;
-    actualDataList.forEach((element) {
-      if (element.checked) count++;
-    });
+    // newDataList.forEach((element) {
+    //   element.checked = isChecked;
+    // });
+    // actualDataList.forEach((element) {
+    //   element.checked = isChecked;
+    // });
+    // count = 0;
+    // actualDataList.forEach((element) {
+    //   if (element.checked) count++;
+    // });
   }
 
   TextEditingController _textController = TextEditingController();
@@ -78,16 +81,19 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
     user2 = false;
   }
 
-  List<ManageName> newDataList = [];
-  List<ManageName> actualDataList = [];
+  late Future<List<Userlist>> newDataList;
+  late Future<List<Userlist>> actualDataList;
+  // Future<List<Userlist>> newDataList = [] as Future<List<Userlist>>;
+  // Future<List<Userlist>> actualDataList = [] as Future<List<Userlist>>;
 
-  onItemChanged(String value, List<ManageName> listSearch) {
+  onItemChanged(String value, Future<List<Userlist>> listSearch) {
     user1 = true;
     user2 = value.trim().length > 0 ? true : false;
-    return listSearch
-        .where((managename) =>
-            managename.name.toLowerCase().contains(value.toLowerCase()))
-        .toList();
+    return null;
+    //  listSearch.
+    //     .where((managename) =>
+    //         managename.name.toLowerCase().contains(value.toLowerCase()))
+    //     .toList();
   }
 
   void submit(String action) {
@@ -95,36 +101,42 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
       widget.callback([], action);
       return;
     }
-
-    List<ManageName> data =
-        actualDataList.where((element) => element.checked).toList();
-    widget.callback(data, action);
+ List<Userlist> data = [];
+    actualDataList
+        .then((value) => {
+        data =  value.where((element) => element.checked as bool).toList()};
+           widget.callback(data, action);
+  
+          );
   }
+    // actualDataList.where((element) => element.checked).toList();
+  
 
   getSelectedCount() {
-    return actualDataList.where((element) => element.checked).length;
+    return 0;
+    // actualDataList.where((element) => element.checked).length;
   }
 
   selectedValue() {
-    if (widget.mainList.where((element) => element.id == -1).length == 0) {
-      widget.mainList.insert(0, unassignedData);
-    }
+    // if (widget.mainList.where((element) => element.id == -1).length == 0) {
+    //   widget.mainList.insert(0, unassignedData);
+    // }
 
-    widget.mainList.forEach((element2) {
-      element2.checked = false;
-      if (widget.selected.where((element) => element.id == element2.id).length >
-          0) {
-        element2.checked = true;
-      }
-    });
+    // widget.mainList.forEach((element2) {
+    //   element2.checked = false;
+    //   if (widget.selected.where((element) => element.id == element2.id).length >
+    //       0) {
+    //     element2.checked = true;
+    //   }
+    // });
     // widget.mainList.sort((a, b) {
     //   if (b.checked) {
     //     return 1;
     //   }
     //   return -1;
     // });
-    isChecked = widget.mainList.length == widget.selected.length;
-    count = widget.selected.length;
+    // isChecked = widget.mainList.length == widget.selected.length;
+    // count = widget.selected.length;
   }
 
   void initState() {
@@ -279,7 +291,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                   padding: EdgeInsets.only(
                                       left: 22, top: 0, bottom: 0),
                                   child: Text(
-                                    '${getSelectedCount()}/${actualDataList.length}',
+                                    '${getSelectedCount()}/${111}',
                                     style: TextStyle(
                                         fontSize: 15,
                                         color:
@@ -289,7 +301,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 ),
                               ),
                               Expanded(
-                                child: newDataList.length == 0 || user2
+                                child: 1 == 0 || user2
                                     ? Container()
                                     : Container(
                                         // padding: EdgeInsets.only(),
@@ -327,84 +339,167 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                         ],
                       ),
                     ),
+
                     AnimatedContainer(
-                      duration: Duration(milliseconds: 120),
-                      child: _animatedHeight != 0
-                          ? SingleChildScrollView(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color: Color.fromRGBO(247, 247, 247, 1)),
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                padding: EdgeInsets.only(
-                                    top: 40, left: 25, right: 25, bottom: 5),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                        padding: EdgeInsets.only(
+                            top: _animatedHeight != 0 ? 50.0 : 0,
+                            left: 30,
+                            right: 30,
+                            bottom: 0),
+                        duration: Duration(milliseconds: 300),
+                        child: _animatedHeight != 0
+                            ? FutureBuilder(
+                                future: null,
+                                builder: (context, data) {
+                                  if (data.hasError) {
+                                    return Center(child: Text("${data.error}"));
+                                  } else if (data.hasData) {
+                                    var items = data.data as List<GroupList>;
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          "User Groups (3)",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Groups 1 (3)",
+                                        Container(
+                                          padding: EdgeInsets.only(left: 15),
+                                          child: Text(
+                                            '${"Group"}(${items.length})',
                                             style: TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.w400),
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                groupCheckedbox =
-                                                    !groupCheckedbox;
-                                              });
-                                            },
-                                            child: Icon(
-                                              groupCheckedbox
-                                                  ? Icons.check_box_rounded
-                                                  : Icons
-                                                      .check_box_outline_blank_rounded,
-                                              size: 27,
-                                              color: chechIcons,
-                                            ),
-                                          ),
-                                        ]),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : null,
-                      height: _animatedHeight,
-                    ),
+                                        ),
+                                        ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            itemCount: items.length,
+                                            itemBuilder: (context, index) {
+                                              var data = items[index];
+
+                                              return ListTile(
+                                                dense: true,
+                                                title: Text(
+                                                  '${data.name.toString()}(${data.users!.length})',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromRGBO(
+                                                          0, 0, 0, 0.8),
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                                trailing: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      // data.checked = !data.checked;
+                                                    });
+                                                    listData(data, context);
+                                                  },
+                                                  child: data.id == 0
+                                                      ? Icon(
+                                                          Icons
+                                                              .check_box_rounded,
+                                                          size: 27,
+                                                          color: chechIcons,
+                                                        )
+                                                      : Icon(
+                                                          Icons
+                                                              .check_box_outline_blank_rounded,
+                                                          size: 27,
+                                                          color: chechIcons,
+                                                        ),
+                                                ),
+                                                onTap: () {
+                                                  setState(() {
+                                                    // data.checked = !data.checked;
+                                                  });
+                                                  // listData(data, context);
+                                                },
+                                              );
+                                            })
+                                      ],
+                                    );
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                },
+                              )
+                            : Text("")),
+                    // ),
+                    // AnimatedContainer(
+                    //   duration: Duration(milliseconds: 300),
+                    //   child: _animatedHeight != 0
+                    //       ? SingleChildScrollView(
+                    //           child: Container(
+                    //             decoration: BoxDecoration(
+                    //                 borderRadius: BorderRadius.circular(4),
+                    //                 color: Color.fromRGBO(247, 247, 247, 1)),
+                    //             margin: EdgeInsets.only(left: 20, right: 20),
+                    //             padding: EdgeInsets.only(
+                    //                 top: 40, left: 25, right: 25, bottom: 5),
+                    //             child: Column(
+                    //               children: [
+                    //                 Row(
+                    //                   mainAxisAlignment:
+                    //                       MainAxisAlignment.spaceBetween,
+                    //                   children: [
+                    //                     Text(
+                    //                       "User Groups (3)",
+                    //                       style: TextStyle(
+                    //                           fontSize: 15,
+                    //                           fontWeight: FontWeight.w500),
+                    //                     ),
+                    //                   ],
+                    //                 ),
+                    //                 SizedBox(
+                    //                   height: 15,
+                    //                 ),
+                    //                 Row(
+                    //                     mainAxisAlignment:
+                    //                         MainAxisAlignment.spaceBetween,
+                    //                     children: [
+                    //                       Text(
+                    //                         "Groups 1 (3)",
+                    //                         style: TextStyle(
+                    //                             fontSize: 17,
+                    //                             fontWeight: FontWeight.w400),
+                    //                       ),
+                    //                       InkWell(
+                    //                         onTap: () {
+                    //                           setState(() {
+                    //                             groupCheckedbox =
+                    //                                 !groupCheckedbox;
+                    //                           });
+                    //                         },
+                    //                         child: Icon(
+                    //                           groupCheckedbox
+                    //                               ? Icons.check_box_rounded
+                    //                               : Icons
+                    //                                   .check_box_outline_blank_rounded,
+                    //                           size: 27,
+                    //                           color: chechIcons,
+                    //                         ),
+                    //                       ),
+                    //                     ]),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         )
+                    //       : null,
+                    //   height: _animatedHeight,
+                    // ),
                     Expanded(
-                      child: newDataList.length == 0
-                          ? Container(
-                              child: Text(
-                                "No records found",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 102, 102, 102),
-                                    fontSize: 14,
-                                    letterSpacing: 1),
-                              ),
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.only(
-                                top: 12.0,
-                              ),
-                              child: Container(
+                        child: 1 == 0
+                            ? Container(
+                                child: Text(
+                                  "No records found",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 102, 102, 102),
+                                      fontSize: 14,
+                                      letterSpacing: 1),
+                                ),
+                              )
+                            : Container(
                                 padding: EdgeInsets.only(top: 15),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -413,72 +508,163 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                     topRight: Radius.circular(25.0),
                                   ),
                                 ),
-                                child: ListView.builder(
-                                    itemCount: newDataList.length,
-                                    itemBuilder: (context, index) {
-                                      var data = newDataList[index];
+                                child: FutureBuilder(
+                                  future: newDataList,
+                                  builder: (context, data) {
+                                    if (data.hasError) {
+                                      return Center(
+                                          child: Text("${data.error}"));
+                                    } else if (data.hasData) {
+                                      var items = data.data as List<Userlist>;
+                                      return ListView.builder(
+                                          itemCount: items.length,
+                                          itemBuilder: (context, index) {
+                                            var data = items[index];
 
-                                      return Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 16, bottom: 9),
-                                        child: ListTile(
-                                          dense: true,
-                                          leading: Container(
-                                            width: 37.0,
-                                            height: 37.0,
-                                            padding: EdgeInsets.all(2.0),
-                                            decoration: BoxDecoration(
-                                              color: data.colorName,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: CircleAvatar(
-                                                radius: 20.0,
-                                                backgroundImage: data.id != -1
-                                                    ? AssetImage(
-                                                        'img/images/jitendra.jpeg')
-                                                    : AssetImage(
-                                                        'img/images/user.jpg')),
-                                          ),
-                                          title: Text(
-                                            data.name,
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: Color.fromRGBO(
-                                                    0, 0, 0, 0.8),
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          trailing: InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                data.checked = !data.checked;
-                                              });
-                                              listData(data, context);
-                                            },
-                                            child: data.checked
-                                                ? Icon(
-                                                    Icons.check_box_rounded,
-                                                    size: 27,
-                                                    color: chechIcons,
-                                                  )
-                                                : Icon(
-                                                    Icons
-                                                        .check_box_outline_blank_rounded,
-                                                    size: 27,
-                                                    color: chechIcons,
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10,
+                                                  right: 16,
+                                                  bottom: 9),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    data.checked =
+                                                        !(data.checked as bool);
+                                                  });
+                                                },
+                                                child: ListTile(
+                                                  dense: true,
+                                                  leading: Container(
+                                                    width: 37.0,
+                                                    height: 37.0,
+                                                    padding:
+                                                        EdgeInsets.all(2.0),
+                                                    decoration: BoxDecoration(
+                                                      // color: data.fullName.toString(),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      height: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xff7c94b6),
+                                                        image: DecorationImage(
+                                                          image: AssetImage(
+                                                              "img/images/user.jpg"),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    50.0)),
+                                                        border: Border.all(
+                                                          color: Colors.grey,
+                                                          width: 1.0,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
-                                          ),
-                                          onTap: () {
-                                            setState(() {
-                                              data.checked = !data.checked;
-                                            });
-                                            listData(data, context);
-                                          },
-                                        ),
+                                                  title: Text(
+                                                    data.fullName.toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 17,
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.8),
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                  trailing: data.checked as bool
+                                                      ? Icon(
+                                                          Icons
+                                                              .check_box_rounded,
+                                                          size: 27,
+                                                          color: chechIcons,
+                                                        )
+                                                      : Icon(
+                                                          Icons
+                                                              .check_box_outline_blank_rounded,
+                                                          size: 27,
+                                                          color: chechIcons,
+                                                        ),
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
                                       );
-                                    }),
-                              ),
-                            ),
-                    ),
+                                    }
+                                  },
+                                ))),
+
+                    //   ListView.builder(
+                    //       itemCount: newDataList.length,
+                    //       itemBuilder: (context, index) {
+                    //         var data = newDataList[index];
+
+                    //         return Padding(
+                    //           padding: const EdgeInsets.only(
+                    //               left: 10, right: 16, bottom: 9),
+                    //           child: ListTile(
+                    //             dense: true,
+                    //             leading: Container(
+                    //               width: 37.0,
+                    //               height: 37.0,
+                    //               padding: EdgeInsets.all(2.0),
+                    //               decoration: BoxDecoration(
+                    //                 color: data.colorName,
+                    //                 shape: BoxShape.circle,
+                    //               ),
+                    //               child: CircleAvatar(
+                    //                   radius: 20.0,
+                    //                   backgroundImage: data.id != -1
+                    //                       ? AssetImage(
+                    //                           'img/images/jitendra.jpeg')
+                    //                       : AssetImage(
+                    //                           'img/images/user.jpg')),
+                    //             ),
+                    //             title: Text(
+                    //               data.name,
+                    //               style: TextStyle(
+                    //                   fontSize: 17,
+                    //                   color:
+                    //                       Color.fromRGBO(0, 0, 0, 0.8),
+                    //                   fontWeight: FontWeight.w400),
+                    //             ),
+                    //             trailing: InkWell(
+                    //               onTap: () {
+                    //                 setState(() {
+                    //                   data.checked = !data.checked;
+                    //                 });
+                    //                 listData(data, context);
+                    //               },
+                    //               child: data.checked
+                    //                   ? Icon(
+                    //                       Icons.check_box_rounded,
+                    //                       size: 27,
+                    //                       color: chechIcons,
+                    //                     )
+                    //                   : Icon(
+                    //                       Icons
+                    //                           .check_box_outline_blank_rounded,
+                    //                       size: 27,
+                    //                       color: chechIcons,
+                    //                     ),
+                    //             ),
+                    //             onTap: () {
+                    //               setState(() {
+                    //                 data.checked = !data.checked;
+                    //               });
+                    //               listData(data, context);
+                    //             },
+                    //           ),
+                    //         );
+                    //       }),
+                    // ),
+                    // ),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(
@@ -575,4 +761,23 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
       },
     );
   }
+
+  // ignore: non_constant_identifier_names
+  // Future<List<GroupList>> ReadJsonData() async {
+  //   final jsondata =
+  //       await rootBundle.rootBundle.loadString('jsonfiles/grouplist.json');
+  //   final list = json.decode(jsondata) as List<dynamic>;
+  //   final list2 = list.map((e) => GroupList.fromJson(e)).toList();
+  //   return list2;
+  // }
+
+  // // ignore: non_constant_identifier_names
+  // Future<List<Userlist>> ReadJsonDataList() async {
+  //   final jsondata =
+  //       await rootBundle.rootBundle.loadString('jsonfiles/userlist.json');
+  //   final listmultiselected = json.decode(jsondata) as List<dynamic>;
+  //   final listmultiselected2 =
+  //       listmultiselected.map((e) => Userlist.fromJson(e)).toList();
+  //   return listmultiselected2;
+  // }
 }
