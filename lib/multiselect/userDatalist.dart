@@ -26,6 +26,7 @@ class Userlist {
   List<Divisions>? divisions;
   List<Tags>? tags;
   bool? checked;
+  bool? visible;
 
   Userlist(
       {this.id,
@@ -54,10 +55,12 @@ class Userlist {
       this.profile,
       this.divisions,
       this.tags,
-      this.checked});
+      this.checked,
+      this.visible});
 
   Userlist.fromJson(Map<String, dynamic> json) {
     checked = false;
+    visible = true;
     id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];

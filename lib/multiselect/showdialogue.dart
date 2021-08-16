@@ -1,24 +1,26 @@
 import 'package:demoapp/multiselect/userDatalist.dart';
-
-import '../multiselect/data.dart';
 import 'package:flutter/material.dart';
 import 'groupDatalist.dart';
+// import 'dart:convert';
+// import 'package:flutter/services.dart' as rootBundle;
 
 class MultiselectedModel extends StatefulWidget {
-  final void Function(List<ManageName> selectedData, String action) callback;
+  final void Function(List<Userlist> selectedData, String action) callback;
   final Future<List<Userlist>> mainList;
-  final List<ManageName> selected;
-  final ManageName unassignedValue;
-  MultiselectedModel(
-      {Key? key,
-      required this.mainList,
-      required this.selected,
-      required this.callback,
-      required String keyToDisplay,
-      required String type,
-      required bool canShowProfilePic,
-      required this.unassignedValue})
-      : super(key: key);
+  final Future<List<GroupList>> groupLists;
+  final List<Userlist> selected;
+  final Userlist? unassignedValue;
+  MultiselectedModel({
+    Key? key,
+    required this.mainList,
+    required this.groupLists,
+    required this.selected,
+    required this.callback,
+    required String keyToDisplay,
+    required String type,
+    required bool canShowProfilePic,
+    this.unassignedValue,
+  }) : super(key: key);
 
   @override
   _MultiselectedModelState createState() => _MultiselectedModelState();
@@ -37,11 +39,47 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   bool groupCheckedbox1 = false;
   bool groupCheckedbox2 = false;
   bool groupCheckedbox3 = false;
+  int checkedCount = 0;
+  int totalCount = 0;
+  int totalDataLength = 0;
+
   Color chechIcons = const Color(0xF2347EBD);
 
   Color textColor = const Color(0xF2101010);
 
   Color cancelColor = const Color.fromARGB(255, 84, 98, 125);
+
+  void onTapChecked(List<Userlist> itemsAll, BuildContext context) {
+    actualDataList.then((value) => {value = itemsAll});
+    checkedCount = itemsAll.where((element) => element.checked as bool).length;
+    count = checkedCount;
+    isChecked = count == itemsAll.length;
+  }
+
+  void onTapGroupChecked(List<GroupList> itemsGroupAll, BuildContext context) {
+    List<int> selectedGroup = [];
+    itemsGroupAll.forEach((elementgrp) {
+      if (elementgrp.checked as bool) {
+        selectedGroup.add(elementgrp.id as int);
+      }
+    });
+
+    newDataList.then((value) => {
+          value.forEach((element) {
+            if (selectedGroup.length > 0) {
+              element.visible = (element.tags!.where(
+                      (eleTag) => selectedGroup.contains(eleTag.id as int)))
+                  as bool;
+            } else {
+              element.visible = true;
+            }
+          })
+        });
+
+    // checkedCount = itemsGroupAll.where((element) => element.checked as bool).length;
+    // count = checkedCount;
+    // isChecked = count == itemsGroupAll.length;
+  }
 
   void listData(data, BuildContext context) {
     // newDataList.forEach((element) {
@@ -57,16 +95,22 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   }
 
   void selectAll() {
-    // newDataList.forEach((element) {
-    //   element.checked = isChecked;
-    // });
-    // actualDataList.forEach((element) {
-    //   element.checked = isChecked;
-    // });
-    // count = 0;
-    // actualDataList.forEach((element) {
-    //   if (element.checked) count++;
-    // });
+    newDataList.then((value) => {
+          value.forEach((element) {
+            element.checked = isChecked;
+          })
+        });
+    count = 0;
+    actualDataList.then((value) => value.forEach((element) {
+          element.checked = isChecked;
+          if (element.checked as bool) count++;
+        }));
+    newDataList.then((value) => {
+          checkedCount =
+              value.where((element) => element.checked as bool).length
+        });
+
+    // actualDataList.forEach((element) {});
   }
 
   TextEditingController _textController = TextEditingController();
@@ -83,17 +127,14 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
 
   late Future<List<Userlist>> newDataList;
   late Future<List<Userlist>> actualDataList;
-  // Future<List<Userlist>> newDataList = [] as Future<List<Userlist>>;
-  // Future<List<Userlist>> actualDataList = [] as Future<List<Userlist>>;
 
   onItemChanged(String value, Future<List<Userlist>> listSearch) {
     user1 = true;
     user2 = value.trim().length > 0 ? true : false;
-    return null;
-    //  listSearch.
-    //     .where((managename) =>
-    //         managename.name.toLowerCase().contains(value.toLowerCase()))
-    //     .toList();
+    return listSearch.then((value) => value
+        .where((managename) =>
+            managename.fullName!.toLowerCase().contains("Pawan"))
+        .toList());
   }
 
   void submit(String action) {
@@ -101,47 +142,68 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
       widget.callback([], action);
       return;
     }
- List<Userlist> data = [];
-    actualDataList
-        .then((value) => {
-        data =  value.where((element) => element.checked as bool).toList()};
-           widget.callback(data, action);
-  
-          );
+
+    actualDataList.then((value) => {
+          widget.callback(
+              value.where((element) => element.checked as bool).toList(),
+              action)
+        });
   }
-    // actualDataList.where((element) => element.checked).toList();
-  
 
   getSelectedCount() {
-    return 0;
-    // actualDataList.where((element) => element.checked).length;
+    newDataList.then((value) => {
+          checkedCount =
+              value.where((element) => element.checked as bool).length
+        });
+    return checkedCount;
+  }
+
+  getTotalCount() {
+    widget.mainList.then((value) => {totalCount = value.length});
+    return totalCount;
+  }
+
+  getDataLength() {
+    newDataList.then((value) => {totalDataLength = value.length});
+    return totalDataLength;
   }
 
   selectedValue() {
-    // if (widget.mainList.where((element) => element.id == -1).length == 0) {
-    //   widget.mainList.insert(0, unassignedData);
-    // }
+    widget.mainList.then((value) => {
+          if (value.where((element) => element.id == -1).length == 0)
+            {
+              value.insert(0, widget.unassignedValue as Userlist),
+            }
+        });
 
-    // widget.mainList.forEach((element2) {
-    //   element2.checked = false;
-    //   if (widget.selected.where((element) => element.id == element2.id).length >
-    //       0) {
-    //     element2.checked = true;
-    //   }
-    // });
+    widget.mainList.then((value) => {
+          value.forEach((element2) {
+            element2.checked = false;
+            if (widget.selected
+                    .where((element) => element.id == element2.id)
+                    .length >
+                0) {
+              element2.checked = true;
+            }
+          })
+        });
     // widget.mainList.sort((a, b) {
     //   if (b.checked) {
     //     return 1;
     //   }
     //   return -1;
     // });
-    // isChecked = widget.mainList.length == widget.selected.length;
-    // count = widget.selected.length;
+
+    widget.mainList.then((value) => {
+          isChecked = value.length == widget.selected.length,
+          count = widget.selected.length
+        });
   }
 
   void initState() {
     super.initState();
     selectedValue();
+    getTotalCount();
   }
 
   @override
@@ -291,7 +353,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                   padding: EdgeInsets.only(
                                       left: 22, top: 0, bottom: 0),
                                   child: Text(
-                                    '${getSelectedCount()}/${111}',
+                                    '$checkedCount/$totalCount',
                                     style: TextStyle(
                                         fontSize: 15,
                                         color:
@@ -301,7 +363,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 ),
                               ),
                               Expanded(
-                                child: 1 == 0 || user2
+                                child: totalCount == 0 || user2
                                     ? Container()
                                     : Container(
                                         // padding: EdgeInsets.only(),
@@ -339,7 +401,6 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                         ],
                       ),
                     ),
-
                     AnimatedContainer(
                         padding: EdgeInsets.only(
                             top: _animatedHeight != 0 ? 50.0 : 0,
@@ -349,12 +410,14 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                         duration: Duration(milliseconds: 300),
                         child: _animatedHeight != 0
                             ? FutureBuilder(
-                                future: null,
-                                builder: (context, data) {
-                                  if (data.hasError) {
-                                    return Center(child: Text("${data.error}"));
-                                  } else if (data.hasData) {
-                                    var items = data.data as List<GroupList>;
+                                future: widget.groupLists,
+                                builder: (context, dataGroup) {
+                                  if (dataGroup.hasError) {
+                                    return Center(
+                                        child: Text("${dataGroup.error}"));
+                                  } else if (dataGroup.hasData) {
+                                    var itemsGroup =
+                                        dataGroup.data as List<GroupList>;
                                     return Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -362,7 +425,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                         Container(
                                           padding: EdgeInsets.only(left: 15),
                                           child: Text(
-                                            '${"Group"}(${items.length})',
+                                            '${"Group"}(${itemsGroup.length})',
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w400),
@@ -371,14 +434,14 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                         ListView.builder(
                                             padding: EdgeInsets.zero,
                                             shrinkWrap: true,
-                                            itemCount: items.length,
+                                            itemCount: itemsGroup.length,
                                             itemBuilder: (context, index) {
-                                              var data = items[index];
+                                              var dataGrp = itemsGroup[index];
 
                                               return ListTile(
                                                 dense: true,
                                                 title: Text(
-                                                  '${data.name.toString()}(${data.users!.length})',
+                                                  '${dataGrp.name.toString()}(${dataGrp.users!.length})',
                                                   style: TextStyle(
                                                       fontSize: 16,
                                                       color: Color.fromRGBO(
@@ -389,23 +452,27 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                                 trailing: InkWell(
                                                   onTap: () {
                                                     setState(() {
-                                                      // data.checked = !data.checked;
+                                                      dataGrp.checked =
+                                                          !(dataGrp.checked
+                                                              as bool);
                                                     });
-                                                    listData(data, context);
+                                                    onTapGroupChecked(
+                                                        itemsGroup, context);
                                                   },
-                                                  child: data.id == 0
-                                                      ? Icon(
-                                                          Icons
-                                                              .check_box_rounded,
-                                                          size: 27,
-                                                          color: chechIcons,
-                                                        )
-                                                      : Icon(
-                                                          Icons
-                                                              .check_box_outline_blank_rounded,
-                                                          size: 27,
-                                                          color: chechIcons,
-                                                        ),
+                                                  child:
+                                                      (dataGrp.checked as bool)
+                                                          ? Icon(
+                                                              Icons
+                                                                  .check_box_rounded,
+                                                              size: 27,
+                                                              color: chechIcons,
+                                                            )
+                                                          : Icon(
+                                                              Icons
+                                                                  .check_box_outline_blank_rounded,
+                                                              size: 27,
+                                                              color: chechIcons,
+                                                            ),
                                                 ),
                                                 onTap: () {
                                                   setState(() {
@@ -425,69 +492,6 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                 },
                               )
                             : Text("")),
-                    // ),
-                    // AnimatedContainer(
-                    //   duration: Duration(milliseconds: 300),
-                    //   child: _animatedHeight != 0
-                    //       ? SingleChildScrollView(
-                    //           child: Container(
-                    //             decoration: BoxDecoration(
-                    //                 borderRadius: BorderRadius.circular(4),
-                    //                 color: Color.fromRGBO(247, 247, 247, 1)),
-                    //             margin: EdgeInsets.only(left: 20, right: 20),
-                    //             padding: EdgeInsets.only(
-                    //                 top: 40, left: 25, right: 25, bottom: 5),
-                    //             child: Column(
-                    //               children: [
-                    //                 Row(
-                    //                   mainAxisAlignment:
-                    //                       MainAxisAlignment.spaceBetween,
-                    //                   children: [
-                    //                     Text(
-                    //                       "User Groups (3)",
-                    //                       style: TextStyle(
-                    //                           fontSize: 15,
-                    //                           fontWeight: FontWeight.w500),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //                 SizedBox(
-                    //                   height: 15,
-                    //                 ),
-                    //                 Row(
-                    //                     mainAxisAlignment:
-                    //                         MainAxisAlignment.spaceBetween,
-                    //                     children: [
-                    //                       Text(
-                    //                         "Groups 1 (3)",
-                    //                         style: TextStyle(
-                    //                             fontSize: 17,
-                    //                             fontWeight: FontWeight.w400),
-                    //                       ),
-                    //                       InkWell(
-                    //                         onTap: () {
-                    //                           setState(() {
-                    //                             groupCheckedbox =
-                    //                                 !groupCheckedbox;
-                    //                           });
-                    //                         },
-                    //                         child: Icon(
-                    //                           groupCheckedbox
-                    //                               ? Icons.check_box_rounded
-                    //                               : Icons
-                    //                                   .check_box_outline_blank_rounded,
-                    //                           size: 27,
-                    //                           color: chechIcons,
-                    //                         ),
-                    //                       ),
-                    //                     ]),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         )
-                    //       : null,
-                    //   height: _animatedHeight,
-                    // ),
                     Expanded(
                         child: 1 == 0
                             ? Container(
@@ -532,62 +536,64 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                                     data.checked =
                                                         !(data.checked as bool);
                                                   });
+                                                  onTapChecked(items, context);
                                                 },
-                                                child: ListTile(
-                                                  dense: true,
-                                                  leading: Container(
-                                                    width: 37.0,
-                                                    height: 37.0,
-                                                    padding:
-                                                        EdgeInsets.all(2.0),
-                                                    decoration: BoxDecoration(
-                                                      // color: data.fullName.toString(),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Container(
-                                                      width: 100.0,
-                                                      height: 100.0,
-                                                      decoration: BoxDecoration(
-                                                        color: const Color(
-                                                            0xff7c94b6),
-                                                        image: DecorationImage(
-                                                          image: AssetImage(
-                                                              "img/images/user.jpg"),
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    50.0)),
-                                                        border: Border.all(
-                                                          color: Colors.grey,
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  title: Text(
-                                                    data.fullName.toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        color: Color.fromRGBO(
-                                                            0, 0, 0, 0.8),
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                  trailing: data.checked as bool
-                                                      ? Icon(
-                                                          Icons
-                                                              .check_box_rounded,
-                                                          size: 27,
-                                                          color: chechIcons,
+                                                child: Visibility(
+                                                  visible: data.visible == null
+                                                      ? true
+                                                      : (data.visible as bool),
+                                                  child: ListTile(
+                                                    dense: true,
+                                                    leading: Container(
+                                                        width: 40.0,
+                                                        height: 40.0,
+                                                        padding:
+                                                            EdgeInsets.all(2.0),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle),
+                                                        child: CircleAvatar(
+                                                          backgroundImage:
+                                                              AssetImage(
+                                                                  'img/images/user.jpg'),
                                                         )
-                                                      : Icon(
-                                                          Icons
-                                                              .check_box_outline_blank_rounded,
-                                                          size: 27,
-                                                          color: chechIcons,
+                                                        //  data.profilePic !=
+                                                        //         null
+                                                        //     ? CircleAvatar(
+                                                        //         backgroundImage:
+                                                        //             NetworkImage(data
+                                                        //                 .profilePic
+                                                        //                 .toString()))
+                                                        //     : Image(
+                                                        //         image: AssetImage(
+                                                        //             'img/images/user.jpg'),
+                                                        //       ),
                                                         ),
+                                                    title: Text(
+                                                      data.fullName.toString(),
+                                                      style: TextStyle(
+                                                          fontSize: 17,
+                                                          color: Color.fromRGBO(
+                                                              0, 0, 0, 0.8),
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                    trailing: data.checked
+                                                            as bool
+                                                        ? Icon(
+                                                            Icons
+                                                                .check_box_rounded,
+                                                            size: 27,
+                                                            color: chechIcons,
+                                                          )
+                                                        : Icon(
+                                                            Icons
+                                                                .check_box_outline_blank_rounded,
+                                                            size: 27,
+                                                            color: chechIcons,
+                                                          ),
+                                                  ),
                                                 ),
                                               ),
                                             );
@@ -599,72 +605,6 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                     }
                                   },
                                 ))),
-
-                    //   ListView.builder(
-                    //       itemCount: newDataList.length,
-                    //       itemBuilder: (context, index) {
-                    //         var data = newDataList[index];
-
-                    //         return Padding(
-                    //           padding: const EdgeInsets.only(
-                    //               left: 10, right: 16, bottom: 9),
-                    //           child: ListTile(
-                    //             dense: true,
-                    //             leading: Container(
-                    //               width: 37.0,
-                    //               height: 37.0,
-                    //               padding: EdgeInsets.all(2.0),
-                    //               decoration: BoxDecoration(
-                    //                 color: data.colorName,
-                    //                 shape: BoxShape.circle,
-                    //               ),
-                    //               child: CircleAvatar(
-                    //                   radius: 20.0,
-                    //                   backgroundImage: data.id != -1
-                    //                       ? AssetImage(
-                    //                           'img/images/jitendra.jpeg')
-                    //                       : AssetImage(
-                    //                           'img/images/user.jpg')),
-                    //             ),
-                    //             title: Text(
-                    //               data.name,
-                    //               style: TextStyle(
-                    //                   fontSize: 17,
-                    //                   color:
-                    //                       Color.fromRGBO(0, 0, 0, 0.8),
-                    //                   fontWeight: FontWeight.w400),
-                    //             ),
-                    //             trailing: InkWell(
-                    //               onTap: () {
-                    //                 setState(() {
-                    //                   data.checked = !data.checked;
-                    //                 });
-                    //                 listData(data, context);
-                    //               },
-                    //               child: data.checked
-                    //                   ? Icon(
-                    //                       Icons.check_box_rounded,
-                    //                       size: 27,
-                    //                       color: chechIcons,
-                    //                     )
-                    //                   : Icon(
-                    //                       Icons
-                    //                           .check_box_outline_blank_rounded,
-                    //                       size: 27,
-                    //                       color: chechIcons,
-                    //                     ),
-                    //             ),
-                    //             onTap: () {
-                    //               setState(() {
-                    //                 data.checked = !data.checked;
-                    //               });
-                    //               listData(data, context);
-                    //             },
-                    //           ),
-                    //         );
-                    //       }),
-                    // ),
-                    // ),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(
@@ -678,10 +618,6 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                           ),
                         ],
                       ),
-                      // decoration: BoxDecoration(
-                      //   borderRadius: BorderRadius.circular(15),
-                      //   color: Colors.white,
-                      // ),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 20, bottom: 15),
                         child: Row(

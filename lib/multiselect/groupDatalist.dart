@@ -3,11 +3,19 @@ class GroupList {
   String? name;
   String? type;
   String? updatedAt;
+  bool? checked;
   List<Users>? users;
 
-  GroupList({this.id, this.name, this.type, this.updatedAt, this.users});
+  GroupList(
+      {this.id,
+      this.name,
+      this.type,
+      this.updatedAt,
+      this.users,
+      this.checked});
 
   GroupList.fromJson(Map<String, dynamic> json) {
+    checked = false;
     id = json['id'];
     name = json['name'];
     type = json['type'];

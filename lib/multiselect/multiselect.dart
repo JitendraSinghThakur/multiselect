@@ -1,4 +1,3 @@
-import '../multiselect/data.dart';
 import '../multiselect/showdialogue.dart';
 import 'package:flutter/material.dart';
 import 'groupDatalist.dart';
@@ -14,9 +13,9 @@ class OpenCustomerDetails extends StatefulWidget {
 }
 
 class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
-  List<ManageName> selectedNames = [];
+  List<Userlist> selectedNames = [];
 
-  void callback(List<ManageName> selectedData, String action) {
+  void callback(List<Userlist> selectedData, String action) {
     if (action == "cancel") {
       return;
     }
@@ -26,7 +25,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
       textvalue = " ";
       if (selectedNames.length > 0) {
         if (selectedNames.length > 0) {
-          textvalue += (selectedNames.map((e) => (e.name))).join(", ");
+          textvalue += (selectedNames.map((e) => (e.fullName))).join(", ");
         }
       }
     });
@@ -82,11 +81,39 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
             builder: (BuildContext context) {
               return MultiselectedModel(
                   mainList: ReadJsonDataList(),
+                  groupLists: ReadJsonData(),
                   selected: selectedNames,
-                  callback: (List<ManageName> selectedData, String action) {
+                  callback: (List<Userlist> selectedData, String action) {
                     callback(selectedData, action);
                   },
-                  unassignedValue: unassignedData,
+                  unassignedValue: new Userlist(
+                      id: -1,
+                      firstName: null,
+                      lastName: null,
+                      fullName: "Unassigned",
+                      fullNameMobile: null,
+                      email: null,
+                      companyId: null,
+                      company: null,
+                      adminPrivilege: null,
+                      group: null,
+                      role: null,
+                      addedDate: null,
+                      profilePic: null,
+                      active: null,
+                      companyName: null,
+                      color: null,
+                      commissionPercentage: null,
+                      resourceId: null,
+                      dataMasking: null,
+                      multipleAccount: null,
+                      allDivisionsAccess: null,
+                      createdBy: null,
+                      updatedBy: null,
+                      profile: null,
+                      divisions: null,
+                      tags: null,
+                      checked: false),
                   keyToDisplay: 'name',
                   type: 'user',
                   canShowProfilePic: true);
@@ -95,6 +122,7 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Future<List<GroupList>> ReadJsonData() async {
     final jsondata =
         await rootBundle.rootBundle.loadString('jsonfiles/grouplist.json');
