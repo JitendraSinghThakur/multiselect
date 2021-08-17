@@ -35,13 +35,8 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   bool user2 = false;
 
   bool groupIconchange = false;
-  bool groupCheckedbox = false;
-  bool groupCheckedbox1 = false;
-  bool groupCheckedbox2 = false;
-  bool groupCheckedbox3 = false;
   int checkedCount = 0;
   int totalCount = 0;
-  int totalDataLength = 0;
 
   Color chechIcons = const Color(0xF2347EBD);
 
@@ -56,7 +51,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
     isChecked = count == itemsAll.length;
   }
 
-  void onTapGroupChecked(List<GroupList> itemsGroupAll, BuildContext context) {
+  onTapGroupChecked(List<GroupList> itemsGroupAll, BuildContext context) {
     List<int> selectedGroup = [];
     itemsGroupAll.forEach((elementgrp) {
       if (elementgrp.checked as bool) {
@@ -67,31 +62,20 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
     newDataList.then((value) => {
           value.forEach((element) {
             if (selectedGroup.length > 0) {
-              element.visible = (element.tags!.where(
-                      (eleTag) => selectedGroup.contains(eleTag.id as int)))
-                  as bool;
+              if (element.tags != null) {
+                List<Tags> hasGroupCheck = element.tags!
+                    .where((eleTag) => selectedGroup.contains(eleTag.id as int))
+                    .toList();
+                element.visible = hasGroupCheck.length > 0;
+              } else {
+                element.visible = false;
+              }
             } else {
               element.visible = true;
             }
           })
         });
-
-    // checkedCount = itemsGroupAll.where((element) => element.checked as bool).length;
-    // count = checkedCount;
-    // isChecked = count == itemsGroupAll.length;
-  }
-
-  void listData(data, BuildContext context) {
-    // newDataList.forEach((element) {
-    //   if (element.id == data.id) {
-    //     element.checked = data.checked;
-    //   }
-    // });
-    // count = 0;
-    // newDataList.forEach((element) {
-    //   if (element.checked as bool) count++;
-    // });
-    // isChecked = count == newDataList.length;
+    return newDataList;
   }
 
   void selectAll() {
@@ -109,8 +93,6 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
           checkedCount =
               value.where((element) => element.checked as bool).length
         });
-
-    // actualDataList.forEach((element) {});
   }
 
   TextEditingController _textController = TextEditingController();
@@ -128,12 +110,11 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   late Future<List<Userlist>> newDataList;
   late Future<List<Userlist>> actualDataList;
 
-  onItemChanged(String value, Future<List<Userlist>> listSearch) {
+  onItemChanged(String txt, Future<List<Userlist>> listSearch) {
     user1 = true;
-    user2 = value.trim().length > 0 ? true : false;
+    user2 = txt.trim().length > 0 ? true : false;
     return listSearch.then((value) => value
-        .where((managename) =>
-            managename.fullName!.toLowerCase().contains("Pawan"))
+        .where((managename) => managename.fullName!.toLowerCase().contains(txt))
         .toList());
   }
 
@@ -151,7 +132,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   }
 
   getSelectedCount() {
-    newDataList.then((value) => {
+    widget.mainList.then((value) => {
           checkedCount =
               value.where((element) => element.checked as bool).length
         });
@@ -161,11 +142,6 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
   getTotalCount() {
     widget.mainList.then((value) => {totalCount = value.length});
     return totalCount;
-  }
-
-  getDataLength() {
-    newDataList.then((value) => {totalDataLength = value.length});
-    return totalDataLength;
   }
 
   selectedValue() {
@@ -195,8 +171,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
     // });
 
     widget.mainList.then((value) => {
-          isChecked = value.length == widget.selected.length,
-          count = widget.selected.length
+          setState(() => {
+                isChecked = value.length == widget.selected.length,
+                count = widget.selected.length
+              })
         });
   }
 
@@ -204,6 +182,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
     super.initState();
     selectedValue();
     getTotalCount();
+    getSelectedCount();
   }
 
   @override
@@ -456,8 +435,10 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                                                           !(dataGrp.checked
                                                               as bool);
                                                     });
-                                                    onTapGroupChecked(
-                                                        itemsGroup, context);
+                                                    newDataList =
+                                                        onTapGroupChecked(
+                                                            itemsGroup,
+                                                            context);
                                                   },
                                                   child:
                                                       (dataGrp.checked as bool)
