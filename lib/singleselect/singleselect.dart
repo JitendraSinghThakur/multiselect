@@ -1,6 +1,9 @@
-import '../multiselect/data.dart';
-import '../singleselect/singleUserDialouge.dart';
+import 'dart:convert';
+import 'package:demoapp/singleselect/singleUserDatalist.dart';
+import 'package:demoapp/singleselect/singleUserDialouge.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SingleUserSelect extends StatefulWidget {
   const SingleUserSelect({Key? key}) : super(key: key);
@@ -10,16 +13,43 @@ class SingleUserSelect extends StatefulWidget {
 }
 
 class _SingleUserSelectState extends State<SingleUserSelect> {
-  ManageName selectedNames =
-      ManageName(-1, "Unassigned", false, 0, Colors.blue, "");
-  void callback(ManageName selectedData, String action) {
+  SingleUserlist selectedNames = SingleUserlist(
+      id: -5,
+      firstName: null,
+      lastName: null,
+      fullName: null,
+      fullNameMobile: null,
+      email: null,
+      companyId: null,
+      company: null,
+      adminPrivilege: null,
+      group: null,
+      role: null,
+      addedDate: null,
+      profilePic: null,
+      active: null,
+      companyName: null,
+      color: null,
+      commissionPercentage: null,
+      resourceId: null,
+      dataMasking: null,
+      multipleAccount: null,
+      allDivisionsAccess: null,
+      createdBy: null,
+      updatedBy: null,
+      profile: null,
+      divisions: null,
+      tags: null,
+      checked: false);
+
+  void callback(SingleUserlist selectedData, String action) {
     if (action == "cancel") {
       return;
     }
     selectedNames = selectedData;
 
     setState(() {
-      textvalue = selectedNames.name;
+      textvalue = selectedNames.fullName!;
     });
   }
 
@@ -73,17 +103,86 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
             context: context,
             builder: (BuildContext context) {
               return SingleSelectedModel(
-                  mainList: mainDataList,
+                  mainList: ReadJsonDataSinglelist(),
                   selected: selectedNames,
-                  callback: (ManageName selectedData, String action) {
+                  callback: (SingleUserlist selectedData, String action) {
                     callback(selectedData, action);
                   },
-                  unassignedValueSingle: unassignedData,
+                  unassignedValue: new SingleUserlist(
+                      id: -1,
+                      firstName: null,
+                      lastName: null,
+                      fullName: "Unassigned",
+                      fullNameMobile: null,
+                      email: null,
+                      companyId: null,
+                      company: null,
+                      adminPrivilege: null,
+                      group: null,
+                      role: null,
+                      addedDate: null,
+                      profilePic: null,
+                      active: null,
+                      companyName: null,
+                      color: null,
+                      commissionPercentage: null,
+                      resourceId: null,
+                      dataMasking: null,
+                      multipleAccount: null,
+                      allDivisionsAccess: null,
+                      createdBy: null,
+                      updatedBy: null,
+                      profile: null,
+                      divisions: null,
+                      tags: null,
+                      checked: false),
                   keyToDisplay: 'name',
                   type: 'user',
                   canShowProfilePic: true);
             });
       },
     );
+  }
+
+// ignore: non_constant_identifier_names
+  Future<List<SingleUserlist>> ReadJsonDataSinglelist() async {
+    final jsondata = await rootBundle.loadString('jsonfiles/userlist.json');
+    final singleSelected = json.decode(jsondata) as List<dynamic>;
+    final singleSelected2 =
+        singleSelected.map((e) => SingleUserlist.fromJson(e)).toList();
+
+    if (singleSelected2.where((element) => element.id == -1).length == 0) {
+      singleSelected2.insert(
+          0,
+          new SingleUserlist(
+              id: -1,
+              firstName: null,
+              lastName: null,
+              fullName: "Unassigned",
+              fullNameMobile: null,
+              email: null,
+              companyId: null,
+              company: null,
+              adminPrivilege: null,
+              group: null,
+              role: null,
+              addedDate: null,
+              profilePic: null,
+              active: null,
+              companyName: null,
+              color: null,
+              commissionPercentage: null,
+              resourceId: null,
+              dataMasking: null,
+              multipleAccount: null,
+              allDivisionsAccess: null,
+              createdBy: null,
+              updatedBy: null,
+              profile: null,
+              divisions: null,
+              tags: null,
+              checked: false));
+    }
+    return singleSelected2;
   }
 }

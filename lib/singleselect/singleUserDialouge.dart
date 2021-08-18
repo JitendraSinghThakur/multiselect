@@ -1,13 +1,12 @@
 import 'dart:ui';
-
-import '../multiselect/data.dart';
 import 'package:flutter/material.dart';
+import 'singleUserDatalist.dart';
 
 class SingleSelectedModel extends StatefulWidget {
-  final void Function(ManageName selectedData, String action) callback;
-  final List<ManageName> mainList;
-  final ManageName selected;
-  final ManageName unassignedValueSingle;
+  final void Function(SingleUserlist selectedData, String action) callback;
+  Future<List<SingleUserlist>> mainList;
+  final SingleUserlist selected;
+  final SingleUserlist? unassignedValue;
   SingleSelectedModel({
     Key? key,
     required this.mainList,
@@ -16,7 +15,7 @@ class SingleSelectedModel extends StatefulWidget {
     required String keyToDisplay,
     required String type,
     required bool canShowProfilePic,
-    required this.unassignedValueSingle,
+    this.unassignedValue,
   }) : super(key: key);
 
   @override
@@ -35,62 +34,79 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
 
   Color cancelColor = const Color(0xF254627D);
 
-  void listData(data, BuildContext context) {
-    newDataList.forEach((element) {
-      element.checked = false;
-      if (element.id == data.id) {
-        element.checked = true;
-        isChecked = true;
-      }
-    });
-    ManageName newSelected =
-        newDataList.where((element) => element.checked).first;
+  // void listData(data, BuildContext context) {
+  //   newDataList.forEach((element) {
+  //     element.checked = false;
+  //     if (element.id == data.id) {
+  //       element.checked = true;
+  //       isChecked = true;
+  //     }
+  //   });
+  //   SingleUserlist newSelected =
+  //       newDataList.where((element) => element.checked).first;
 
-    widget.callback(
-        new ManageName(newSelected.id, newSelected.name, newSelected.checked,
-            newSelected.sort, newSelected.colorName, newSelected.groupName),
-        "done");
-  }
+  //   widget.callback(
+  //       new SingleUserlist(
+  //           newSelected.id,
+  //           newSelected.name,
+  //           newSelected.checked,
+  //           newSelected.sort,
+  //           newSelected.colorName,
+  //           newSelected.groupName),
+  //       "done");
+  // }
 
   TextEditingController _textController = TextEditingController();
 
   void clearText() {
     _textController.clear();
-    var list = onItemChanged(_textController.value.toString(), newDataList);
+    var list = onItemChanged(_textController.value.toString(), widget.mainList);
     setState(() {
-      newDataList = list;
+      widget.mainList = list;
     });
     user1 = false;
     user2 = false;
   }
 
-  List<ManageName> newDataList = [];
+  late Future<List<SingleUserlist>> newDataList;
 
-  onItemChanged(String value, List<ManageName> listSearch) {
+  onItemChanged(String txt, Future<List<SingleUserlist>> listSearch) {
     user1 = true;
-    user2 = value.trim().length > 0 ? true : false;
-    return listSearch
-        .where((managename) =>
-            managename.name.toLowerCase().contains(value.toLowerCase()))
-        .toList();
+    user2 = txt.trim().length > 0 ? true : false;
+    return listSearch.then((value) => value
+        .where((managename) => managename.fullName!.toLowerCase().contains(txt))
+        .toList());
   }
 
   void submit(String action) {
     if (action == "cancel") {
       return;
     }
+    widget.mainList.then((value) => {
+          widget.callback(
+              value.firstWhere((element) => element.checked as bool), action)
+        });
   }
 
   selectedValue() {
-    if (widget.mainList.where((element) => element.id == -1).length == 0) {
-      widget.mainList.insert(0, unassignedData);
-    }
-    widget.mainList.forEach((element2) {
-      element2.checked = false;
-      if (widget.selected.id == element2.id) {
-        element2.checked = true;
-      }
-    });
+    widget.mainList.then((value) => {
+          value.forEach((element2) {
+            element2.checked = false;
+            if (widget.selected.id == element2.id) {
+              element2.checked = true;
+            }
+          }),
+        });
+
+    // widget.mainList.then((value) => {
+    //       value.forEach((element2) {
+    //         element2.checked = false;
+    //         if (widget.selected.id == element2.id) {
+    //           element2.checked = true;
+    //         }
+    //       })
+    //     });
+
     // widget.mainList.sort((a, b) {
     //   if (b.checked) {
     //     return 1;
@@ -106,7 +122,7 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
 
   @override
   Widget build(BuildContext context) {
-    newDataList = widget.mainList;
+    // newDataList = widget.mainList;
     return StatefulBuilder(
       builder: (context, setState) {
         return AlertDialog(
@@ -189,7 +205,7 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                       : null),
                               onChanged: (value) {
                                 setState(() {
-                                  newDataList =
+                                  widget.mainList =
                                       onItemChanged(value, widget.mainList);
                                 });
                               },
@@ -199,7 +215,7 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                       ),
                     ),
                     Expanded(
-                      child: newDataList.length == 0
+                      child: 1 == 0
                           ? Container(
                               width: width,
                               decoration: BoxDecoration(
@@ -227,64 +243,151 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(25)),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: ListView.builder(
-                                    itemCount: newDataList.length,
-                                    itemBuilder: (context, index) {
-                                      var data = newDataList[index];
+                              child: FutureBuilder(
+                                future: widget.mainList,
+                                builder: (context, data) {
+                                  if (data.hasError) {
+                                    return Center(child: Text("${data.error}"));
+                                  } else if (data.hasData) {
+                                    var items =
+                                        data.data as List<SingleUserlist>;
+                                    return Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: ListView.builder(
+                                          itemCount: items.length,
+                                          itemBuilder: (context, index) {
+                                            var dataitems = items[index];
 
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: ListTile(
-                                          selectedTileColor: Colors.red,
-                                          dense: true,
-                                          contentPadding: EdgeInsets.only(
-                                              left: 0.0, right: 18),
-                                          leading: Container(
-                                            width: 32.0,
-                                            height: 32.0,
-                                            padding: EdgeInsets.all(2.0),
-                                            decoration: BoxDecoration(
-                                              color: data.colorName,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: CircleAvatar(
-                                                radius: 14.0,
-                                                backgroundImage: data.id != -1
-                                                    ? AssetImage(
-                                                        'img/images/jitendra.jpeg')
-                                                    : AssetImage(
-                                                        'img/images/user.jpg')),
-                                          ),
-                                          title: Text(
-                                            data.name,
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color.fromARGB(
-                                                    255, 68, 68, 68)),
-                                          ),
-                                          trailing: data.checked
-                                              ? Icon(
-                                                  Icons.check,
-                                                  color: data.id != -1
-                                                      ? Colors.blue[400]
-                                                      : Colors.white,
-                                                )
-                                              : null,
-                                          onTap: () {
-                                            setState(() {
-                                              data.checked = !data.checked;
-                                            });
-                                            listData(data, context);
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      );
-                                    }),
-                              ),
-                            ),
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: ListTile(
+                                                selectedTileColor: Colors.red,
+                                                dense: true,
+                                                contentPadding: EdgeInsets.only(
+                                                    left: 0.0, right: 18),
+                                                leading: Container(
+                                                  width: 32.0,
+                                                  height: 32.0,
+                                                  padding: EdgeInsets.all(2.0),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.amberAccent,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: CircleAvatar(
+                                                      radius: 14.0,
+                                                      backgroundImage: dataitems.id !=
+                                                              -1
+                                                          ? AssetImage(
+                                                              'img/images/jitendra.jpeg')
+                                                          : AssetImage(
+                                                              'img/images/user.jpg')),
+                                                ),
+                                                title: Text(
+                                                  dataitems.fullName as String,
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color.fromARGB(
+                                                          255, 68, 68, 68)),
+                                                ),
+                                                trailing: dataitems.checked
+                                                        as bool
+                                                    ? Icon(
+                                                        Icons.check,
+                                                        color: dataitems.id !=
+                                                                -2
+                                                            ? Colors.blue[400]
+                                                            : Colors.white,
+                                                      )
+                                                    : null,
+                                                onTap: () {
+                                                  setState(() {
+                                                    items.forEach((element) {
+                                                      element.checked = false;
+                                                    });
+                                                    dataitems.checked =
+                                                        !(dataitems.checked
+                                                            as bool);
+                                                  });
+                                                  submit("Done");
+                                                  // listData(data, context);
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            );
+                                          }),
+                                    );
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+                                },
+                              )),
+                      // Container(
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius:
+                      //           BorderRadius.all(Radius.circular(25)),
+                      //     ),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(18.0),
+                      //       child: ListView.builder(
+                      //           itemCount: newDataList.length,
+                      //           itemBuilder: (context, index) {
+                      //             var data = newDataList[index];
+
+                      //             return Padding(
+                      //               padding:
+                      //                   const EdgeInsets.only(left: 10),
+                      //               child: ListTile(
+                      //                 selectedTileColor: Colors.red,
+                      //                 dense: true,
+                      //                 contentPadding: EdgeInsets.only(
+                      //                     left: 0.0, right: 18),
+                      //                 leading: Container(
+                      //                   width: 32.0,
+                      //                   height: 32.0,
+                      //                   padding: EdgeInsets.all(2.0),
+                      //                   decoration: BoxDecoration(
+                      //                     color: data.colorName,
+                      //                     shape: BoxShape.circle,
+                      //                   ),
+                      //                   child: CircleAvatar(
+                      //                       radius: 14.0,
+                      //                       backgroundImage: data.id != -1
+                      //                           ? AssetImage(
+                      //                               'img/images/jitendra.jpeg')
+                      //                           : AssetImage(
+                      //                               'img/images/user.jpg')),
+                      //                 ),
+                      //                 title: Text(
+                      //                   data.name,
+                      //                   style: TextStyle(
+                      //                       fontSize: 16,
+                      //                       color: Color.fromARGB(
+                      //                           255, 68, 68, 68)),
+                      //                 ),
+                      //                 trailing: data.checked
+                      //                     ? Icon(
+                      //                         Icons.check,
+                      //                         color: data.id != -1
+                      //                             ? Colors.blue[400]
+                      //                             : Colors.white,
+                      //                       )
+                      //                     : null,
+                      //                 onTap: () {
+                      //                   setState(() {
+                      //                     data.checked = !data.checked;
+                      //                   });
+                      //                   listData(data, context);
+                      //                   Navigator.of(context).pop();
+                      //                 },
+                      //               ),
+                      //             );
+                      //           }),
+                      //     ),
+                      //   ),
                     ),
                   ],
                 ),
