@@ -1,98 +1,89 @@
-{
-    "data": [
-        {
-            "id": 1,
-            "name": "Group1",
-            "type": "user",
-            "updated_at": "2020-09-19 14:56:54",
-            "users": {
-                "data": [
-                    {
-                        "id": 127,
-                        "first_name": "Brown",
-                        "last_name": "Schoen",
-                        "full_name": "Brown Schoen",
-                        "group_id": 3
-                    },
-                    {
-                        "id": 33,
-                        "first_name": "Pawan",
-                        "last_name": "Arora Dev",
-                        "full_name": "Pawan Arora Dev",
-                        "group_id": 5
-                    },
-                    {
-                        "id": 114,
-                        "first_name": "Javier",
-                        "last_name": "Prosacco",
-                        "full_name": "Javier Prosacco",
-                        "group_id": 8
-                    }
-                ]
+[
+    {
+        "id": 1,
+        "name": "Group1",
+        "type": "user",
+        "updated_at": "2020-09-19 14:56:54",
+        "users": [
+            {
+                "id": 127,
+                "first_name": "Brown",
+                "last_name": "Schoen",
+                "full_name": "Brown Schoen",
+                "group_id": 3
+            },
+            {
+                "id": 33,
+                "first_name": "Pawan",
+                "last_name": "Arora Dev",
+                "full_name": "Pawan Arora Dev",
+                "group_id": 5
+            },
+            {
+                "id": 114,
+                "first_name": "Javier",
+                "last_name": "Prosacco",
+                "full_name": "Javier Prosacco",
+                "group_id": 8
             }
-        },
-        {
-            "id": 16,
-            "name": "Gorup2",
-            "type": "user",
-            "updated_at": "2020-09-19 14:57:11",
-            "users": {
-                "data": [
-                    {
-                        "id": 127,
-                        "first_name": "Brown",
-                        "last_name": "Schoen",
-                        "full_name": "Brown Schoen",
-                        "group_id": 3
-                    },
-                    {
-                        "id": 163,
-                        "first_name": "Neva",
-                        "last_name": "Greenholt",
-                        "full_name": "Neva Greenholt",
-                        "group_id": 3
-                    },
-                    {
-                        "id": 33,
-                        "first_name": "Pawan",
-                        "last_name": "Arora Dev",
-                        "full_name": "Pawan Arora Dev",
-                        "group_id": 5
-                    },
-                    {
-                        "id": 114,
-                        "first_name": "Javier",
-                        "last_name": "Prosacco",
-                        "full_name": "Javier Prosacco",
-                        "group_id": 8
-                    }
-                ]
+        ]
+    },
+    {
+        "id": 16,
+        "name": "Gorup2",
+        "type": "user",
+        "updated_at": "2020-09-19 14:57:11",
+        "users": [
+            {
+                "id": 127,
+                "first_name": "Brown",
+                "last_name": "Schoen",
+                "full_name": "Brown Schoen",
+                "group_id": 3
+            },
+            {
+                "id": 163,
+                "first_name": "Neva",
+                "last_name": "Greenholt",
+                "full_name": "Neva Greenholt",
+                "group_id": 3
+            },
+            {
+                "id": 33,
+                "first_name": "Pawan",
+                "last_name": "Arora Dev",
+                "full_name": "Pawan Arora Dev",
+                "group_id": 5
+            },
+            {
+                "id": 114,
+                "first_name": "Javier",
+                "last_name": "Prosacco",
+                "full_name": "Javier Prosacco",
+                "group_id": 8
             }
-        },
-        {
-            "id": 17,
-            "name": "dsf",
-            "type": "user",
-            "updated_at": "2020-08-19 12:45:47",
-            "users": {
-                "data": [
-                    {
-                        "id": 33,
-                        "first_name": "Pawan",
-                        "last_name": "Arora Dev",
-                        "full_name": "Pawan Arora Dev",
-                        "group_id": 5
-                    },
-                    {
-                        "id": 114,
-                        "first_name": "Javier",
-                        "last_name": "Prosacco",
-                        "full_name": "Javier Prosacco",
-                        "group_id": 8
-                    }
-                ]
+        ]
+    },
+    {
+        "id": 17,
+        "name": "dsf",
+        "type": "user",
+        "updated_at": "2020-08-19 12:45:47",
+        "users": [
+            {
+                "id": 33,
+                "first_name": "Pawan",
+                "last_name": "Arora Dev",
+                "full_name": "Pawan Arora Dev",
+                "group_id": 5
+            },
+            {
+                "id": 114,
+                "first_name": "Javier",
+                "last_name": "Prosacco",
+                "full_name": "Javier Prosacco",
+                "group_id": 8
             }
-        }
-    ],
-    "status": 200
-}
+        ]
+    }
+]
