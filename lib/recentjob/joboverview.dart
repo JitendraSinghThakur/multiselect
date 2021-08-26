@@ -45,32 +45,148 @@ class _JobOverviewState extends State<JobOverview> {
             ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            children: [
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      "Description",
-                      style: TextStyle(
-                          color: Color(0xff444444),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1),
-                    ),
-                  )),
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("xyhx",
-                      style: TextStyle(
-                          color: Color(0xff444444),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 1)))
-            ],
+        InkWell(
+          onTap: () {
+            print("ontap");
+          },
+          onLongPress: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return StatefulBuilder(builder: (context, setState) {
+                    return AlertDialog(
+                      contentPadding: EdgeInsets.zero,
+                      insetPadding: EdgeInsets.zero,
+                      backgroundColor: Colors.white,
+                      content: Builder(builder: (context) {
+                        return Container(
+                          height: 380,
+                          width: MediaQuery.of(context).size.width - 40,
+                          child: Column(
+                            children: [
+                              // Top
+                              Container(
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                height: 40,
+                                color: Color(0xff357ebd),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        "JOB DESCRIPTION",
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.white),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.white),
+                                      child: Text(
+                                        "Trade Scripts",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color.fromARGB(
+                                                255, 200, 27, 27)),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              // middle
+
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    maxLines: 99,
+                                    decoration: InputDecoration(
+                                      alignLabelWithHint: mounted,
+                                      hintText: "Comment!",
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // bottom
+                              Container(
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                height: 40,
+                                color: Color.fromARGB(255, 241, 241, 241),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Container(
+                                        child: Text(
+                                          "CANCEL",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      child: Container(
+                                        child: Text(
+                                          "SAVE",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    );
+                  });
+                });
+          },
+          child: Container(
+            padding: EdgeInsets.all(15),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/descriptionpage');
+              },
+              child: Column(
+                children: [
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          "Description",
+                          style: TextStyle(
+                              color: Color(0xff444444),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 1),
+                        ),
+                      )),
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("xyhx",
+                          style: TextStyle(
+                              color: Color(0xff444444),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 1)))
+                ],
+              ),
+            ),
           ),
         ),
         Container(

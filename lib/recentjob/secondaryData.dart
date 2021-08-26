@@ -11,8 +11,8 @@ class SecondaryDrawerData {
 }
 
 List<SecondaryDrawerData> secondaryDataList = [
-  new SecondaryDrawerData(
-      1, "Job Overview", Icons.access_alarm_rounded, Colors.yellow[800], false),
+  new SecondaryDrawerData(1, "Job Overview", Icons.remove_red_eye_outlined,
+      Colors.yellow[800], false),
   new SecondaryDrawerData(
       2, "Measurements", Icons.dehaze_rounded, Colors.yellow[800], false),
   new SecondaryDrawerData(

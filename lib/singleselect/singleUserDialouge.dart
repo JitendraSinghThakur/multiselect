@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'singleUserDatalist.dart';
 
+// ignore: must_be_immutable
 class SingleSelectedModel extends StatefulWidget {
   final void Function(SingleUserlist selectedData, String action) callback;
   Future<List<SingleUserlist>> mainList;
@@ -127,16 +128,15 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
       builder: (context, setState) {
         return AlertDialog(
           backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          insetPadding: EdgeInsets.all(0),
+          insetPadding: EdgeInsets.only(top: 90, bottom: 40),
           contentPadding: EdgeInsets.only(top: 10, left: 0, right: 0),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           content: Builder(
             builder: (context) {
-              var height = MediaQuery.of(context).size.height * 0.85;
-              var width = MediaQuery.of(context).size.width * 1;
+              var width = MediaQuery.of(context).size.width * .95;
               return Container(
-                height: height,
+                // height: height,
                 width: width - 45,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -251,72 +251,64 @@ class _SingleSelectedModelState extends State<SingleSelectedModel> {
                                   } else if (data.hasData) {
                                     var items =
                                         data.data as List<SingleUserlist>;
-                                    return Padding(
-                                      padding: const EdgeInsets.all(18.0),
-                                      child: ListView.builder(
-                                          itemCount: items.length,
-                                          itemBuilder: (context, index) {
-                                            var dataitems = items[index];
+                                    return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        itemCount: items.length,
+                                        itemBuilder: (context, index) {
+                                          var dataitems = items[index];
 
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10),
-                                              child: ListTile(
-                                                selectedTileColor: Colors.red,
-                                                dense: true,
-                                                contentPadding: EdgeInsets.only(
-                                                    left: 0.0, right: 18),
-                                                leading: Container(
-                                                  width: 32.0,
-                                                  height: 32.0,
-                                                  padding: EdgeInsets.all(2.0),
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.amberAccent,
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: CircleAvatar(
-                                                      radius: 14.0,
-                                                      backgroundImage: dataitems.id !=
-                                                              -1
-                                                          ? AssetImage(
-                                                              'img/images/jitendra.jpeg')
-                                                          : AssetImage(
-                                                              'img/images/user.jpg')),
-                                                ),
-                                                title: Text(
-                                                  dataitems.fullName as String,
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Color.fromARGB(
-                                                          255, 68, 68, 68)),
-                                                ),
-                                                trailing: dataitems.checked
-                                                        as bool
-                                                    ? Icon(
-                                                        Icons.check,
-                                                        color: dataitems.id !=
-                                                                -2
-                                                            ? Colors.blue[400]
-                                                            : Colors.white,
-                                                      )
-                                                    : null,
-                                                onTap: () {
-                                                  setState(() {
-                                                    items.forEach((element) {
-                                                      element.checked = false;
-                                                    });
-                                                    dataitems.checked =
-                                                        !(dataitems.checked
-                                                            as bool);
-                                                  });
-                                                  submit("Done");
-                                                  // listData(data, context);
-                                                  Navigator.of(context).pop();
-                                                },
+                                          return ListTile(
+                                            selectedTileColor: Colors.red,
+                                            dense: true,
+                                            contentPadding: EdgeInsets.only(
+                                                top: 5, left: 20, right: 20),
+                                            leading: Container(
+                                              width: 37.0,
+                                              height: 37.0,
+                                              padding: EdgeInsets.all(2.0),
+                                              decoration: BoxDecoration(
+                                                color: Colors.amberAccent,
+                                                shape: BoxShape.circle,
                                               ),
-                                            );
-                                          }),
-                                    );
+                                              child: CircleAvatar(
+                                                  radius: 14.0,
+                                                  backgroundImage: dataitems
+                                                              .id !=
+                                                          -1
+                                                      ? AssetImage(
+                                                          'img/images/user.jpg')
+                                                      : AssetImage(
+                                                          'img/images/user.jpg')),
+                                            ),
+                                            title: Text(
+                                              dataitems.fullName as String,
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  color: Color.fromARGB(
+                                                      255, 68, 68, 68)),
+                                            ),
+                                            trailing: dataitems.checked as bool
+                                                ? Icon(
+                                                    Icons.check,
+                                                    color: dataitems.id != -2
+                                                        ? Colors.blue[400]
+                                                        : Colors.white,
+                                                  )
+                                                : null,
+                                            onTap: () {
+                                              setState(() {
+                                                items.forEach((element) {
+                                                  element.checked = false;
+                                                });
+                                                dataitems.checked = !(dataitems
+                                                    .checked as bool);
+                                              });
+                                              submit("Done");
+                                              // listData(data, context);
+                                              Navigator.of(context).pop();
+                                            },
+                                          );
+                                        });
                                   } else {
                                     return Center(
                                       child: CircularProgressIndicator(),

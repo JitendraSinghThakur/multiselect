@@ -1,60 +1,39 @@
-import 'dart:convert';
-import '../singleselect/singleUserDialouge.dart';
-import '../animations/animations.dart';
-import '../singleselect/singleUserDatalist.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:demoapp/multiselect/groupDatalist.dart';
 
-class SingleUserSelect extends StatefulWidget {
-  const SingleUserSelect({Key? key}) : super(key: key);
+import '../animations/animations.dart';
+import 'package:flutter/material.dart';
+import 'demowork.dart';
+import 'multiselect/userDatalist.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' as rootBundle;
+
+class Demoselect extends StatefulWidget {
+  const Demoselect({Key? key}) : super(key: key);
 
   @override
-  _SingleUserSelectState createState() => _SingleUserSelectState();
+  _DemoselectState createState() => _DemoselectState();
 }
 
-class _SingleUserSelectState extends State<SingleUserSelect> {
-  SingleUserlist selectedNames = SingleUserlist(
-      id: -5,
-      firstName: null,
-      lastName: null,
-      fullName: null,
-      fullNameMobile: null,
-      email: null,
-      companyId: null,
-      company: null,
-      adminPrivilege: null,
-      group: null,
-      role: null,
-      addedDate: null,
-      profilePic: null,
-      active: null,
-      companyName: null,
-      color: null,
-      commissionPercentage: null,
-      resourceId: null,
-      dataMasking: null,
-      multipleAccount: null,
-      allDivisionsAccess: null,
-      createdBy: null,
-      updatedBy: null,
-      profile: null,
-      divisions: null,
-      tags: null,
-      checked: false);
+class _DemoselectState extends State<Demoselect> {
+  List<Userlist> selectedNames = [];
 
-  void callback(SingleUserlist selectedData, String action) {
+  void callback(List<Userlist> selectedData, String action) {
     if (action == "cancel") {
       return;
     }
     selectedNames = selectedData;
 
     setState(() {
-      textvalue = selectedNames.fullName!;
+      textvalue = " ";
+      if (selectedNames.length > 0) {
+        if (selectedNames.length > 0) {
+          textvalue += (selectedNames.map((e) => (e.fullName))).join(", ");
+        }
+      }
     });
   }
 
-  String textvalue = "Dropbox user";
+  String textvalue = "0 Selected";
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -73,7 +52,7 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
                       right: BorderSide(width: 1.2)),
                 ),
                 child: Text(
-                  "Single User",
+                  "Selected Values",
                   style: TextStyle(letterSpacing: 0.5, color: Colors.black),
                 ),
               ),
@@ -90,10 +69,9 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
                 child: textvalue == " "
                     ? Text(
                         "0 Selected",
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                        style: TextStyle(color: Colors.black, fontSize: 15),
                       )
-                    : Text(textvalue,
-                        style: TextStyle(color: Colors.black, fontSize: 16)),
+                    : Text(textvalue),
               ),
             ],
           ),
@@ -111,13 +89,14 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
                 _animation, _secondaryAnimation, _child);
           },
           pageBuilder: (_animation, _secondaryAnimation, _child) {
-            return SingleSelectedModel(
-                mainList: ReadJsonDataSinglelist(),
+            return DemoselectModel(
+                mainList: ReadJsonDataList(),
+                groupLists: ReadJsonData(),
                 selected: selectedNames,
-                callback: (SingleUserlist selectedData, String action) {
+                callback: (List<Userlist> selectedData, String action) {
                   callback(selectedData, action);
                 },
-                unassignedValue: new SingleUserlist(
+                unassignedValue: new Userlist(
                     id: -1,
                     firstName: null,
                     lastName: null,
@@ -154,45 +133,22 @@ class _SingleUserSelectState extends State<SingleUserSelect> {
     );
   }
 
-// ignore: non_constant_identifier_names
-  Future<List<SingleUserlist>> ReadJsonDataSinglelist() async {
-    final jsondata = await rootBundle.loadString('jsonfiles/userlist.json');
-    final singleSelected = json.decode(jsondata) as List<dynamic>;
-    final singleSelected2 =
-        singleSelected.map((e) => SingleUserlist.fromJson(e)).toList();
+  // ignore: non_constant_identifier_names
+  Future<List<GroupList>> ReadJsonData() async {
+    final jsondata =
+        await rootBundle.rootBundle.loadString('jsonfiles/grouplist.json');
+    final list = json.decode(jsondata) as List<dynamic>;
+    final list2 = list.map((e) => GroupList.fromJson(e)).toList();
+    return list2;
+  }
 
-    if (singleSelected2.where((element) => element.id == -1).length == 0) {
-      singleSelected2.insert(
-          0,
-          new SingleUserlist(
-              id: -1,
-              firstName: null,
-              lastName: null,
-              fullName: "Unassigned",
-              fullNameMobile: null,
-              email: null,
-              companyId: null,
-              company: null,
-              adminPrivilege: null,
-              group: null,
-              role: null,
-              addedDate: null,
-              profilePic: null,
-              active: null,
-              companyName: null,
-              color: null,
-              commissionPercentage: null,
-              resourceId: null,
-              dataMasking: null,
-              multipleAccount: null,
-              allDivisionsAccess: null,
-              createdBy: null,
-              updatedBy: null,
-              profile: null,
-              divisions: null,
-              tags: null,
-              checked: false));
-    }
-    return singleSelected2;
+  // ignore: non_constant_identifier_names
+  Future<List<Userlist>> ReadJsonDataList() async {
+    final jsondata =
+        await rootBundle.rootBundle.loadString('jsonfiles/userlist.json');
+    final listmultiselected = json.decode(jsondata) as List<dynamic>;
+    final listmultiselected2 =
+        listmultiselected.map((e) => Userlist.fromJson(e)).toList();
+    return listmultiselected2;
   }
 }

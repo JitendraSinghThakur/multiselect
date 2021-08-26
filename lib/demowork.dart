@@ -1,16 +1,16 @@
 import 'package:demoapp/multiselect/userDatalist.dart';
 import 'package:flutter/material.dart';
-import 'groupDatalist.dart';
+import 'multiselect/groupDatalist.dart';
 // import 'dart:convert';
 // import 'package:flutter/services.dart' as rootBundle;
 
-class MultiselectedModel extends StatefulWidget {
+class DemoselectModel extends StatefulWidget {
   final void Function(List<Userlist> selectedData, String action) callback;
   final Future<List<Userlist>> mainList;
   final Future<List<GroupList>> groupLists;
   final List<Userlist> selected;
   final Userlist? unassignedValue;
-  MultiselectedModel({
+  DemoselectModel({
     Key? key,
     required this.mainList,
     required this.groupLists,
@@ -23,10 +23,10 @@ class MultiselectedModel extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MultiselectedModelState createState() => _MultiselectedModelState();
+  _DemoselectModelState createState() => _DemoselectModelState();
 }
 
-class _MultiselectedModelState extends State<MultiselectedModel> {
+class _DemoselectModelState extends State<DemoselectModel> {
   double _animatedHeight = 0.0;
   bool isChecked = false;
 
@@ -212,7 +212,7 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
                       // decoration: BoxDecoration(
                       //   color: Colors.white,
                       //   borderRadius: BorderRadius.circular(15),
@@ -377,205 +377,204 @@ class _MultiselectedModelState extends State<MultiselectedModel> {
                         ],
                       ),
                     ),
-                    AnimatedContainer(
-                        padding: EdgeInsets.only(
-                            top: _animatedHeight != 0 ? 50.0 : 0,
-                            left: 30,
-                            right: 30,
-                            bottom: 0),
-                        duration: Duration(milliseconds: 300),
-                        child: _animatedHeight != 0
-                            ? FutureBuilder(
-                                future: widget.groupLists,
-                                builder: (context, dataGroup) {
-                                  if (dataGroup.hasError) {
-                                    return Center(
-                                        child: Text("${dataGroup.error}"));
-                                  } else if (dataGroup.hasData) {
-                                    var itemsGroup =
-                                        dataGroup.data as List<GroupList>;
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(left: 15),
-                                          child: Text(
-                                            '${"Group"}(${itemsGroup.length})',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.only(top: 10),
-                                          color: Color.fromARGB(
-                                              255, 247, 247, 247),
-                                          child: ListView.builder(
-                                              padding: EdgeInsets.zero,
-                                              shrinkWrap: true,
-                                              itemCount: itemsGroup.length,
-                                              itemBuilder: (context, index) {
-                                                var dataGrp = itemsGroup[index];
-
-                                                return ListTile(
-                                                  dense: true,
-                                                  title: Text(
-                                                    '${dataGrp.name.toString()}(${dataGrp.users!.length})',
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        color: Color.fromRGBO(
-                                                            0, 0, 0, 0.8),
-                                                        fontWeight:
-                                                            FontWeight.w400),
-                                                  ),
-                                                  trailing: InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        dataGrp.checked =
-                                                            !(dataGrp.checked
-                                                                as bool);
-                                                      });
-                                                      newDataList =
-                                                          onTapGroupChecked(
-                                                              itemsGroup,
-                                                              context);
-                                                    },
-                                                    child: (dataGrp.checked
-                                                            as bool)
-                                                        ? Icon(
-                                                            Icons
-                                                                .check_box_rounded,
-                                                            size: 27,
-                                                            color: chechIcons,
-                                                          )
-                                                        : Icon(
-                                                            Icons
-                                                                .check_box_outline_blank_rounded,
-                                                            size: 27,
-                                                            color: chechIcons,
-                                                          ),
-                                                  ),
-                                                  onTap: () {
-                                                    setState(() {
-                                                      // data.checked = !data.checked;
-                                                    });
-                                                    // listData(data, context);
-                                                  },
-                                                );
-                                              }),
-                                        )
-                                      ],
-                                    );
-                                  } else {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                },
-                              )
-                            : Text("")),
                     Expanded(
-                        child: 1 == 0
-                            ? Container(
-                                child: Text(
-                                  "No records found",
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 102, 102, 102),
-                                      fontSize: 14,
-                                      letterSpacing: 1),
-                                ),
-                              )
-                            : Container(
-                                padding: EdgeInsets.only(top: 5),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(25.0),
-                                    topRight: Radius.circular(25.0),
-                                  ),
-                                ),
-                                child: FutureBuilder(
-                                  future: newDataList,
-                                  builder: (context, data) {
-                                    if (data.hasError) {
-                                      return Center(
-                                          child: Text("${data.error}"));
-                                    } else if (data.hasData) {
-                                      var items = data.data as List<Userlist>;
-                                      return ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          itemCount: items.length,
-                                          itemBuilder: (context, index) {
-                                            var data = items[index];
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10,
-                                                  right: 16,
-                                                  bottom: 6),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    data.checked =
-                                                        !(data.checked as bool);
-                                                  });
-                                                  onTapChecked(items, context);
-                                                },
-                                                child: Visibility(
-                                                  visible: data.visible == null
-                                                      ? true
-                                                      : (data.visible as bool),
-                                                  child: ListTile(
-                                                    dense: true,
-                                                    leading: Container(
-                                                        width: 40.0,
-                                                        height: 40.0,
-                                                        padding:
-                                                            EdgeInsets.all(2.0),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle),
-                                                        child: CircleAvatar(
-                                                          backgroundImage:
-                                                              AssetImage(
-                                                                  'img/images/user.jpg'),
-                                                        )),
-                                                    title: Text(
-                                                      data.fullName.toString(),
-                                                      style: TextStyle(
-                                                          fontSize: 17,
-                                                          color: Color.fromRGBO(
-                                                              0, 0, 0, 0.8),
-                                                          fontWeight:
-                                                              FontWeight.w400),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            _animatedHeight == 0
+                                ? Text("")
+                                : AnimatedContainer(
+                                    duration: Duration(milliseconds: 10),
+                                    margin: EdgeInsets.all(10),
+                                    padding: EdgeInsets.only(
+                                        top: 40,
+                                        left: 30,
+                                        right: 30,
+                                        bottom: 20),
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 247, 247, 247),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                    child: FutureBuilder(
+                                      future: widget.groupLists,
+                                      builder: (context, dataGroup) {
+                                        if (dataGroup.hasError) {
+                                          return Center(
+                                              child:
+                                                  Text("${dataGroup.error}"));
+                                        } else if (dataGroup.hasData) {
+                                          var itemsGroup =
+                                              dataGroup.data as List<GroupList>;
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.zero,
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 10),
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                              '${"User Group"}(${itemsGroup.length})'),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    trailing: data.checked
-                                                            as bool
-                                                        ? Icon(
-                                                            Icons
-                                                                .check_box_rounded,
-                                                            size: 27,
-                                                            color: chechIcons,
-                                                          )
-                                                        : Icon(
-                                                            Icons
-                                                                .check_box_outline_blank_rounded,
-                                                            size: 27,
-                                                            color: chechIcons,
-                                                          ),
-                                                  ),
+                                                    Container(
+                                                      child: Column(
+                                                        children: itemsGroup
+                                                            .map((dataGrp) {
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                dataGrp.checked =
+                                                                    !(dataGrp
+                                                                            .checked
+                                                                        as bool);
+                                                              });
+                                                              newDataList =
+                                                                  onTapGroupChecked(
+                                                                      itemsGroup,
+                                                                      context);
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(6.0),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                      '${dataGrp.name.toString()}(${dataGrp.users!.length})'),
+                                                                  (dataGrp.checked
+                                                                          as bool)
+                                                                      ? Icon(
+                                                                          Icons
+                                                                              .check_box_rounded,
+                                                                          size:
+                                                                              27,
+                                                                          color:
+                                                                              chechIcons,
+                                                                        )
+                                                                      : Icon(
+                                                                          Icons
+                                                                              .check_box_outline_blank_rounded,
+                                                                          size:
+                                                                              27,
+                                                                          color:
+                                                                              chechIcons,
+                                                                        ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }).toList(),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          );
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        }
+                                      },
+                                    )),
+                            FutureBuilder(
+                              future: newDataList,
+                              builder: (context, data) {
+                                if (data.hasError) {
+                                  return Center(child: Text("${data.error}"));
+                                } else if (data.hasData) {
+                                  var items = data.data as List<Userlist>;
+                                  return Column(
+                                    children: items.map((userlistData) {
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            userlistData.checked =
+                                                !(userlistData.checked as bool);
+                                          });
+                                          onTapChecked(items, context);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 20, right: 2, bottom: 15),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: 38.0,
+                                                      height: 38.0,
+                                                      decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: AssetImage(
+                                                              "img/images/user.jpg"),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    50.0)),
+                                                        border: Border.all(
+                                                          color: Colors.grey,
+                                                          width: 1.0,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text(userlistData.fullName
+                                                        .toString()),
+                                                  ],
                                                 ),
                                               ),
-                                            );
-                                          });
-                                    } else {
-                                      return Center(
-                                        child: CircularProgressIndicator(),
+                                              Expanded(
+                                                child: Container(
+                                                    child: userlistData.checked!
+                                                        ? Icon(
+                                                            Icons
+                                                                .check_box_rounded,
+                                                            size: 27,
+                                                            color: chechIcons,
+                                                          )
+                                                        : Icon(
+                                                            Icons
+                                                                .check_box_outline_blank,
+                                                            size: 27,
+                                                            color: chechIcons,
+                                                          )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       );
-                                    }
-                                  },
-                                ))),
+                                    }).toList(),
+                                  );
+                                } else {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.vertical(

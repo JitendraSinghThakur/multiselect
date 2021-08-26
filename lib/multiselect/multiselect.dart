@@ -1,3 +1,4 @@
+import '../animations/animations.dart';
 import '../multiselect/showdialogue.dart';
 import 'package:flutter/material.dart';
 import 'groupDatalist.dart';
@@ -76,48 +77,57 @@ class _OpenCustomerDetailsState extends State<OpenCustomerDetails> {
         ),
       ),
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return MultiselectedModel(
-                  mainList: ReadJsonDataList(),
-                  groupLists: ReadJsonData(),
-                  selected: selectedNames,
-                  callback: (List<Userlist> selectedData, String action) {
-                    callback(selectedData, action);
-                  },
-                  unassignedValue: new Userlist(
-                      id: -1,
-                      firstName: null,
-                      lastName: null,
-                      fullName: "Unassigned",
-                      fullNameMobile: null,
-                      email: null,
-                      companyId: null,
-                      company: null,
-                      adminPrivilege: null,
-                      group: null,
-                      role: null,
-                      addedDate: null,
-                      profilePic: null,
-                      active: null,
-                      companyName: null,
-                      color: null,
-                      commissionPercentage: null,
-                      resourceId: null,
-                      dataMasking: null,
-                      multipleAccount: null,
-                      allDivisionsAccess: null,
-                      createdBy: null,
-                      updatedBy: null,
-                      profile: null,
-                      divisions: null,
-                      tags: null,
-                      checked: false),
-                  keyToDisplay: 'name',
-                  type: 'user',
-                  canShowProfilePic: true);
-            });
+        showGeneralDialog(
+          context: context,
+          barrierLabel: '',
+          barrierDismissible: true,
+          transitionDuration: Duration(milliseconds: 300),
+          transitionBuilder:
+              (context, _animation, _secondaryAnimation, _child) {
+            return Animations.fromBottom(
+                _animation, _secondaryAnimation, _child);
+          },
+          pageBuilder: (_animation, _secondaryAnimation, _child) {
+            return MultiselectedModel(
+                mainList: ReadJsonDataList(),
+                groupLists: ReadJsonData(),
+                selected: selectedNames,
+                callback: (List<Userlist> selectedData, String action) {
+                  callback(selectedData, action);
+                },
+                unassignedValue: new Userlist(
+                    id: -1,
+                    firstName: null,
+                    lastName: null,
+                    fullName: "Unassigned",
+                    fullNameMobile: null,
+                    email: null,
+                    companyId: null,
+                    company: null,
+                    adminPrivilege: null,
+                    group: null,
+                    role: null,
+                    addedDate: null,
+                    profilePic: null,
+                    active: null,
+                    companyName: null,
+                    color: null,
+                    commissionPercentage: null,
+                    resourceId: null,
+                    dataMasking: null,
+                    multipleAccount: null,
+                    allDivisionsAccess: null,
+                    createdBy: null,
+                    updatedBy: null,
+                    profile: null,
+                    divisions: null,
+                    tags: null,
+                    checked: false),
+                keyToDisplay: 'name',
+                type: 'user',
+                canShowProfilePic: true);
+          },
+        );
       },
     );
   }

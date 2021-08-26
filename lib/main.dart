@@ -1,3 +1,5 @@
+import 'package:demoapp/demoworkslel.dart';
+import 'package:demoapp/description/descriptionmain.dart';
 import '../recentjob/recentmain.dart';
 import '../workflow/workflowpage.dart';
 import '../customeDrawer/customedrawer.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/material.dart';
 import '../multiselect/multiselect.dart';
 import '../multiselect/styles.dart';
 import 'demo.dart';
+import 'demoDatePicker.dart';
 // import 'popover/popOver.dart';
 
 void main() => runApp(
@@ -29,6 +32,8 @@ class MyApp extends StatelessWidget {
         "/": (context) => Home(title: "Popover"),
         "/workflowpage": (context) => WorkFlowPage(),
         "/recentjob": (context) => RecentMain(),
+        "/descriptionpage": (context) => DescriptionPage(),
+        "/datepickerDemo": (context) => DatepickerDemo()
       },
     );
   }
@@ -103,6 +108,19 @@ class _HomeState extends State<Home> {
                         },
                         child: Text("Recent Job"),
                       ),
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/datepickerDemo');
+                        },
+                        child: Text("DatePicker Demo"),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 18.0),
+                      child: Demoselect(),
                     ),
                     SingleChildScrollView(
                         child: Container(height: 500, child: DemoHomeJson()))
