@@ -9,6 +9,8 @@ class JobInfoPage extends StatefulWidget {
 }
 
 class _JobInfoPageState extends State<JobInfoPage> {
+  final emailController = TextEditingController();
+  String textValue = "...";
   bool valueNull = true;
   bool valueNull2 = true;
   DateTime selectedDate = DateTime.now();
@@ -48,7 +50,20 @@ class _JobInfoPageState extends State<JobInfoPage> {
         }
       });
   }
-final myController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    emailController.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -109,7 +124,7 @@ final myController = TextEditingController();
                   style: TextStyle(fontSize: 15),
                 ),
                 subtitle: Text(
-                  "...",
+                  textValue,
                   style: TextStyle(fontSize: 15),
                 ),
                 trailing: InkWell(
@@ -150,9 +165,10 @@ final myController = TextEditingController();
                                         // middle
 
                                         Container(
-                                          padding: EdgeInsets.only(left: 30),
+                                          padding: EdgeInsets.only(left: 13),
                                           height: 50,
                                           child: TextField(
+                                            controller: emailController,
                                             decoration: InputDecoration(
                                                 border: InputBorder.none,
                                                 hintText: 'Enter Job Name'),
@@ -167,7 +183,7 @@ final myController = TextEditingController();
                                               255, 241, 241, 241),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                                MainAxisAlignment.spaceAround,
                                             children: [
                                               InkWell(
                                                 onTap: () {
@@ -175,20 +191,34 @@ final myController = TextEditingController();
                                                 },
                                                 child: Container(
                                                   child: Text(
-                                                    "CANCEL",
+                                                    "Cancel",
                                                     style: TextStyle(
-                                                        fontSize: 16,
-                                                        color: Colors.black),
+                                                        letterSpacing: 1,
+                                                        fontSize: 15,
+                                                        color: Colors.black87
+                                                        // color: Color.fromRGBO(
+                                                        //     153, 153, 153, 1)
+                                                        ),
                                                   ),
                                                 ),
                                               ),
                                               InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    textValue =
+                                                        emailController.text;
+                                                    Navigator.pop(context);
+                                                  });
+                                                  // print(
+                                                  //     'Email: ${emailController.text}');
+                                                },
                                                 child: Container(
                                                   child: Text(
-                                                    "SAVE",
+                                                    "Update",
                                                     style: TextStyle(
-                                                        fontSize: 16,
-                                                        color: Colors.black),
+                                                        letterSpacing: 1,
+                                                        fontSize: 15,
+                                                        color: Colors.black87),
                                                   ),
                                                 ),
                                               )
@@ -206,7 +236,7 @@ final myController = TextEditingController();
                     child: Icon(
                       Icons.note_alt_outlined,
                       size: 20,
-                      color: Colors.black,
+                      color: Color.fromRGBO(64, 64, 64, .7),
                     ))),
             Divider(
               height: 5,
@@ -226,7 +256,7 @@ final myController = TextEditingController();
                     onTap: () => _selectDateSigned(context),
                     child: Icon(
                       Icons.note_alt_outlined,
-                      color: Colors.black,
+                      color: Color.fromRGBO(64, 64, 64, .7),
                       size: 20,
                     ))),
             Divider(
@@ -246,7 +276,7 @@ final myController = TextEditingController();
                     child: Icon(
                       Icons.note_alt_outlined,
                       size: 20,
-                      color: Colors.black,
+                      color: Color.fromRGBO(64, 64, 64, .7),
                     ))),
             Divider(
               height: 5,
@@ -285,6 +315,26 @@ final myController = TextEditingController();
               ),
               subtitle: Text(
                 "04/21/2021 02:55 AM",
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                "Jon Record Since",
+                style: TextStyle(fontSize: 15),
+              ),
+              subtitle: Text(
+                "04/21/2021 02:55 AM",
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                "Last Modified",
+                style: TextStyle(fontSize: 15),
+              ),
+              subtitle: Text(
+                "3 days ago",
                 style: TextStyle(fontSize: 15),
               ),
             )

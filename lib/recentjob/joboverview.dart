@@ -60,7 +60,7 @@ class _JobOverviewState extends State<JobOverview> {
                       backgroundColor: Colors.white,
                       content: Builder(builder: (context) {
                         return Container(
-                          height: 380,
+                          height: 310,
                           width: MediaQuery.of(context).size.width - 40,
                           child: Column(
                             children: [
@@ -81,15 +81,17 @@ class _JobOverviewState extends State<JobOverview> {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(5),
+                                      padding: EdgeInsets.only(
+                                          top: 1, bottom: 1, left: 7, right: 7),
                                       decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                              BorderRadius.circular(50),
                                           color: Colors.white),
                                       child: Text(
                                         "Trade Scripts",
                                         style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 10,
+                                            letterSpacing: 0,
                                             color: Color.fromARGB(
                                                 255, 200, 27, 27)),
                                       ),
@@ -99,15 +101,17 @@ class _JobOverviewState extends State<JobOverview> {
                               ),
                               // middle
 
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.all(8.0),
-                                  child: TextField(
-                                    maxLines: 99,
-                                    decoration: InputDecoration(
-                                      alignLabelWithHint: mounted,
-                                      hintText: "Comment!",
-                                      border: OutlineInputBorder(),
+                              Container(
+                                height: 230,
+                                padding: EdgeInsets.all(10.0),
+                                child: TextField(
+                                  maxLines: 99,
+                                  decoration: InputDecoration(
+                                    alignLabelWithHint: mounted,
+                                    hintText: "Comment!",
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.grey, width: 0.5),
                                     ),
                                   ),
                                 ),
@@ -119,7 +123,7 @@ class _JobOverviewState extends State<JobOverview> {
                                 color: Color.fromARGB(255, 241, 241, 241),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     InkWell(
                                       onTap: () {
@@ -127,20 +131,22 @@ class _JobOverviewState extends State<JobOverview> {
                                       },
                                       child: Container(
                                         child: Text(
-                                          "CANCEL",
+                                          "Cancel",
                                           style: TextStyle(
+                                              letterSpacing: 1,
                                               fontSize: 16,
-                                              color: Colors.black),
+                                              color: Colors.black87),
                                         ),
                                       ),
                                     ),
                                     InkWell(
                                       child: Container(
                                         child: Text(
-                                          "SAVE",
+                                          "Save",
                                           style: TextStyle(
+                                              letterSpacing: 1,
                                               fontSize: 16,
-                                              color: Colors.black),
+                                              color: Colors.black87),
                                         ),
                                       ),
                                     )

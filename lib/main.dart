@@ -10,6 +10,7 @@ import '../multiselect/multiselect.dart';
 import '../multiselect/styles.dart';
 import 'demo.dart';
 import 'demoDatePicker.dart';
+import 'dragabledemo.dart';
 // import 'popover/popOver.dart';
 
 void main() => runApp(
@@ -24,16 +25,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: "Roboto"),
-
-      // home: const Home(
-      //   title: "PopOver",
-      // ),
       routes: {
         "/": (context) => Home(title: "Popover"),
         "/workflowpage": (context) => WorkFlowPage(),
         "/recentjob": (context) => RecentMain(),
         "/descriptionpage": (context) => DescriptionPage(),
-        "/datepickerDemo": (context) => DatepickerDemo()
+        "/datepickerDemo": (context) => DatepickerDemo(),
       },
     );
   }
@@ -128,6 +125,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
+            DemodragablePage(),
           ],
         ),
       ),

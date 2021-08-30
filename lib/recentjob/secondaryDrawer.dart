@@ -11,10 +11,13 @@ class SecondaryDrawer extends StatefulWidget {
 class _SecondaryDrawerState extends State<SecondaryDrawer> {
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
-      margin: EdgeInsets.only(top: 10),
-      padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+    return Container(
+      // margin: EdgeInsets.only(top: 10),
+      padding: EdgeInsets.only(
+        left: 10,
+        right: 10,
+        top: 4,
+      ),
       child: Row(
         children: [
           InkWell(
